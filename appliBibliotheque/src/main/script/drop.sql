@@ -593,3 +593,5 @@ drop table if exists operation;
 drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
