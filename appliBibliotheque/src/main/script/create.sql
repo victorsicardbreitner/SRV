@@ -599,3 +599,4 @@ create table operation (id_op bigint not null auto_increment, date date, label v
 alter table operation add constraint FKn4dupl0ql813fl2mfvryxns49 foreign key (ref_compte) references compte (numero);
 create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
 create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
+create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
