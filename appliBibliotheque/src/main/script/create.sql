@@ -602,3 +602,5 @@ create table livre (id bigint not null auto_increment, auteur varchar(255), titr
 create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
 create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
 create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
+create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
+create table livre (id bigint not null auto_increment, auteur varchar(255), titre varchar(255), primary key (id)) engine=InnoDB;
