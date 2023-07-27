@@ -678,3 +678,9 @@ drop table livre cascade constraints;
 drop table livre cascade constraints;
 drop table livre cascade constraints;
 >>>>>>> 6110ab075dc6551172a149d9a2f5fe5a50cd313d
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;

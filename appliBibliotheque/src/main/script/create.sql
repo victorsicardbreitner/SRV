@@ -685,3 +685,9 @@ create table livre (id number(19,0) generated as identity, auteur varchar2(255 c
 create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
 create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
 >>>>>>> 6110ab075dc6551172a149d9a2f5fe5a50cd313d
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
