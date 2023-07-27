@@ -68,6 +68,13 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version> <!-- dernière version -->
 		</dependency>
+		
+				<dependency>
+			<!-- driver jdbc pour base h2 -->
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<!-- pas de scope=test aujourd'hui -->
+		</dependency>
 
 	</dependencies>
 
