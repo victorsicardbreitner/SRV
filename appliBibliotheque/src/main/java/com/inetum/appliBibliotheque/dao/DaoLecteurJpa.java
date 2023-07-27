@@ -1,7 +1,5 @@
 package com.inetum.appliBibliotheque.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,9 +15,9 @@ public class DaoLecteurJpa  extends DaoGenericJpa<Lecteur, Long> implements DaoL
 	}
 
 	@Override
-	public List<Lecteur> findByNom(String prenom) {
-		return entityManager.createNamedQuery("Lecteur.findByNom",Lecteur.class)
-				.setParameter(1,prenom)
+	public Lecteur findById(Long id) {
+		return (Lecteur) entityManager.createNamedQuery("Lecteur.findById",Lecteur.class)
+				.setParameter(1,id)
 				.getResultList();
 	}
 
