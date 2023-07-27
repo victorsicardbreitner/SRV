@@ -15,6 +15,11 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	@Override
+	public EntityManager getEntityManager() {
+		return this.entityManager;
+	}
+	
 	public DaoAdminJpa() {
 		super(Administrateur.class);
 	}
@@ -26,9 +31,6 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 				.getResultList();
 	}
 
-	@Override
-	public EntityManager getEntityManager() {
-		return this.entityManager;
-	}
+
 
 }
