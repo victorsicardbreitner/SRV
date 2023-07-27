@@ -69,9 +69,6 @@
 			<version>1.7.0</version> <!-- dernière version -->
 		</dependency>
 
-
-
-
 	</dependencies>
 
 	<build>
