@@ -75,7 +75,6 @@
 			<artifactId>h2</artifactId>
 			<!-- pas de scope=test aujourd'hui -->
 		</dependency>
-		
 
 	</dependencies>
 

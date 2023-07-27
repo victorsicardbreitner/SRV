@@ -597,6 +597,8 @@ drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
+<<<<<<< HEAD
+=======
 drop table livre cascade constraints;
 drop table livre cascade constraints;
 drop table livre cascade constraints;
@@ -655,11 +657,34 @@ drop table livre cascade constraints;
 drop table livre cascade constraints;
 drop table livre cascade constraints;
 drop table livre cascade constraints;
+>>>>>>> 6110ab075dc6551172a149d9a2f5fe5a50cd313d
 drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
+<<<<<<< HEAD
+drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
+drop table if exists livre;
+=======
 drop table if exists livre CASCADE ;
 drop table livre cascade constraints;
+drop table livre cascade constraints;
+<<<<<<< HEAD
+=======
+drop table livre cascade constraints;
+>>>>>>> 6110ab075dc6551172a149d9a2f5fe5a50cd313d
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+drop table livre cascade constraints;
+>>>>>>> 797e86b4b39759afafc44b8d1f93cac7f90c4561
 drop table livre cascade constraints;
