@@ -17,7 +17,7 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public DaoAdminJpa(Class<Administrateur> entityClass) {
+	public DaoAdminJpa() {
 		super(Administrateur.class);
 	}
 

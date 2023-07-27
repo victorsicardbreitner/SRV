@@ -2,6 +2,8 @@ window.onload=function(){
 	
 	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLivresSelonSoldeMini);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLivre);
+	(document.getElementById("btnDelete")).addEventListener("click", deleteLivre);
+	(document.getElementById("btnUpdate")).addEventListener("click", updateLivre);
 	
 }
 
@@ -20,6 +22,7 @@ function rechercherLivresSelonSoldeMini(){
 			(row.insertCell(0)).innerHTML = livre.id;
 			(row.insertCell(1)).innerHTML = livre.titre;
 			(row.insertCell(2)).innerHTML = livre.auteur;
+			(row.insertCell(3)).innerHTML = livre.dispo;
 		}
 	});
 	
@@ -39,4 +42,39 @@ function rechercherLivresSelonSoldeMini(){
 		});
    
  }
+ 
+ function deleteLivre(){
+	 
+	 let labelLivreDelete = (document.getElementById("inputLabelLivreDelete")).value;
+	 //let livreDeleteJs = {id: labelLivreDelete};
+	// let livreDeleteJson = JSON.stringify(livreDeleteJs);
+	 
+	 let wsUrl= "./api-bibli/livre/"+ labelLivreDelete; 
+	 makeAjaxDeleteRequest(wsUrl,function(responseJson){
+		 console.log("responseJson=", responseJson);
+		    rechercherLivresSelonSoldeMini();
+	 })
+	 
+ }
+ 
+ function updateLivre(){
+	  let labelLivreUpdateDispo = (document.getElementById("inputLabelLivreUpdateDispo")).value;
+	  let labelIdLivre = (document.getElementById("inputLabelIdLivre")).value;
+	  let livreUpdateDispoJs = {id : labelIdLivre,
+		  						dispo: labelLivreUpdateDispo};
+	  let livreUpdateDispoJson = JSON.stringify(livreUpdateDispoJs);
+	  
+	  let wsUrl= "./api-bibli/livre/";
+	  
+	  makeAjaxPostRequest(wsUrl,livreUpdateDispoJson, function(responseJson){
+		   console.log("responseJson=", responseJson);
+		    rechercherLivresSelonSoldeMini();
+	  })
+	  
+ }
+ 
+ 
+     
+
+
  

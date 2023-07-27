@@ -58,10 +58,11 @@ public class LivreRestCtrl {
 	}
 	
 	
-	//exemple de fin d'URL: ./api-bank/compte/1
+	//exemple de fin d'URL:  ./api-bibli/livre/1
 	@DeleteMapping("/{idLivre}" )
 	public ResponseEntity<?> deleteLivreByNumero(@PathVariable("idLivre") Long id) {
 	    Livre livreAsupprimer = daoLivreJpa.findById(id);
+	    System.out.println("livre supprimer"+ livreAsupprimer);
 	    if(livreAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
 	 			           HttpStatus.NOT_FOUND);//40
@@ -72,7 +73,5 @@ public class LivreRestCtrl {
 	   // return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	    		    
 	}
-	
-	
-	
+			
 }

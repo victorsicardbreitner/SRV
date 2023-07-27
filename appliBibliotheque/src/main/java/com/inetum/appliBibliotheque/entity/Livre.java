@@ -20,16 +20,18 @@ public class Livre {
 	private Long id;
 	private String titre;
 	private String auteur;
+	private Boolean dispo;
 	
-	public Livre(Long id, String titre, String auteur) {
+	public Livre(Long id, String titre, String auteur, Boolean dispo) {
 		this.id = id;
 		this.titre = titre;
 		this.auteur = auteur;
+		this.dispo = dispo;
 	}
 
 	@Override
 	public String toString() {
-		return "Livre [id=" + id + ", titre=" + titre + ", auteur=" + auteur + "]";
+		return "Livre [id=" + id + ", titre=" + titre + ", auteur=" + auteur + " dispo "+ dispo+ "]";
 	}
 
 }
