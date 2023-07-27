@@ -12,8 +12,8 @@ public class AppliSpringWebApplication {
 		
 		
 		//System.setProperty("spring.profiles.active", "mysql,init");
-		//System.setProperty("spring.profiles.active", "oracle,init");
-		System.setProperty("spring.profiles.active", "h2,init");
+		System.setProperty("spring.profiles.active", "oracle,init");
+		//System.setProperty("spring.profiles.active", "h2,init");
 
 		SpringApplication.run(AppliSpringWebApplication.class, args);
 		

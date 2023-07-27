@@ -661,3 +661,4 @@ drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre;
 drop table if exists livre CASCADE ;
+drop table livre cascade constraints;
