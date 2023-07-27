@@ -14,9 +14,9 @@ import com.inetum.appliBibliotheque.dao.DaoLivre;
 
 @SpringBootTest //Classe de collaboration entre SpringBoot et JUnit (Gestion de BeforeEach etc.)
 //@ActiveProfiles({"oracle"})
-public class TestCompteDao {
+public class TestLivreDao {
 	
-	Logger logger = LoggerFactory.getLogger(TestCompteDao.class);
+	Logger logger = LoggerFactory.getLogger(TestLivreDao.class);
 
 	@Autowired 
 	private DaoLivre daoLivreJpa;

@@ -1,7 +1,5 @@
 package com.inetum.appliBibliotheque.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -22,9 +20,9 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 	}
 
 	@Override
-	public List<Administrateur> findByNom(String nom) {
-		return entityManager.createNamedQuery("Administrateur.findByNom",Administrateur.class)
-				.setParameter(1,nom)
+	public Administrateur findById(Long id) {
+		return (Administrateur) entityManager.createNamedQuery("Admin.findById",Administrateur.class)
+				.setParameter(1,id)
 				.getResultList();
 	}
 
