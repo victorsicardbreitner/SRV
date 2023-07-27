@@ -3,6 +3,7 @@ package com.inetum.appliBibliotheque.init;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.inetum.appliBibliotheque.dao.DaoLivre;
@@ -14,6 +15,7 @@ import com.inetum.appliBibliotheque.entity.Livre;
  *
  */
 @Component
+@Profile("init")
 public class InitDataSet {
 	
 
@@ -32,6 +34,8 @@ public class InitDataSet {
     	daoLivreJpa.insert(new Livre(null,"Harry Potter 6" , "JKR"));
     	daoLivreJpa.insert(new Livre(null,"Harry Potter 7" , "JKR"));
     	daoLivreJpa.insert(new Livre(null,"Le Seigneur des Anneaux" , "Tolkien"));
+    	daoLivreJpa.insert(new Livre(null,"Les Miserables" , "Victor Hugo"));
+    	daoLivreJpa.insert(new Livre(null,"Madame Bovary" , "Gustave Flaubert"));
 
 	}
 }

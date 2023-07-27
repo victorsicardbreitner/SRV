@@ -9,7 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AppliSpringWebApplication {
 
 	public static void main(String[] args) {
+		
+		
+		//System.setProperty("spring.profiles.active", "mysql,init");
+		//System.setProperty("spring.profiles.active", "oracle,init");
+		System.setProperty("spring.profiles.active", "h2,init");
+
 		SpringApplication.run(AppliSpringWebApplication.class, args);
+		
 		
 		ResourceBundle props = ResourceBundle.getBundle("application");
 		String port = props.getString("server.port");
@@ -18,3 +25,10 @@ public class AppliSpringWebApplication {
 	}
 
 }
+
+
+/*
+
+		//System.setProperty("spring.profiles.active", "mysql,init");
+		//System.setProperty("spring.profiles.active", "h2,init");
+*/
