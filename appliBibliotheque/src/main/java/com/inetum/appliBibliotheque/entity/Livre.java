@@ -29,7 +29,7 @@ public class Livre {
 
 	@Override
 	public String toString() {
-		return "Compte [id=" + id + ", titre=" + titre + ", auteur=" + auteur + "]";
+		return "Livre [id=" + id + ", titre=" + titre + ", auteur=" + auteur + "]";
 	}
 
 }
