@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.inetum.appliBibliotheque.dao.DaoAdmin;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
+import com.inetum.appliBibliotheque.entity.Administrateur;
 import com.inetum.appliBibliotheque.entity.Livre;
 
 /**
@@ -21,6 +23,9 @@ public class InitDataSet {
 
 	@Autowired
 	private DaoLivre daoLivreJpa;
+	
+	@Autowired
+	private DaoAdmin daoAdminJpa;
 
 	
 	@PostConstruct
@@ -36,6 +41,15 @@ public class InitDataSet {
     	daoLivreJpa.insert(new Livre(null,"Le Seigneur des Anneaux" , "Tolkien"));
     	daoLivreJpa.insert(new Livre(null,"Les Miserables" , "Victor Hugo"));
     	daoLivreJpa.insert(new Livre(null,"Madame Bovary" , "Gustave Flaubert"));
-
+    	daoAdminJpa.insert(new Administrateur(null, "Soulef", "Saoud", "soulefsaoud@biblio.fr", "06XXXXXXXX", "5", "rue de la Biologie",
+    			"Paris", "75012", "France", "SoulefS", "Eucaryote"));
+		daoAdminJpa.insert(new Administrateur(null,"Victor", "Sicard", "victor.sicard@biblio.fr", "06XXXXXXXX",
+				"8", "rue des Mathématiques", "Paris", "75012", "France", "VictorS", "Cauchy-Schwartz"));
+		daoAdminJpa.insert(new Administrateur(null, "Roland", "Panzou", "roland.panzou@biblio.fr", "06XXXXXXXX",
+				"3", "rue de la Chimie", "Paris", "75012", "France", "RolandP", "Helium"));
 	}
+	
+	//public void initDataAdmin() {
+
+	//}
 }
