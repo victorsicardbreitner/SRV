@@ -1,5 +1,7 @@
 HELP.md
 target/
+src/main/script/create.sql
+src/main/script/drop.sql
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
