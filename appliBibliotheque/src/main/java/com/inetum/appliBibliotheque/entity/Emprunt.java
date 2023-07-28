@@ -24,7 +24,7 @@ public class Emprunt {
 	
 	
 	@Temporal(TemporalType.DATE)
-	private Date date_debut;
+	private Date date_debut = new Date();
 	@Temporal(TemporalType.DATE)
 	private Date date_fin;
 	
@@ -40,7 +40,7 @@ public class Emprunt {
 	private Livre livre;
 	
 	@ManyToOne
-	@JoinColumn(name = "lecter")
+	@JoinColumn(name = "lecteur")
 	//@MapsId("idLecteur") // pk.idFilm
 	private Lecteur lecteur;
 
