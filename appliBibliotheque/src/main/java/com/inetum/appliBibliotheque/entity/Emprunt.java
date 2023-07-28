@@ -1,5 +1,8 @@
 package com.inetum.appliBibliotheque.entity;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.EmbeddedId;
@@ -8,40 +11,42 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.inetum.appliBibliotheque.utils.AppUtils;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 //@Table(name = "Emprunt")
-@Getter @Setter 
+@Getter
+@Setter
 public class Emprunt {
 	@EmbeddedId
-	private EmpruntCompositePk id; //primary key
-	
-	
+	private EmpruntCompositePk id; // primary key
+
 	@Temporal(TemporalType.DATE)
 	private Date date_debut = new Date();
 	@Temporal(TemporalType.DATE)
-	private Date date_fin;
-	
-	
-	public enum TypesEmprunt {RESERVATION, EFFECTIF};
-	
+	private Date date_fin = AppUtils.ajouterJours(date_debut, 14);
+
+	public enum TypesEmprunt {
+		RESERVATION, EFFECTIF
+	};
+
 	@Enumerated(EnumType.STRING)
 	private TypesEmprunt etat = TypesEmprunt.EFFECTIF;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "livre")
-	//@MapsId("idLivre") // pk.idActeur
+	// @MapsId("idLivre") // pk.idActeur
 	private Livre livre;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "lecteur")
-	//@MapsId("idLecteur") // pk.idFilm
+	// @MapsId("idLecteur") // pk.idFilm
 	private Lecteur lecteur;
 
 	public Emprunt() {
@@ -56,5 +61,7 @@ public class Emprunt {
 		this.id = new EmpruntCompositePk(livre.getId(), lecteur.getId());
 	}
 
-	//faire un constructeur pour les date_debut et date_fin ?
+	// faire un constructeur pour les date_debut et date_fin ?
+
+	
 }
