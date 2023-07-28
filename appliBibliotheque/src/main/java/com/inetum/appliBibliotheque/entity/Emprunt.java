@@ -32,8 +32,8 @@ public class Emprunt {
 	@Temporal(TemporalType.DATE)
 	private Date date_fin = AppUtils.ajouterJours(date_debut, 14);
 
-	@OneToMany(mappedBy="emprunt")
-	private List<Incident> incidents = new ArrayList<Incident>();
+	@OneToOne(mappedBy="emprunt")
+	private Incident incident;
 
 	public enum TypesEmprunt {RESERVATION, EFFECTIF};
 
