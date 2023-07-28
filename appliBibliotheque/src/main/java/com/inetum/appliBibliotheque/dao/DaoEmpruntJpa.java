@@ -6,12 +6,12 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inetum.appliBibliotheque.entity.Administrateur;
+import com.inetum.appliBibliotheque.entity.Emprunt;
 
 @Repository 
 @Transactional
-public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements DaoAdmin {
-	
+public class DaoEmpruntJpa extends DaoGenericJpa<Emprunt, Long> implements DaoEmprunt {
+
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -20,18 +20,10 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 		return this.entityManager;
 	}
 	
-
-	public DaoAdminJpa() {
-		super(Administrateur.class);
+	
+	public DaoEmpruntJpa() {
+		super(Emprunt.class);
 	}
-
-	@Override
-	public Administrateur findById(Long id) {
-		return (Administrateur) entityManager.createNamedQuery("Admin.findById",Administrateur.class)
-				.setParameter(1,id)
-				.getResultList();
-	}
-
 
 
 }

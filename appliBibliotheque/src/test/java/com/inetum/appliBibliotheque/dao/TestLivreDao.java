@@ -1,4 +1,4 @@
-package com.inetum.appliSpringWeb.dao;
+package com.inetum.appliBibliotheque.dao;
 
 
 
@@ -12,14 +12,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.inetum.appliBibliotheque.dao.DaoLivre;
 
-@SpringBootTest //Classe de collaboration entre SpringBoot et JUnit (Gestion de BeforeEach etc.)
-//@ActiveProfiles({"oracle"})
-public class TestCompteDao {
-	
-	Logger logger = LoggerFactory.getLogger(TestCompteDao.class);
 
+@SpringBootTest 
+//@ActiveProfiles({"oracle"})
+public class TestLivreDao {
+	
+
+	Logger logger = LoggerFactory.getLogger(TestLivreDao.class);
 	@Autowired 
 	private DaoLivre daoLivreJpa;
+	
+	
+	
+	
+	@Test
+	public void testFind() {
+		daoLivreJpa.findAll();
+	}
 
 	
 	@Test
@@ -31,3 +40,4 @@ public class TestCompteDao {
 
 
 }
+//@ActiveProfiles({"oracle"})
