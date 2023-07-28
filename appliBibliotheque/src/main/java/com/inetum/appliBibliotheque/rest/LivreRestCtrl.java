@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.appliBibliotheque.dao.DaoLivreJpa;
 import com.inetum.appliBibliotheque.entity.Livre;
-
 
 
 @RestController
@@ -73,5 +73,23 @@ public class LivreRestCtrl {
 	   // return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	    		    
 	}
-			
+	
+	@PutMapping("" )
+	public  ResponseEntity<?> updateLivre(@RequestBody Livre livreUpdated){
+		Long numLivreToUpdate = livreUpdated.getId();
+		Livre livreQuiDevraitExister = daoLivreJpa.findById(numLivreToUpdate);
+	
+	    if(livreQuiDevraitExister==null)
+	    	return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
+			           HttpStatus.NOT_FOUND); //NOT_FOUND = code http 404
+	    
+	    livreUpdated.setAuteur(livreQuiDevraitExister.getAuteur());
+	    livreUpdated.setTitre(livreQuiDevraitExister.getTitre());
+	    livreUpdated.setDispo(livreUpdated.getDispo());
+	    
+		daoLivreJpa.update(livreUpdated);
+		return new ResponseEntity<Livre>(livreUpdated , HttpStatus.OK);
+    }
+
+		
 }

@@ -3,8 +3,8 @@ window.onload=function(){
 	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLivresSelonSoldeMini);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLivre);
 	(document.getElementById("btnDelete")).addEventListener("click", deleteLivre);
-	(document.getElementById("btnUpdate")).addEventListener("click", updateLivre);
-	
+	(document.getElementById("btnUpdateDispo")).addEventListener("click", updateLivreDispo);
+	(document.getElementById("btnUpdateEtat")).addEventListener("click",updateLivreEtat);
 }
 
 function rechercherLivresSelonSoldeMini(){
@@ -23,6 +23,7 @@ function rechercherLivresSelonSoldeMini(){
 			(row.insertCell(1)).innerHTML = livre.titre;
 			(row.insertCell(2)).innerHTML = livre.auteur;
 			(row.insertCell(3)).innerHTML = livre.dispo;
+			(row.insertCell(4)).innerHTML = livre.etat;
 		}
 	});
 	
@@ -30,15 +31,13 @@ function rechercherLivresSelonSoldeMini(){
 
  function ajouterLivre(){
 	  let labelTitre = (document.getElementById("inputLabelTitre")).value;
-	  console.log("LABEL "+ labelTitre);
 	  let labelAuteur = (document.getElementById("inputLabelAuteur")).value;
 	  let livreJs = {titre : labelTitre,
 	  				 auteur: labelAuteur};
 	  let livreJson= JSON.stringify(livreJs);
 	   let wsUrl= "./api-bibli/livre";
 	    makeAjaxPostRequest(wsUrl, livreJson,function(responseJson){
-			console.log("responseJson=", responseJson);
-		    rechercherLivresSelonSoldeMini();
+			 rechercherLivresSelonSoldeMini();
 		});
    
  }
@@ -46,34 +45,54 @@ function rechercherLivresSelonSoldeMini(){
  function deleteLivre(){
 	 
 	 let labelLivreDelete = (document.getElementById("inputLabelLivreDelete")).value;
-	 //let livreDeleteJs = {id: labelLivreDelete};
-	// let livreDeleteJson = JSON.stringify(livreDeleteJs);
-	 
-	 let wsUrl= "./api-bibli/livre/"+ labelLivreDelete; 
+	 	 
+	 let wsUrl= "./api-bibli/livre/"+labelLivreDelete; 
 	 makeAjaxDeleteRequest(wsUrl,function(responseJson){
-		 console.log("responseJson=", responseJson);
-		    rechercherLivresSelonSoldeMini();
+		 rechercherLivresSelonSoldeMini();
 	 })
 	 
  }
  
- function updateLivre(){
+ function updateLivreDispo(){
 	  let labelLivreUpdateDispo = (document.getElementById("inputLabelLivreUpdateDispo")).value;
 	  let labelIdLivre = (document.getElementById("inputLabelIdLivre")).value;
 	  let livreUpdateDispoJs = {id : labelIdLivre,
-		  						dispo: labelLivreUpdateDispo};
+	  							dispo: labelLivreUpdateDispo};
+		  						
 	  let livreUpdateDispoJson = JSON.stringify(livreUpdateDispoJs);
 	  
 	  let wsUrl= "./api-bibli/livre/";
-	  
-	  makeAjaxPostRequest(wsUrl,livreUpdateDispoJson, function(responseJson){
-		   console.log("responseJson=", responseJson);
+	  console.log("TEST UPDATE ", labelIdLivre+"  "+ livreUpdateDispoJs.dispo);
+	  makeAjaxPutRequest(wsUrl,livreUpdateDispoJson, function(responseJson){
 		    rechercherLivresSelonSoldeMini();
 	  })
 	  
  }
  
- 
+ function updateLivreEtat(){
+	  let labelLivreUpdateEtat = (document.getElementById("inputLabelLivreUpdateEtat")).value;
+	  let labelIdLivre = (document.getElementById("inputLabelIdLivreEtat")).value;
+	  var  dispoVar= new Boolean(true);
+	  
+	 
+	  let livreUpdateEtatJs = {id : labelIdLivre,
+	  							dispo: dispoVar,
+	  							etat: labelLivreUpdateEtat.toUpperCase()};
+	  
+	  if(labelLivreUpdateEtat.toUpperCase() == "HORS_SERVICE") dispoVar = false;
+			
+	  livreUpdateEtatJs = {id : labelIdLivre,
+	  						 dispo: dispoVar,
+	  						 etat: labelLivreUpdateEtat.toUpperCase()};
+	
+	  let livreUpdateEtatJson = JSON.stringify(livreUpdateEtatJs);
+	  
+	  let wsUrl= "./api-bibli/livre/";
+	  makeAjaxPutRequest(wsUrl,livreUpdateEtatJson, function(responseJson){
+		   rechercherLivresSelonSoldeMini();
+	  })
+	  
+ }
      
 
 

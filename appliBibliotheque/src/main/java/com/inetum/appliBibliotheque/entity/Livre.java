@@ -1,6 +1,8 @@
 package com.inetum.appliBibliotheque.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +23,11 @@ public class Livre {
 	private String titre;
 	private String auteur;
 	private Boolean dispo;
+	
+	public enum EtatLivre { BON_ETAT,ABIME,HORS_SERVICE };
+	
+	@Enumerated(EnumType.STRING)
+	private EtatLivre etat = EtatLivre.BON_ETAT;
 	
 	public Livre(Long id, String titre, String auteur, Boolean dispo) {
 		this.id = id;
