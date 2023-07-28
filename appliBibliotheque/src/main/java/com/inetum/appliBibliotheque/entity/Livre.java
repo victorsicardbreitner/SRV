@@ -25,7 +25,6 @@ public class Livre {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
 	private Long id;
 	private String titre;
 	private String auteur;
@@ -53,5 +52,9 @@ public class Livre {
 	@JsonIgnore
 	private List<Emprunt> emprunts;
 	
+	
+	@ManyToOne
+	@JoinColumn(name = "numLivre") 
+	privat
 
 }
