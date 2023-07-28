@@ -1,22 +1,24 @@
 window.onload=function(){
 	
-	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLivresSelonSoldeMini);
+	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLivres);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLivre);
 	(document.getElementById("btnDelete")).addEventListener("click", deleteLivre);
 	(document.getElementById("btnUpdateDispo")).addEventListener("click", updateLivreDispo);
 	(document.getElementById("btnUpdateEtat")).addEventListener("click",updateLivreEtat);
 }
 
-function rechercherLivresSelonSoldeMini(){
-	let soldeMini = (document.getElementById("inputSoldeMini")).value;
-		
-	let wsUrl = "./api-bibli/livre?soldeMini="+soldeMini; //l'appel du controller qui fournit le fichier JSON
+
+
+function rechercherLivres(){
+	
+	let wsUrl = "./api-bibli/livre?soldeMini="; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl,function(responseJson){
 		let livresJs = JSON.parse(responseJson);
 		//console.log("comptesJs="+livresJs);
 		
 		let bodyElt = document.getElementById("table_body");
 		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
+		document.getElementById('alertIdSuccess').classList.remove('hide')
 		for(let livre of livresJs){
 			let row = bodyElt.insertRow(-1);
 			(row.insertCell(0)).innerHTML = livre.id;
@@ -25,6 +27,8 @@ function rechercherLivresSelonSoldeMini(){
 			(row.insertCell(3)).innerHTML = livre.dispo;
 			(row.insertCell(4)).innerHTML = livre.etat;
 		}
+		
+		(document.getElementById('idMessage')).innerHTML="ok";
 	});
 	
 }
@@ -37,7 +41,7 @@ function rechercherLivresSelonSoldeMini(){
 	  let livreJson= JSON.stringify(livreJs);
 	   let wsUrl= "./api-bibli/livre";
 	    makeAjaxPostRequest(wsUrl, livreJson,function(responseJson){
-			 rechercherLivresSelonSoldeMini();
+			 rechercherLivres();
 		});
    
  }
@@ -48,7 +52,7 @@ function rechercherLivresSelonSoldeMini(){
 	 	 
 	 let wsUrl= "./api-bibli/livre/"+labelLivreDelete; 
 	 makeAjaxDeleteRequest(wsUrl,function(responseJson){
-		 rechercherLivresSelonSoldeMini();
+		 rechercherLivres();
 	 })
 	 
  }
@@ -64,7 +68,7 @@ function rechercherLivresSelonSoldeMini(){
 	  let wsUrl= "./api-bibli/livre/";
 	  console.log("TEST UPDATE ", labelIdLivre+"  "+ livreUpdateDispoJs.dispo);
 	  makeAjaxPutRequest(wsUrl,livreUpdateDispoJson, function(responseJson){
-		    rechercherLivresSelonSoldeMini();
+		    rechercherLivres();
 	  })
 	  
  }
@@ -89,7 +93,7 @@ function rechercherLivresSelonSoldeMini(){
 	  
 	  let wsUrl= "./api-bibli/livre/";
 	  makeAjaxPutRequest(wsUrl,livreUpdateEtatJson, function(responseJson){
-		   rechercherLivresSelonSoldeMini();
+		   rechercherLivres();
 	  })
 	  
  }
