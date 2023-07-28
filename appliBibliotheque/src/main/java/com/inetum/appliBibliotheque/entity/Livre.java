@@ -52,9 +52,9 @@ public class Livre {
 	@JsonIgnore
 	private List<Emprunt> emprunts;
 	
-	
+	/*
 	@ManyToOne
 	@JoinColumn(name = "numLivre") 
-	privat
+	privat*/
 
 }
