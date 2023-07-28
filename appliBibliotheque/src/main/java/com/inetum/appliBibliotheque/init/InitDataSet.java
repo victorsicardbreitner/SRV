@@ -11,11 +11,13 @@ import org.springframework.stereotype.Component;
 import com.inetum.appliBibliotheque.dao.DaoAdmin;
 import com.inetum.appliBibliotheque.dao.DaoDomaine;
 import com.inetum.appliBibliotheque.dao.DaoEmprunt;
+import com.inetum.appliBibliotheque.dao.DaoIncident;
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.entity.Administrateur;
 import com.inetum.appliBibliotheque.entity.Domaine;
 import com.inetum.appliBibliotheque.entity.Emprunt;
+import com.inetum.appliBibliotheque.entity.Incident;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
 
@@ -40,6 +42,9 @@ public class InitDataSet {
 	
 	@Autowired
 	private DaoEmprunt daoEmpruntJpa;
+	
+	@Autowired
+	private DaoIncident daoIncidentJpa;
 
 	@Autowired
 	private DaoDomaine daoDomaineJpa;
@@ -73,8 +78,16 @@ public class InitDataSet {
 		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		daoEmpruntJpa.insert(emprunt1);
 		
+
 		Domaine domaine1= new Domaine(null,"livre de bio","science");
 		daoDomaineJpa.insert(domaine1);
+
+		Incident incident1 = new Incident("motif 1");
+		incident1.setEmprunt(emprunt1);
+		daoIncidentJpa.insert(incident1);
+		
+		
+
 		
 	}
 	

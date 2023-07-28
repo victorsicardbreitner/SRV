@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,9 +50,10 @@ public class Livre {
 	}
 	
 	
-	@OneToMany(mappedBy="livre" /*, cascade = CascadeType.ALL*/)
+
+	@OneToOne(mappedBy="livre" /*, cascade = CascadeType.ALL*/)
 	@JsonIgnore
-	private List<Emprunt> emprunts;
+	private Emprunt emprunt;
 	
 	@ManyToOne
 	@JoinColumn(name = "numDomaine") 
