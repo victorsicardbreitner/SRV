@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -39,7 +40,7 @@ public class Emprunt {
 	@Enumerated(EnumType.STRING)
 	private TypesEmprunt etat = TypesEmprunt.EFFECTIF;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "livre")
 	// @MapsId("idLivre") // pk.idActeur
 	private Livre livre;
