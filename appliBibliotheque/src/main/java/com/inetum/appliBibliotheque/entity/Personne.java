@@ -58,6 +58,13 @@ public class Personne {
 		this.codepostal = codepostal;
 		this.pays = pays;
 	}
+	
+	//constructeur simple
+	public Personne(String prenom, String nom) {
+		this.prenom = prenom;
+		this.nom = nom;
+	}
+
 
 
 	
