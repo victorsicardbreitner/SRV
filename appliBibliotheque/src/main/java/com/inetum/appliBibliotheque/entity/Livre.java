@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,9 +49,10 @@ public class Livre {
 	}
 	
 	
-	@OneToMany(mappedBy="livre" /*, cascade = CascadeType.ALL*/)
+
+	@OneToOne(mappedBy="livre" /*, cascade = CascadeType.ALL*/)
 	@JsonIgnore
-	private List<Emprunt> emprunts;
+	private Emprunt emprunt;
 	
 
 }
