@@ -8,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
@@ -52,9 +54,10 @@ public class Livre {
 	@JsonIgnore
 	private List<Emprunt> emprunts;
 	
-	/*
 	@ManyToOne
-	@JoinColumn(name = "numLivre") 
-	privat*/
+	@JoinColumn(name = "numDomaine") 
+	@JsonIgnore
+	private Domaine domaine;
 
+	
 }

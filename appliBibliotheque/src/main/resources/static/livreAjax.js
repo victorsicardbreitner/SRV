@@ -14,11 +14,9 @@ function rechercherLivres(){
 	let wsUrl = "./api-bibli/livre?soldeMini="; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl,function(responseJson){
 		let livresJs = JSON.parse(responseJson);
-		//console.log("comptesJs="+livresJs);
 		
 		let bodyElt = document.getElementById("table_body");
 		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
-		document.getElementById('alertIdSuccess').classList.remove('hide')
 		for(let livre of livresJs){
 			let row = bodyElt.insertRow(-1);
 			(row.insertCell(0)).innerHTML = livre.id;
@@ -27,10 +25,8 @@ function rechercherLivres(){
 			(row.insertCell(3)).innerHTML = livre.dispo;
 			(row.insertCell(4)).innerHTML = livre.etat;
 		}
-		
-		(document.getElementById('idMessage')).innerHTML="ok";
 	});
-	
+	/*document.getElementById('idMessage').innerHTML="ok";*/
 }
 
  function ajouterLivre(){
