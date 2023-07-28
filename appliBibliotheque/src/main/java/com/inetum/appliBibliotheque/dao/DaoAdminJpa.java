@@ -20,6 +20,7 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 		return this.entityManager;
 	}
 	
+
 	public DaoAdminJpa() {
 		super(Administrateur.class);
 	}
