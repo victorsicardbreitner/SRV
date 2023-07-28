@@ -43,6 +43,7 @@ public class InitDataSet {
 	@PostConstruct
 	public void initData() { // pour que les tables de soient pas vide
   	
+<<<<<<< HEAD
     	Livre livre1 = new Livre(null,"Harry Potter 1" , "JKR");
     	daoLivreJpa.insert(livre1);
     	daoLivreJpa.insert(new Livre(null,"Harry Potter 2" , "JKR"));
@@ -69,6 +70,19 @@ public class InitDataSet {
 		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		daoEmpruntJpa.insert(emprunt1);
 		
+=======
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 1" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 2" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 3" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 4" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 5" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 6" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Harry Potter 7" , "JKR",true));
+    	daoLivreJpa.insert(new Livre(null,"Le Seigneur des Anneaux" , "Tolkien",true));
+    	daoLivreJpa.insert(new Livre(null,"Les Miserables" , "Victor Hugo",true));
+    	daoLivreJpa.insert(new Livre(null,"Madame Bovary" , "Gustave Flaubert",true));
+
+>>>>>>> soulef
 	}
 	
 	//public void initDataAdmin() {

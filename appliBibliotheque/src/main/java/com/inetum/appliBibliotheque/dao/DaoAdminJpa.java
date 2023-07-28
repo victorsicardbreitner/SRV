@@ -15,6 +15,20 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+<<<<<<< HEAD
+=======
+	public DaoAdminJpa() {
+		super(Administrateur.class);
+	}
+
+	@Override
+	public List<Administrateur> findByNom(String prenom) {
+		return entityManager.createNamedQuery("Administrateur.findByNom",Administrateur.class)
+				.setParameter(1,prenom)
+				.getResultList();
+	}
+
+>>>>>>> soulef
 	@Override
 	public EntityManager getEntityManager() {
 		return this.entityManager;
