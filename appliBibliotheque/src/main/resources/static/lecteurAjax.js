@@ -38,8 +38,26 @@ function rechercherLecteursSelonSoldeMini(){
 	  let labelPrenom = (document.getElementById("inputLabelPrenom")).value;
 	  console.log("LABEL "+ labelPrenom);
 	  let labelNom = (document.getElementById("inputLabelNom")).value;
+	  let labelUsername = (document.getElementById("inputLabelUsername")).value;
+	  let labelEmail = (document.getElementById("inputLabelEmail")).value;
+	  let labelNumtel = (document.getElementById("inputLabelNumtel")).value;
+	  let labelPassword = (document.getElementById("inputLabelPassword")).value;
+	  let labelNumallee = (document.getElementById("inputLabelNumallee")).value;
+	  let labelTypevoie = (document.getElementById("inputLabelTypevoie")).value;
+	  let labelCodepostal = (document.getElementById("inputLabelCodepostal")).value;
+	  let labelVille = (document.getElementById("inputLabelVille")).value;
+	  let labelPays = (document.getElementById("inputLabelPays")).value;
 	  let lecteurJs = {prenom : labelPrenom,
-	  				 nom : labelNom};
+	  				 nom : labelNom,
+	  				 username : labelUsername,
+	  				 email : labelEmail,
+	  				 numtel : labelNumtel,
+	  				 password : labelPassword,
+	  				 numallee : labelNumallee,
+	  				 typevoie : labelTypevoie,
+	  				 codepostal : labelCodepostal,
+	  				 ville : labelVille,
+	  				 pays : labelPays};
 	  let lecteurJson= JSON.stringify(lecteurJs);
 	   let wsUrl= "./api-bibli/lecteur";
 	    makeAjaxPostRequest(wsUrl, lecteurJson,function(responseJson){

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +33,7 @@ public class Lecteur extends Personne {
 	
 	
 	@OneToMany(mappedBy="lecteur" /*, cascade = CascadeType.ALL*/)
+	@JsonIgnore
 	private List<Emprunt> emprunts;
 	
 
