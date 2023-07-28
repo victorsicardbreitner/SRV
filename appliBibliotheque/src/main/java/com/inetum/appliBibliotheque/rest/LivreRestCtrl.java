@@ -53,6 +53,7 @@ public class LivreRestCtrl {
 	@PostMapping("" )
 	public Livre postLivre(@RequestBody Livre nouveauLivre) {
 		System.out.println("nouveauLIvre "+ nouveauLivre);
+		nouveauLivre.setDispo(true);
 		Livre livreEnregistreEnBase = daoLivreJpa.insert(nouveauLivre);
 		return livreEnregistreEnBase; // on retourne le livre avec la clé primaire auto-incrémentée
 	}
