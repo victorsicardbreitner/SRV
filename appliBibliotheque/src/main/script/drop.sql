@@ -1049,3 +1049,24 @@ drop table personne cascade constraints;
 drop table emprunt cascade constraints;
 drop table livre cascade constraints;
 drop table personne cascade constraints;
+<<<<<<< HEAD
+=======
+drop table emprunt cascade constraints;
+drop table livre cascade constraints;
+drop table personne cascade constraints;
+drop table emprunt cascade constraints;
+drop table livre cascade constraints;
+drop table personne cascade constraints;
+drop table emprunt cascade constraints;
+drop table livre cascade constraints;
+drop table personne cascade constraints;
+drop table emprunt cascade constraints;
+drop table livre cascade constraints;
+drop table personne cascade constraints;
+drop table emprunt cascade constraints;
+drop table livre cascade constraints;
+drop table personne cascade constraints;
+>>>>>>> 832a216e49b167fffa05d595ec43254e0af65058
+drop table emprunt cascade constraints;
+drop table livre cascade constraints;
+drop table personne cascade constraints;
