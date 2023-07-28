@@ -1,8 +1,6 @@
 package com.inetum.appliBibliotheque.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,7 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +17,10 @@ import com.inetum.appliBibliotheque.utils.AppUtils;
 
 import lombok.Getter;
 import lombok.Setter;
-
+@NamedQuery(
+		name="Emprunt.findByIdFetchLecteurs" , 
+		query="SELECT e FROM Emprunt e JOIN FETCH e.lecteur WHERE e.livre = ?1"
+)
 @Entity
 //@Table(name = "Emprunt")
 @Getter @Setter

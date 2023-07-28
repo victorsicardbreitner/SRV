@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +27,7 @@ public class Incident {
 	private String motif;
 	
 	@OneToOne(fetch=FetchType.LAZY)
+	@JsonIgnore
 	@JoinColumns({
 		@JoinColumn(name = "id_livre"),
 		@JoinColumn(name = "id_lecteur")

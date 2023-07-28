@@ -1,7 +1,5 @@
 package com.inetum.appliBibliotheque.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +20,7 @@ import lombok.Setter;
 @Entity
 //@Table(name = "Livre")
 @NamedQuery(name="Livre.findByTitre" , query="SELECT l FROM Livre l WHERE l.titre = ?1") 
+
 @Getter @Setter @NoArgsConstructor
 public class Livre {
 	
