@@ -1,6 +1,6 @@
 window.onload=function(){
 	
-	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLecteursSelonSoldeMini);
+	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLivresSelonSoldeMini);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLivre);
 	
 }
