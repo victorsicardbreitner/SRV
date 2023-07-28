@@ -1,0 +1,15 @@
+create table emprunt (id_lecteur number(19,0) not null, id_livre number(19,0) not null, date_debut date, date_fin date, etat varchar2(255 char), lecteur number(19,0), livre number(19,0), primary key (id_lecteur, id_livre));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table personne (role varchar2(31 char) not null, id number(19,0) generated as identity, codepostal varchar2(255 char), email varchar2(255 char), nom varchar2(255 char), numallee varchar2(255 char), numtel varchar2(255 char), pays varchar2(255 char), prenom varchar2(255 char), typevoie varchar2(255 char), ville varchar2(255 char), password varchar2(255 char), username varchar2(255 char), primary key (id));
+alter table emprunt add constraint FKrjndy9n4xltpwohmtybmhegb6 foreign key (lecteur) references personne;
+alter table emprunt add constraint FKdtd8d202tw0fjq1v28ptrpf3c foreign key (livre) references livre;
+create table emprunt (id_lecteur number(19,0) not null, id_livre number(19,0) not null, date_debut date, date_fin date, etat varchar2(255 char), lecteur number(19,0), livre number(19,0), primary key (id_lecteur, id_livre));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table personne (role varchar2(31 char) not null, id number(19,0) generated as identity, codepostal varchar2(255 char), email varchar2(255 char), nom varchar2(255 char), numallee varchar2(255 char), numtel varchar2(255 char), pays varchar2(255 char), prenom varchar2(255 char), typevoie varchar2(255 char), ville varchar2(255 char), password varchar2(255 char), username varchar2(255 char), primary key (id));
+alter table emprunt add constraint FKrjndy9n4xltpwohmtybmhegb6 foreign key (lecteur) references personne;
+alter table emprunt add constraint FKdtd8d202tw0fjq1v28ptrpf3c foreign key (livre) references livre;
+create table emprunt (id_lecteur number(19,0) not null, id_livre number(19,0) not null, date_debut date, date_fin date, etat varchar2(255 char), lecteur number(19,0), livre number(19,0), primary key (id_lecteur, id_livre));
+create table livre (id number(19,0) generated as identity, auteur varchar2(255 char), titre varchar2(255 char), primary key (id));
+create table personne (role varchar2(31 char) not null, id number(19,0) generated as identity, codepostal varchar2(255 char), email varchar2(255 char), nom varchar2(255 char), numallee varchar2(255 char), numtel varchar2(255 char), pays varchar2(255 char), prenom varchar2(255 char), typevoie varchar2(255 char), ville varchar2(255 char), password varchar2(255 char), username varchar2(255 char), primary key (id));
+alter table emprunt add constraint FKrjndy9n4xltpwohmtybmhegb6 foreign key (lecteur) references personne;
+alter table emprunt add constraint FKdtd8d202tw0fjq1v28ptrpf3c foreign key (livre) references livre;

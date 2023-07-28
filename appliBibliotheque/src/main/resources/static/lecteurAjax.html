@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>lecteurAjax</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+			crossorigin="anonymous">
+			
+		<script src="lecteurAjax.js"></script>
+		<script src="my_ajax_util.js"></script>		
+	</head>
+	<body>
+		<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center ">
+			<h1>lecteurAjax</h1>
+			<div class="table shadow p-3 mb-5 bg-body rounded w-25 p-3">
+				labelPrenom:<input id="inputLabelPrenom"/><br/>
+				labelNom:<input id="inputLabelNom"/><br/>				
+				labelUsername:<input id="inputLabelNom"/><br/>
+				labelEmail:<input id="inputLabelNom"/><br/>
+				labelNumtel:<input id="inputLabelNom"/><br/>
+				labelPassword:<input id="inputLabelNom"/><br/>
+				labelNumallee:<input id="inputLabelNom"/><br/>
+				labelTypevoie:<input id="inputLabelNom"/><br/>
+				labelCodepostal:<input id="inputLabelNom"/><br/>
+				labelVille:<input id="inputLabelNom"/><br/>
+				labelPays:<input id="inputLabelNom"/><br/>
+				<button id="btnAjout">ajouter Lecteur (post)</button>
+ 				<hr/>
+				soldeMini : <input  class="form-control" id="inputSoldeMini" /> <br />
+				<button class="btn btn-primary" id="btnRechercher">Rechercher lecteur</button> <br /> <br />
+				<table class="table table-bordered" >
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>prenom</th>
+							<th>nom</th>
+							<th>codepostal</th>
+							<th>email</th>
+							<th>numallee</th>
+							<th>numtel</th>
+							<th>pays</th>
+							<th>typevoie</th>
+							<th>ville</th>
+							<th>password</th>
+							<th>username</th>
+						</tr>
+					</thead>
+					<tbody id="table_body">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
