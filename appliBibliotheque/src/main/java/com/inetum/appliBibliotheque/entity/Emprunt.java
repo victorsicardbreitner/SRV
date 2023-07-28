@@ -1,9 +1,8 @@
 package com.inetum.appliBibliotheque.entity;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -11,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,8 +21,7 @@ import lombok.Setter;
 
 @Entity
 //@Table(name = "Emprunt")
-@Getter
-@Setter
+@Getter @Setter
 public class Emprunt {
 	@EmbeddedId
 	private EmpruntCompositePk id; // primary key
@@ -32,9 +31,10 @@ public class Emprunt {
 	@Temporal(TemporalType.DATE)
 	private Date date_fin = AppUtils.ajouterJours(date_debut, 14);
 
-	public enum TypesEmprunt {
-		RESERVATION, EFFECTIF
-	};
+	@OneToMany(mappedBy="emprunt")
+	private List<Incident> incidents = new ArrayList<Incident>();
+
+	public enum TypesEmprunt {RESERVATION, EFFECTIF};
 
 	@Enumerated(EnumType.STRING)
 	private TypesEmprunt etat = TypesEmprunt.EFFECTIF;

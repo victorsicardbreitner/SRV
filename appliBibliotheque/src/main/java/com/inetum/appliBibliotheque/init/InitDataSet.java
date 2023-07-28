@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 
 import com.inetum.appliBibliotheque.dao.DaoAdmin;
 import com.inetum.appliBibliotheque.dao.DaoEmprunt;
+import com.inetum.appliBibliotheque.dao.DaoIncident;
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.entity.Administrateur;
 import com.inetum.appliBibliotheque.entity.Emprunt;
+import com.inetum.appliBibliotheque.entity.Incident;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
 
@@ -38,6 +40,9 @@ public class InitDataSet {
 	
 	@Autowired
 	private DaoEmprunt daoEmpruntJpa;
+	
+	@Autowired
+	private DaoIncident daoIncidentJpa;
 
 	
 	@PostConstruct
@@ -68,6 +73,12 @@ public class InitDataSet {
 		Logger logger = LoggerFactory.getLogger(InitDataSet.class);
 		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		daoEmpruntJpa.insert(emprunt1);
+		
+		Incident incident1 = new Incident("motif 1");
+		incident1.setEmprunt(emprunt1);
+		daoIncidentJpa.insert(incident1);
+		
+		
 		
 	}
 	
