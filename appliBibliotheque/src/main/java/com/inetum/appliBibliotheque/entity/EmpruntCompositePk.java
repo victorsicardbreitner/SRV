@@ -5,12 +5,13 @@ import java.util.List;
 
 import javax.persistence.Embeddable;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Embeddable
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 public class EmpruntCompositePk implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idLivre;

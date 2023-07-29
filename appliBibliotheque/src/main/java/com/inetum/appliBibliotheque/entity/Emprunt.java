@@ -8,7 +8,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,10 +16,7 @@ import com.inetum.appliBibliotheque.utils.AppUtils;
 
 import lombok.Getter;
 import lombok.Setter;
-@NamedQuery(
-		name="Emprunt.findByIdFetchLecteurs" , 
-		query="SELECT e FROM Emprunt e JOIN FETCH e.lecteur WHERE e.livre = ?1"
-)
+
 @Entity
 //@Table(name = "Emprunt")
 @Getter @Setter
@@ -33,7 +29,8 @@ public class Emprunt {
 	@Temporal(TemporalType.DATE)
 	private Date date_fin = AppUtils.ajouterJours(date_debut, 14);
 
-	@OneToOne(mappedBy="emprunt")
+	@OneToOne
+	@JoinColumn(name = "incident")
 	private Incident incident;
 
 	public enum TypesEmprunt {RESERVATION, EFFECTIF};
@@ -41,7 +38,7 @@ public class Emprunt {
 	@Enumerated(EnumType.STRING)
 	private TypesEmprunt etat = TypesEmprunt.EFFECTIF;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "livre")
 	// @MapsId("idLivre") // pk.idActeur
 	private Livre livre;
@@ -64,6 +61,10 @@ public class Emprunt {
 	}
 
 	// faire un constructeur pour les date_debut et date_fin ?
+	
+	public void prolonger() { // une semaine
+		this.date_fin = AppUtils.ajouterJours(date_fin, 7);
+	}
 
 	
 }

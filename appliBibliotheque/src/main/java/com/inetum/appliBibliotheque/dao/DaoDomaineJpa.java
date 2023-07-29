@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.inetum.appliBibliotheque.entity.Domaine;
+import com.inetum.appliBibliotheque.entity.Livre;
 
 
 @Repository 
@@ -22,15 +23,17 @@ public class DaoDomaineJpa extends DaoGenericJpa<Domaine, Long> implements DaoDo
 	}
 
 	@Override
-	public Domaine findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public EntityManager getEntityManager() {
-		// TODO Auto-generated method stub
 		return entityManager;
+	}
+	
+	
+	
+	@Override
+	public Domaine findByIdFetchLivres(Long id) {
+		return entityManager.createNamedQuery("Domaine.findByIdFetchLivres",Domaine.class) //avec un NamedQuery déclaré dans Employe
+				.setParameter(1,id)
+				.getSingleResult();
 	}
 	
 }

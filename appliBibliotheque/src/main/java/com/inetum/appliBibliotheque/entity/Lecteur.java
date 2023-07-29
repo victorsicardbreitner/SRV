@@ -3,6 +3,7 @@ package com.inetum.appliBibliotheque.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
@@ -13,7 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NamedQuery(name="Lecteur.findById" , query="SELECT lect FROM Lecteur lect")
-//@NamedQuery(name="Lecteur.findByNom" , query="SELECT lect FROM Lecteur lect WHERE lect.nom = ?1")
 
 @Entity
 //@Table(name = "Lecteur")
@@ -32,7 +32,7 @@ public class Lecteur extends Personne {
 	
 	
 	
-	@OneToMany(mappedBy="lecteur" /*, cascade = CascadeType.ALL*/)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="lecteur")
 	@JsonIgnore
 	private List<Emprunt> emprunts;
 	

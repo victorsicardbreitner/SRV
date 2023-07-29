@@ -7,10 +7,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.inetum.appliBibliotheque.entity.Emprunt;
+import com.inetum.appliBibliotheque.entity.EmpruntCompositePk;
 
 @Repository 
 @Transactional
-public class DaoEmpruntJpa extends DaoGenericJpa<Emprunt, Long> implements DaoEmprunt {
+public class DaoEmpruntJpa extends DaoGenericJpa<Emprunt, EmpruntCompositePk> implements DaoEmprunt {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -24,6 +25,4 @@ public class DaoEmpruntJpa extends DaoGenericJpa<Emprunt, Long> implements DaoEm
 	public DaoEmpruntJpa() {
 		super(Emprunt.class);
 	}
-
-
 }

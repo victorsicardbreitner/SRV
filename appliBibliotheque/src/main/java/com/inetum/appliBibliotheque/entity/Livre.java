@@ -1,15 +1,18 @@
 package com.inetum.appliBibliotheque.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,7 +23,10 @@ import lombok.Setter;
 @Entity
 //@Table(name = "Livre")
 @NamedQuery(name="Livre.findByTitre" , query="SELECT l FROM Livre l WHERE l.titre = ?1") 
-
+@NamedQuery(
+		name="Livre.findByIdFetchEmprunts" , 
+		query="SELECT l FROM Livre l LEFT JOIN FETCH l.emprunts empr WHERE l.id = ?1" //attention sensible à la case
+)
 @Getter @Setter @NoArgsConstructor
 public class Livre {
 	
@@ -50,12 +56,12 @@ public class Livre {
 	
 	
 
-	@OneToOne(mappedBy="livre" /*, cascade = CascadeType.ALL*/)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="livre")
 	@JsonIgnore
-	private Emprunt emprunt;
+	private List<Emprunt> emprunts;
 	
 	@ManyToOne
-	@JoinColumn(name = "numDomaine") 
+	@JoinColumn(name = "domaine") 
 	@JsonIgnore
 	private Domaine domaine;
 

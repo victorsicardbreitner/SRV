@@ -75,7 +75,7 @@ public class InitDataSet {
 		daoLecteurJpa.insert(lecteur1);
 		Emprunt emprunt1 = new Emprunt(livre1,lecteur1);
 		Logger logger = LoggerFactory.getLogger(InitDataSet.class);
-		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
+		logger.error("EMPRUNT : "+ emprunt1.getId().toString());
 		daoEmpruntJpa.insert(emprunt1);
 		
 

@@ -6,7 +6,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inetum.appliBibliotheque.entity.Emprunt;
 import com.inetum.appliBibliotheque.entity.Incident;
 
 @Repository 
@@ -25,6 +24,4 @@ public class DaoIncidentJpa extends DaoGenericJpa<Incident, Long> implements Dao
 	public DaoIncidentJpa() {
 		super(Incident.class);
 	}
-
-
 }

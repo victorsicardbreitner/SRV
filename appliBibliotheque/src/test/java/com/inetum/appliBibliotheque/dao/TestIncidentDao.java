@@ -10,14 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.inetum.appliBibliotheque.entity.Emprunt;
+import com.inetum.appliBibliotheque.entity.Incident;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
 
 @SpringBootTest
 //@ActiveProfiles({"oracle"})
-public class TestLivreDao {
+public class TestIncidentDao {
 
-	Logger logger = LoggerFactory.getLogger(TestLivreDao.class);
+	Logger logger = LoggerFactory.getLogger(TestIncidentDao.class);
 	@Autowired
 	private DaoLivre daoLivreJpa;
 
@@ -26,46 +27,34 @@ public class TestLivreDao {
 
 	@Autowired
 	private DaoEmprunt daoEmpruntJpa;
+	
+	@Autowired
+	private DaoIncident daoIncidentJpa;
 
 	@Test
 	public void testFind() {
-		daoLivreJpa.findAll();
+		daoIncidentJpa.findAll();
 	}
 
 	@Test
-	public void testLivreEtEmpruntFetchEtLazy() {
+	public void testIncidentGetEmprunt() {
 
 		Livre livre1 = daoLivreJpa.insert(new Livre(null, "Harry Potter 1", "JKR", true));
 		Lecteur lecteur1 = daoLecteurJpa.insert(new Lecteur("Paul", "NomPaul"));
-		Lecteur lecteur2 = daoLecteurJpa.insert(new Lecteur("Jean", "NomJean"));
-
+		Incident incident1 = daoIncidentJpa.insert(new Incident("non rendu"));
+		
 		Emprunt emprunt1 = new Emprunt(livre1, lecteur1);
+		emprunt1.setIncident(incident1);
 		emprunt1 = daoEmpruntJpa.insert(emprunt1);
 		
-		Emprunt emprunt2 = new Emprunt(livre1, lecteur2);
-		emprunt2 = daoEmpruntJpa.insert(emprunt2);
+		//Pas besoin de fetch car OneToOne
+		Incident incident1Relu = daoIncidentJpa.findById(incident1.getId());
 
-		Livre livre1FetchEmprunts = daoLivreJpa.findByIdFetchEmprunts(livre1.getId());
+		assertEquals(incident1Relu.getEmprunt().getId(),emprunt1.getId());
+		
 
-		Livre livre1ReluSansFetch = daoLivreJpa.findById(livre1.getId());
-
-		assertEquals(livre1FetchEmprunts.getEmprunts().size(),2);
-		
-		
-		for (Emprunt empr : livre1FetchEmprunts.getEmprunts()) {
-			assertEquals(empr.getLivre().getId(),livre1.getId());
-		}
-		
-		
-		// on ne peut pas aller chercher le get car le lien @---ToMany est LAZY
-		boolean testNecessiteFetch=false;
-		try {
-			assertEquals(livre1ReluSansFetch.getEmprunts().size(),2);
-		} catch (Exception e) {
-			testNecessiteFetch=true;
-			assertTrue(e instanceof org.hibernate.LazyInitializationException);
-		}
-		assertTrue(testNecessiteFetch);
+		Emprunt emprunt1Relu = daoEmpruntJpa.findById(emprunt1.getId());
+		assertEquals(emprunt1Relu.getIncident().getId(),incident1.getId());
 		
 
 	}

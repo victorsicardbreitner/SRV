@@ -34,6 +34,13 @@ public class DaoLivreJpa extends DaoGenericJpa<Livre, Long> implements DaoLivre 
 				.setParameter(1,titre)
 				.getResultList();
 	}
+	
+	@Override
+	public Livre findByIdFetchEmprunts(Long id) {
+		return entityManager.createNamedQuery("Livre.findByIdFetchEmprunts",Livre.class) //avec un NamedQuery déclaré dans Employe
+				.setParameter(1,id)
+				.getSingleResult();
+	}
 
 
 }
