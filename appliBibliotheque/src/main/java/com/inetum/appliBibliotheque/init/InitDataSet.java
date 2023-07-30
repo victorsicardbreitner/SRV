@@ -1,12 +1,16 @@
 package com.inetum.appliBibliotheque.init;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.inetum.appliBibliotheque.dao.DaoAdmin;
 import com.inetum.appliBibliotheque.dao.DaoDomaine;
@@ -27,10 +31,10 @@ import com.inetum.appliBibliotheque.entity.Livre;
  *
  */
 @Component
+
 @Profile("init")
 public class InitDataSet {
 	
-
 	@Autowired
 	private DaoLivre daoLivreJpa;
 	
@@ -51,10 +55,13 @@ public class InitDataSet {
 	
 	@PostConstruct
 	public void initData() { // pour que les tables de soient pas vide
+		
+		
+		
+		Logger logger = LoggerFactory.getLogger(InitDataSet.class);
 
-    	Livre livre1 = new Livre(null,"Harry Potter 1" , "JKR",true);
-    	daoLivreJpa.insert(livre1);
-    	daoLivreJpa.insert(new Livre(null,"Harry Potter 2" , "JKR",true));
+    	Livre livre1 = daoLivreJpa.insert(new Livre(null,"Harry Potter 1" , "JKR",true));
+    	Livre livre2 = daoLivreJpa.insert(new Livre(null,"Harry Potter 2" , "JKR",true));
     	daoLivreJpa.insert(new Livre(null,"Harry Potter 3" , "JKR",true));
     	daoLivreJpa.insert(new Livre(null,"Harry Potter 4" , "JKR",true));
     	daoLivreJpa.insert(new Livre(null,"Harry Potter 5" , "JKR",true));
@@ -71,20 +78,28 @@ public class InitDataSet {
 				"3", "rue de la Chimie", "Paris", "75012", "France", "RolandP", "Helium"));
 		
 		
-		Lecteur lecteur1 = new Lecteur("Paul" , "NomPaul");
-		daoLecteurJpa.insert(lecteur1);
-		Emprunt emprunt1 = new Emprunt(livre1,lecteur1);
-		Logger logger = LoggerFactory.getLogger(InitDataSet.class);
-		logger.error("EMPRUNT : "+ emprunt1.getId().toString());
-		daoEmpruntJpa.insert(emprunt1);
+		Lecteur lecteur1 = daoLecteurJpa.insert(new Lecteur("Paul" , "Dirac"));
+		Emprunt emprunt1 = daoEmpruntJpa.insert(new Emprunt(livre1,lecteur1));
+		
+		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		
 
-		Domaine domaine1= new Domaine(null,"livre de bio","science");
+		Domaine domaine1= new Domaine(null,"livre de biologie","science");
+		
 		daoDomaineJpa.insert(domaine1);
 
 		Incident incident1 = new Incident("motif 1");
 		incident1.setEmprunt(emprunt1);
 		daoIncidentJpa.insert(incident1);
+		
+		Lecteur lecteur2 = daoLecteurJpa.insert(new Lecteur("Joseph" , "Staline"));
+		logger.debug("EMPRUNT : "+ daoLecteurJpa.findById(lecteur2.getId()));
+		/*
+		Emprunt emprunt2 = new Emprunt(livre2,lecteur2);
+		logger.debug("EMPRUNT2 : "+ emprunt2.getId().toString());
+		daoEmpruntJpa.insert(emprunt2);
+		*/
+		
 		
 		
 

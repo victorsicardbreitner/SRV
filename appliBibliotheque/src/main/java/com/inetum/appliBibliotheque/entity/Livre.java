@@ -31,7 +31,7 @@ import lombok.Setter;
 public class Livre {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String titre;
 	private String auteur;

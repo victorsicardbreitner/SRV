@@ -24,12 +24,5 @@ public class DaoLecteurJpa  extends DaoGenericJpa<Lecteur, Long> implements DaoL
 		super(Lecteur.class);
 	}
 
-	@Override
-	public Lecteur findById(Long id) {
-		return (Lecteur) entityManager.createNamedQuery("Lecteur.findById",Lecteur.class)
-				.setParameter(1,id)
-				.getResultList();
-	}
-
 	
 }

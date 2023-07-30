@@ -25,13 +25,6 @@ public class DaoAdminJpa extends DaoGenericJpa<Administrateur, Long> implements 
 		super(Administrateur.class);
 	}
 
-	@Override
-	public Administrateur findById(Long id) {
-		return (Administrateur) entityManager.createNamedQuery("Admin.findById",Administrateur.class)
-				.setParameter(1,id)
-				.getResultList();
-	}
-
 
 
 }
