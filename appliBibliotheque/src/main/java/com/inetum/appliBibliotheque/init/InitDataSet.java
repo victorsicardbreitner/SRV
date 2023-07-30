@@ -84,7 +84,7 @@ public class InitDataSet {
 		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		
 
-		Domaine domaine1= new Domaine(null,"livre de biologie","science");
+		Domaine domaine1= new Domaine(null,"livre de biologie","sciences");
 		
 		daoDomaineJpa.insert(domaine1);
 

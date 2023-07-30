@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.inetum.appliBibliotheque.entity.Emprunt;
 import com.inetum.appliBibliotheque.entity.Incident;
@@ -15,7 +16,7 @@ import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
 
 @SpringBootTest
-//@ActiveProfiles({"oracle"})
+@ActiveProfiles({"oracle"})
 public class TestIncidentDao {
 
 	Logger logger = LoggerFactory.getLogger(TestIncidentDao.class);
