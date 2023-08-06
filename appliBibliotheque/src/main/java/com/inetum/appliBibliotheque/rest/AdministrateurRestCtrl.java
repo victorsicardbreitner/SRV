@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoAdminJpa;
+import com.inetum.appliBibliotheque.dao.DaoAdmin;
 import com.inetum.appliBibliotheque.entity.Administrateur;
 
 
@@ -28,12 +28,12 @@ import com.inetum.appliBibliotheque.entity.Administrateur;
 public class AdministrateurRestCtrl {
 	
 	@Autowired
-	private DaoAdminJpa daoAdminJpa;
+	private DaoAdmin daoAdminJpa;
 	
 
 	@GetMapping("/{idAdmin}")
 	public ResponseEntity<?> getCompteByNumero(@PathVariable("idAdmin") Long id) {
-		Administrateur admin = daoAdminJpa.findById(id);
+		Administrateur admin = daoAdminJpa.findById(id).orElse(null);
 		if(admin!=null) {
 			return new ResponseEntity<Administrateur>(admin, HttpStatus.OK);
 		}
@@ -53,7 +53,7 @@ public class AdministrateurRestCtrl {
 	@PostMapping("" )
 	public Administrateur postAdmin(@RequestBody Administrateur nouveauAdmin) {
 		System.out.println("nouveauAdmin "+ nouveauAdmin);
-		Administrateur adminEnregistreEnBase = daoAdminJpa.insert(nouveauAdmin);
+		Administrateur adminEnregistreEnBase = daoAdminJpa.save(nouveauAdmin);
 		return adminEnregistreEnBase; // on retourne le lecteur avec la clé primaire auto-incrémentée
 	}
 	
@@ -61,7 +61,7 @@ public class AdministrateurRestCtrl {
 	//exemple de fin d'URL: ./api-bank/compte/1
 	@DeleteMapping("/{idAdmin}" )
 	public ResponseEntity<?> deleteAdminByNumero(@PathVariable("idAdmin") Long id) {
-	    Administrateur adminAsupprimer = daoAdminJpa.findById(id);
+	    Administrateur adminAsupprimer = daoAdminJpa.findById(id).orElse(null);
 	    if(adminAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"admin not found\"}" ,
 	 			           HttpStatus.NOT_FOUND);//40

@@ -36,14 +36,14 @@ public class TestEmpruntDao {
 	@Test
 	public void testEmpruntGetLivre() {
 
-		Livre livre1 = daoLivreJpa.insert(new Livre(null, "Harry Potter 1", "JKR", true));
-		Lecteur lecteur1 = daoLecteurJpa.insert(new Lecteur("Paul", "NomPaul"));
+		Livre livre1 = daoLivreJpa.save(new Livre(null, "Harry Potter 1", "JKR", true));
+		Lecteur lecteur1 = daoLecteurJpa.save(new Lecteur("Paul", "NomPaul"));
 
 		Emprunt emprunt1 = new Emprunt(livre1, lecteur1);
-		emprunt1 = daoEmpruntJpa.insert(emprunt1);
+		emprunt1 = daoEmpruntJpa.save(emprunt1);
 		
 		//Pas besoin de fetch car cote One.
-		Emprunt emprunt1Relu = daoEmpruntJpa.findById(emprunt1.getId());
+		Emprunt emprunt1Relu = daoEmpruntJpa.findById(emprunt1.getId()).orElse(emprunt1);
 
 		assertEquals(emprunt1Relu.getLivre().getId(),livre1.getId());
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoLecteurJpa;
+import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 
 
@@ -28,12 +28,12 @@ import com.inetum.appliBibliotheque.entity.Lecteur;
 public class LecteurRestCtrl {
 	
 	@Autowired
-	private DaoLecteurJpa daoLecteurJpa;
+	private DaoLecteur daoLecteurJpa;
 	
 
 	@GetMapping("/{idLecteur}")
 	public ResponseEntity<?> getCompteByNumero(@PathVariable("idLecteur") Long id) {
-		Lecteur lecteur = daoLecteurJpa.findById(id);
+		Lecteur lecteur = daoLecteurJpa.findById(id).orElse(null);
 		if(lecteur!=null) {
 			return new ResponseEntity<Lecteur>(lecteur, HttpStatus.OK);
 		}
@@ -53,7 +53,7 @@ public class LecteurRestCtrl {
 	@PostMapping("" )
 	public Lecteur postLecteur(@RequestBody Lecteur nouveauLecteur) {
 		System.out.println("nouveauLecteur "+ nouveauLecteur);
-		Lecteur lecteurEnregistreEnBase = daoLecteurJpa.insert(nouveauLecteur);
+		Lecteur lecteurEnregistreEnBase = daoLecteurJpa.save(nouveauLecteur);
 		return lecteurEnregistreEnBase; // on retourne le lecteur avec la clé primaire auto-incrémentée
 	}
 	
@@ -61,7 +61,7 @@ public class LecteurRestCtrl {
 	//exemple de fin d'URL: ./api-bank/compte/1
 	@DeleteMapping("/{idLecteur}" )
 	public ResponseEntity<?> deleteLecteurByNumero(@PathVariable("idLecteur") Long id) {
-	    Lecteur lecteurAsupprimer = daoLecteurJpa.findById(id);
+	    Lecteur lecteurAsupprimer = daoLecteurJpa.findById(id).orElse(null);
 	    if(lecteurAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"lecteur not found\"}" ,
 	 			           HttpStatus.NOT_FOUND);//40

@@ -36,19 +36,19 @@ public class TestLivreDao {
 	@Test
 	public void testLivreEtEmpruntFetchEtLazy() {
 
-		Livre livre1 = daoLivreJpa.insert(new Livre(null, "Harry Potter 1", "JKR", true));
-		Lecteur lecteur1 = daoLecteurJpa.insert(new Lecteur("Paul", "NomPaul"));
-		Lecteur lecteur2 = daoLecteurJpa.insert(new Lecteur("Jean", "NomJean"));
+		Livre livre1 = daoLivreJpa.save(new Livre(null, "Harry Potter 1", "JKR", true));
+		Lecteur lecteur1 = daoLecteurJpa.save(new Lecteur("Paul", "NomPaul"));
+		Lecteur lecteur2 = daoLecteurJpa.save(new Lecteur("Jean", "NomJean"));
 
 		Emprunt emprunt1 = new Emprunt(livre1, lecteur1);
-		emprunt1 = daoEmpruntJpa.insert(emprunt1);
+		emprunt1 = daoEmpruntJpa.save(emprunt1);
 		
 		Emprunt emprunt2 = new Emprunt(livre1, lecteur2);
-		emprunt2 = daoEmpruntJpa.insert(emprunt2);
+		emprunt2 = daoEmpruntJpa.save(emprunt2);
 
 		Livre livre1FetchEmprunts = daoLivreJpa.findByIdFetchEmprunts(livre1.getId());
 
-		Livre livre1ReluSansFetch = daoLivreJpa.findById(livre1.getId());
+		Livre livre1ReluSansFetch = daoLivreJpa.findById(livre1.getId()).orElse(null);
 
 		assertEquals(livre1FetchEmprunts.getEmprunts().size(),2);
 		

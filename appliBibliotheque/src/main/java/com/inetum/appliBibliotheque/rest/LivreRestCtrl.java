@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoLivreJpa;
+import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.entity.Livre;
 
 
@@ -28,12 +28,12 @@ import com.inetum.appliBibliotheque.entity.Livre;
 public class LivreRestCtrl {
 	
 	@Autowired
-	private DaoLivreJpa daoLivreJpa;
+	private DaoLivre daoLivreJpa;
 	
 
 	@GetMapping("/{idLivre}")
 	public ResponseEntity<?> getCompteByNumero(@PathVariable("idLivre") Long id) {
-		Livre livre = daoLivreJpa.findById(id);
+		Livre livre = daoLivreJpa.findById(id).orElse(null);
 		if(livre!=null) {
 			return new ResponseEntity<Livre>(livre, HttpStatus.OK);
 		}
@@ -54,7 +54,7 @@ public class LivreRestCtrl {
 	public Livre postLivre(@RequestBody Livre nouveauLivre) {
 		System.out.println("nouveauLIvre "+ nouveauLivre);
 		nouveauLivre.setDispo(true);
-		Livre livreEnregistreEnBase = daoLivreJpa.insert(nouveauLivre);
+		Livre livreEnregistreEnBase = daoLivreJpa.save(nouveauLivre);
 		return livreEnregistreEnBase; // on retourne le livre avec la clé primaire auto-incrémentée
 	}
 	
@@ -62,7 +62,7 @@ public class LivreRestCtrl {
 	//exemple de fin d'URL:  ./api-bibli/livre/1
 	@DeleteMapping("/{idLivre}" )
 	public ResponseEntity<?> deleteLivreByNumero(@PathVariable("idLivre") Long id) {
-	    Livre livreAsupprimer = daoLivreJpa.findById(id);
+	    Livre livreAsupprimer = daoLivreJpa.findById(id).orElse(null);
 	    System.out.println("livre supprimer"+ livreAsupprimer);
 	    if(livreAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
@@ -78,7 +78,7 @@ public class LivreRestCtrl {
 	@PutMapping("" )
 	public  ResponseEntity<?> updateLivre(@RequestBody Livre livreUpdated){
 		Long numLivreToUpdate = livreUpdated.getId();
-		Livre livreQuiDevraitExister = daoLivreJpa.findById(numLivreToUpdate);
+		Livre livreQuiDevraitExister = daoLivreJpa.findById(numLivreToUpdate).orElse(null);
 	
 	    if(livreQuiDevraitExister==null)
 	    	return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
@@ -88,7 +88,7 @@ public class LivreRestCtrl {
 	    livreUpdated.setTitre(livreQuiDevraitExister.getTitre());
 	    livreUpdated.setDispo(livreUpdated.getDispo());
 	    
-		daoLivreJpa.update(livreUpdated);
+		daoLivreJpa.save(livreUpdated);
 		return new ResponseEntity<Livre>(livreUpdated , HttpStatus.OK);
     }
 

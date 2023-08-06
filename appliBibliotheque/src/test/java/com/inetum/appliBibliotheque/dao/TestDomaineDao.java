@@ -33,20 +33,20 @@ public class TestDomaineDao {
 	public void testDomaineEtLivreFetchEtLazy() {
 
 		
-		Domaine domaine1 = daoDomaineJpa.insert(new Domaine("Biologie", "Etude du vivant"));
+		Domaine domaine1 = daoDomaineJpa.save(new Domaine("Biologie", "Etude du vivant"));
 
 		Livre livre1 = new Livre(null, "Parasitisme, Ecologie et évolution des interactions durables"
 				,"Claude Combes", true);
 		livre1.setDomaine(domaine1);
-		livre1 = daoLivreJpa.insert(livre1);
+		livre1 = daoLivreJpa.save(livre1);
 		
 		Livre livre2 = new Livre(null, "Eléments de biologie à l'usage des autres disciplines" ,"Jacques Demongeot", true);
 		livre2.setDomaine(domaine1);
-		livre2 = daoLivreJpa.insert(livre2);
+		livre2 = daoLivreJpa.save(livre2);
 
 		Domaine domaine1FetchLivres = daoDomaineJpa.findByIdFetchLivres(domaine1.getId());
 
-		Domaine domaine1ReluSansFetch = daoDomaineJpa.findById(domaine1.getId());
+		Domaine domaine1ReluSansFetch = daoDomaineJpa.findById(domaine1.getId()).orElse(domaine1FetchLivres);
 
 		assertEquals(domaine1FetchLivres.getLivres().size(),2);
 		

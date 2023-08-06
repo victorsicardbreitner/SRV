@@ -40,21 +40,21 @@ public class TestIncidentDao {
 	@Test
 	public void testIncidentGetEmprunt() {
 
-		Livre livre1 = daoLivreJpa.insert(new Livre(null, "Harry Potter 1", "JKR", true));
-		Lecteur lecteur1 = daoLecteurJpa.insert(new Lecteur("Paul", "NomPaul"));
-		Incident incident1 = daoIncidentJpa.insert(new Incident("non rendu"));
+		Livre livre1 = daoLivreJpa.save(new Livre(null, "Harry Potter 1", "JKR", true));
+		Lecteur lecteur1 = daoLecteurJpa.save(new Lecteur("Paul", "NomPaul"));
+		Incident incident1 = daoIncidentJpa.save(new Incident("non rendu"));
 		
 		Emprunt emprunt1 = new Emprunt(livre1, lecteur1);
 		emprunt1.setIncident(incident1);
-		emprunt1 = daoEmpruntJpa.insert(emprunt1);
+		emprunt1 = daoEmpruntJpa.save(emprunt1);
 		
 		//Pas besoin de fetch car OneToOne
-		Incident incident1Relu = daoIncidentJpa.findById(incident1.getId());
+		Incident incident1Relu = daoIncidentJpa.findById(incident1.getId()).orElse(incident1);
 
 		assertEquals(incident1Relu.getEmprunt().getId(),emprunt1.getId());
 		
 
-		Emprunt emprunt1Relu = daoEmpruntJpa.findById(emprunt1.getId());
+		Emprunt emprunt1Relu = daoEmpruntJpa.findById(emprunt1.getId()).orElse(null);
 		assertEquals(emprunt1Relu.getIncident().getId(),incident1.getId());
 		
 

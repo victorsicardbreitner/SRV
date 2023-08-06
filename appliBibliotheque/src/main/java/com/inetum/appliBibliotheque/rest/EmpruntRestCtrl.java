@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoEmpruntJpa;
+import com.inetum.appliBibliotheque.dao.DaoEmprunt;
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.entity.Emprunt;
@@ -38,7 +37,7 @@ public class EmpruntRestCtrl {
 	Logger logger = LoggerFactory.getLogger(InitDataSet.class);
 	
 	@Autowired
-	private DaoEmpruntJpa daoEmpruntJpa;
+	private DaoEmprunt daoEmpruntJpa;
 	
 	@Autowired
 	private DaoLivre daoLivreJpa;
@@ -71,15 +70,15 @@ public class EmpruntRestCtrl {
 	public Emprunt postEmprunt(@RequestParam(value="idLivre",required=false) Long idLivre, @RequestParam(value="idLecteur",required=false) Long idLecteur) {
 		
 
-		Livre livre = daoLivreJpa.findById(idLivre);
-		Lecteur lecteur = daoLecteurJpa.findById(idLecteur);
+		Livre livre = daoLivreJpa.findById(idLivre).orElse(null);
+		Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
 		
 		
 		logger.debug("Livre : "+ livre.getTitre());
 		logger.debug("Lecteur : "+ lecteur.getNom());
 		
 		
-		Emprunt EmpruntEnregistreEnBase = daoEmpruntJpa.insert(new Emprunt(livre,lecteur));
+		Emprunt EmpruntEnregistreEnBase = daoEmpruntJpa.save(new Emprunt(livre,lecteur));
 		return EmpruntEnregistreEnBase;
 	}
 	
@@ -88,7 +87,7 @@ public class EmpruntRestCtrl {
 	@DeleteMapping("?idLivre={idLivre}&idLecteur={idLecteur}")
 	public ResponseEntity<?> deleteEmpruntByNumero(@RequestParam(value="idLivre",required=true) Long idLivre, @RequestParam(value="idLecteur",required=true) Long idLecteur) {
 		EmpruntCompositePk idEmprunt=new EmpruntCompositePk(idLivre,idLecteur);
-	    Emprunt EmpruntAsupprimer = daoEmpruntJpa.findById(idEmprunt);
+	    Emprunt EmpruntAsupprimer = daoEmpruntJpa.findById(idEmprunt).orElse(null);
 	    System.out.println("Emprunt supprimer"+ EmpruntAsupprimer);
 	    if(EmpruntAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"Emprunt not found\"}" ,
@@ -104,7 +103,7 @@ public class EmpruntRestCtrl {
 	@PutMapping("" )
 	public  ResponseEntity<?> updateEmprunt(@RequestBody Emprunt EmpruntUpdated){
 		EmpruntCompositePk numEmpruntToUpdate = EmpruntUpdated.getId();
-		Emprunt EmpruntQuiDevraitExister = daoEmpruntJpa.findById(numEmpruntToUpdate);
+		Emprunt EmpruntQuiDevraitExister = daoEmpruntJpa.findById(numEmpruntToUpdate).orElse(null);
 	
 	    if(EmpruntQuiDevraitExister==null)
 	    	return new ResponseEntity<String>("{ \"err\" : \"Emprunt not found\"}" ,
@@ -112,7 +111,7 @@ public class EmpruntRestCtrl {
 	    
 	    EmpruntUpdated.setIncident(EmpruntQuiDevraitExister.getIncident());
 	    
-		daoEmpruntJpa.update(EmpruntUpdated);
+		daoEmpruntJpa.save(EmpruntUpdated);
 		return new ResponseEntity<Emprunt>(EmpruntUpdated , HttpStatus.OK);
     }
 
