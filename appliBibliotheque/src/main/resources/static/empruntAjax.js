@@ -22,10 +22,10 @@ function rechercherEmprunts(){
 		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
 		for(let emprunt of empruntsJs){
 			let row = bodyElt.insertRow(-1);
-			(row.insertCell(0)).innerHTML = emprunt.livre.titre;
-			(row.insertCell(1)).innerHTML = emprunt.lecteur.nom;
-			(row.insertCell(2)).innerHTML = emprunt.date_debut;
-			(row.insertCell(3)).innerHTML = emprunt.date_fin;
+			(row.insertCell(0)).innerHTML = emprunt.nomLecteur; //emprunt.livre.titre
+			(row.insertCell(1)).innerHTML = emprunt.nomLivre; //emprunt.lecteur.nom
+			(row.insertCell(2)).innerHTML = emprunt.dateDebut; //emprunt.date_debut
+			(row.insertCell(3)).innerHTML = emprunt.dateFin; //emprunt.date_fin
 		}
 	});
 	/*document.getElementById('idMessage').innerHTML="ok";*/
