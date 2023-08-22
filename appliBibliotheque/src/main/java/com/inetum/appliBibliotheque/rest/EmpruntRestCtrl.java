@@ -12,19 +12,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inetum.appliBibliotheque.dao.DaoIncident;
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.dto.EmpruntDto;
 import com.inetum.appliBibliotheque.entity.Emprunt;
 import com.inetum.appliBibliotheque.entity.EmpruntCompositePk;
+import com.inetum.appliBibliotheque.entity.Incident;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.exception.LivreIndisponibleException;
+import com.inetum.appliBibliotheque.exception.NotFoundException;
 import com.inetum.appliBibliotheque.init.InitDataSet;
 import com.inetum.appliBibliotheque.service.ServiceEmprunt;
 
@@ -45,6 +48,9 @@ public class EmpruntRestCtrl {
 	
 	@Autowired
 	private DaoLecteur daoLecteurJpa;
+	
+	@Autowired
+	private DaoIncident daoIncidentJpa;
 	
 	/*
 	@GetMapping("/{idEmprunt}")
@@ -68,32 +74,52 @@ public class EmpruntRestCtrl {
 	//ex de fin URL: ./api-bibli/emprunt?idLivre=2&idLecteur=4
 	// appelé en mode POST avec dans la partie invisible "body" de la requête
 	@PostMapping("")
-	public Emprunt postEmprunt(@RequestParam(value="idLivre",required=false) Long idLivre, @RequestParam(value="idLecteur",required=false) Long idLecteur) {
+	public ResponseEntity<?> postEmprunt(@RequestParam(value="idLivre",required=false) Long idLivre, @RequestParam(value="idLecteur",required=false) Long idLecteur, @RequestParam(value="motifIncident",required=false) String motifIncident) throws LivreIndisponibleException {
 		
 
 		Livre livre = daoLivreJpa.findById(idLivre).orElse(null);
 		Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
+		Incident incident = null;
+	    if(!motifIncident.isEmpty()) {
+		   incident = new Incident(motifIncident);
+		   daoIncidentJpa.save(incident);
+	    }
 		
 		
 		logger.debug("Livre : "+ livre.getTitre());
 		logger.debug("Lecteur : "+ lecteur.getNom());
 		
 		
-		Emprunt EmpruntEnregistreEnBase = serviceEmprunt.sauvegarder(new Emprunt(livre,lecteur));
-		return EmpruntEnregistreEnBase;
+	    
+		
+		if(livre.getDispo()) {
+			livre.setDispo(false);
+			daoLivreJpa.save(livre);
+			Emprunt nouvelEmprunt = new Emprunt(livre,lecteur);
+			nouvelEmprunt.setIncident(incident);
+			Emprunt EmpruntEnregistreEnBase = serviceEmprunt.sauvegarder(nouvelEmprunt);
+			return new ResponseEntity<Emprunt>(EmpruntEnregistreEnBase , HttpStatus.OK);
+		}
+		else {
+			throw new LivreIndisponibleException();
+		}
 	}
 	
 	
 	//exemple de fin d'URL:  ./api-bibli/emprunt?idLivre=2&idLecteur=1
-	@DeleteMapping("?idLivre={idLivre}&idLecteur={idLecteur}")
-	public ResponseEntity<?> deleteEmpruntByNumero(@RequestParam(value="idLivre",required=true) Long idLivre, @RequestParam(value="idLecteur",required=true) Long idLecteur) {
+	//?idLivre={idLivre}&idLecteur={idLecteur}
+	@DeleteMapping("")
+	public ResponseEntity<?> deleteEmprunt(@RequestParam(value="idLivre",required=true) Long idLivre, @RequestParam(value="idLecteur",required=true) Long idLecteur) throws NotFoundException {
 		EmpruntCompositePk idEmprunt=new EmpruntCompositePk(idLivre,idLecteur);
 	    Emprunt EmpruntAsupprimer = serviceEmprunt.trouverParId(idEmprunt);
 	    System.out.println("Emprunt supprimer"+ EmpruntAsupprimer);
-	    if(EmpruntAsupprimer == null) 
-	    	   		 return new ResponseEntity<String>("{ \"err\" : \"Emprunt not found\"}" ,
-	 			           HttpStatus.NOT_FOUND);//40
+	    if(EmpruntAsupprimer == null) throw new NotFoundException();
+	    	   		 //return new ResponseEntity<String>("{ \"err\" : \"Emprunt not found\"}" , HttpStatus.NOT_FOUND);//40
+	    	
 	    serviceEmprunt.suppressionParId(idEmprunt);
+	    Livre livre = daoLivreJpa.findById(idLivre).orElse(null);
+	    livre.setDispo(true);
+		daoLivreJpa.save(livre);
 	    return new ResponseEntity<>("{ \"done\" : \"Emprunt deleted\"}" ,
 	    	   HttpStatus.OK);
 	    // ou bien
@@ -101,19 +127,23 @@ public class EmpruntRestCtrl {
 	    		    
 	}
 	
-	@PutMapping("" )
-	public  ResponseEntity<?> updateEmprunt(@RequestBody Emprunt EmpruntUpdated){
-		EmpruntCompositePk numEmpruntToUpdate = EmpruntUpdated.getId();
-		Emprunt EmpruntQuiDevraitExister = serviceEmprunt.trouverParId(numEmpruntToUpdate);
+	@PutMapping("")
+	public  ResponseEntity<?> updateEmprunt(@RequestParam(value="idLivre",required=false) Long idLivre, @RequestParam(value="idLecteur",required=false) Long idLecteur, @RequestParam(value="motifIncident",required=false) String motifIncident) throws NotFoundException {
+		EmpruntCompositePk idEmprunt=new EmpruntCompositePk(idLivre,idLecteur);
+		Emprunt EmpruntQuiDevraitExister = serviceEmprunt.trouverParId(idEmprunt);
 	
-	    if(EmpruntQuiDevraitExister==null)
-	    	return new ResponseEntity<String>("{ \"err\" : \"Emprunt not found\"}" ,
-			           HttpStatus.NOT_FOUND); //NOT_FOUND = code http 404
+	    if(EmpruntQuiDevraitExister==null) throw new NotFoundException();
 	    
-	    EmpruntUpdated.setIncident(EmpruntQuiDevraitExister.getIncident());
+	    Incident incident = null;
+	    if(!motifIncident.isEmpty()) {
+		   incident = new Incident(motifIncident);
+		   daoIncidentJpa.save(incident);
+	    }
 	    
-	    serviceEmprunt.sauvegarder(EmpruntUpdated);
-		return new ResponseEntity<Emprunt>(EmpruntUpdated , HttpStatus.OK);
+	    EmpruntQuiDevraitExister.setIncident(incident);
+	    
+	    serviceEmprunt.sauvegarder(EmpruntQuiDevraitExister);
+		return new ResponseEntity<Emprunt>(EmpruntQuiDevraitExister , HttpStatus.OK);
     }
 
 		

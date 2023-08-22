@@ -66,7 +66,7 @@ public class InitDataSet {
     	daoLivreJpa.save(new Livre(null,"Harry Potter 4" , "JKR",true));
     	daoLivreJpa.save(new Livre(null,"Harry Potter 5" , "JKR",true));
     	daoLivreJpa.save(new Livre(null,"Harry Potter 6" , "JKR",true));
-    	daoLivreJpa.save(new Livre(null,"Harry Potter 7" , "JKR",true));
+    	daoLivreJpa.save(new Livre(null,"Harry Potter 7" , "JKR",false));
     	daoLivreJpa.save(new Livre(null,"Le Seigneur des Anneaux" , "Tolkien",true));
     	daoLivreJpa.save(new Livre(null,"Les Miserables" , "Victor Hugo",true));
     	daoLivreJpa.save(new Livre(null,"Madame Bovary" , "Gustave Flaubert",true));

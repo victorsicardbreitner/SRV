@@ -32,7 +32,7 @@ public class LecteurRestCtrl {
 	
 
 	@GetMapping("/{idLecteur}")
-	public ResponseEntity<?> getCompteByNumero(@PathVariable("idLecteur") Long id) {
+	public ResponseEntity<?> getLecteurById(@PathVariable("idLecteur") Long id) {
 		Lecteur lecteur = daoLecteurJpa.findById(id).orElse(null);
 		if(lecteur!=null) {
 			return new ResponseEntity<Lecteur>(lecteur, HttpStatus.OK);

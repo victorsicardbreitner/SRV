@@ -1,102 +1,126 @@
-window.onload=function(){
+window.onload = function() {
 	
-	(document.getElementById("btnRechercher")).addEventListener("click",rechercherEmprunts);
-	
+	rechercherEmprunts();
+
+	(document.getElementById("btnRechercher")).addEventListener("click", rechercherEmprunts);
+
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterEmprunt);
+
+	(document.getElementById("btnDelete")).addEventListener("click", supprimerEmprunt);
+	
+	(document.getElementById("btnUpdate")).addEventListener("click",miseAJourEmprunt);
+
 	/*
-	(document.getElementById("btnDelete")).addEventListener("click", deleteLivre);
 	(document.getElementById("btnUpdateDispo")).addEventListener("click", updateLivreDispo);
-	(document.getElementById("btnUpdateEtat")).addEventListener("click",updateLivreEtat);
+	
 	*/
 }
 
 
+function errCallbackJson(responseErrCallbackJson) {
+	document.getElementById("messageException").classList.remove("d-none");
+	let repJs = JSON.parse(responseErrCallbackJson);
+	document.getElementById("messageException").innerHTML = repJs.message;
+}
 
-function rechercherEmprunts(){
-	
+
+function rechercherEmprunts() {
+
 	let wsUrl = "./api-bibli/emprunt?soldeMini="; //l'appel du controller qui fournit le fichier JSON
-	makeAjaxGetRequest(wsUrl,function(responseJson){
+	makeAjaxGetRequest(wsUrl, function(responseJson) {
+		document.getElementById("messageException").classList.add("d-none");
 		let empruntsJs = JSON.parse(responseJson);
-		
+
 		let bodyElt = document.getElementById("table_body");
-		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
-		for(let emprunt of empruntsJs){
+		bodyElt.innerHTML = "";//vider le tableau avant de le reremplir
+		for (let emprunt of empruntsJs) {
 			let row = bodyElt.insertRow(-1);
 			(row.insertCell(0)).innerHTML = emprunt.nomLecteur; //emprunt.livre.titre
 			(row.insertCell(1)).innerHTML = emprunt.nomLivre; //emprunt.lecteur.nom
 			(row.insertCell(2)).innerHTML = emprunt.dateDebut; //emprunt.date_debut
 			(row.insertCell(3)).innerHTML = emprunt.dateFin; //emprunt.date_fin
+			(row.insertCell(4)).innerHTML = emprunt.incident; //emprunt.incident
 		}
 	});
-	/*document.getElementById('idMessage').innerHTML="ok";*/
 }
 
- function ajouterEmprunt(){
-	  let idLivre = (document.getElementById("inputIdLivre")).value;
-	  let idLecteur = (document.getElementById("inputIdLecteur")).value;
-	  let empruntJs = {idLivre : idLivre,
-	  				 idLivre: idLecteur};
-	  let empruntJson= JSON.stringify(empruntJs);
-	   let wsUrl= "./api-bibli/emprunt?idLivre="+idLivre+"&idLecteur="+idLecteur;
-	    makeAjaxPostRequest(wsUrl, empruntJson,function(responseJson){
-			 rechercherEmprunts();
-		});
-   
- }
- 
- /*
- function deleteLivre(){
+function ajouterEmprunt() {
+	let idLivre = (document.getElementById("inputIdLivre")).value;
+	let idLecteur = (document.getElementById("inputIdLecteur")).value;
+	let motifIncident = (document.getElementById("inputMotifIncident")).value;
+	let empruntJs = {
+		idLivre: idLivre,
+		idLecteur: idLecteur
+	};
+	let empruntJson = JSON.stringify(empruntJs);
+	let wsUrl = "./api-bibli/emprunt?idLivre=" + idLivre + "&idLecteur=" + idLecteur+ "&motifIncident=" + motifIncident;
+	makeAjaxPostRequest(wsUrl, empruntJson, function(responseJson) {
+		document.getElementById("messageException").classList.add("d-none");
+		rechercherEmprunts();
+	}, errCallbackJson);
+
+}
+
+
+function supprimerEmprunt() {
+	let idLivre = (document.getElementById("inputIdLivre")).value;
+	let idLecteur = (document.getElementById("inputIdLecteur")).value;
+	let empruntJs = {
+		idLivre: idLivre,
+		idLecteur: idLecteur
+	};
+	let empruntJson = JSON.stringify(empruntJs);
+	let wsUrl = "./api-bibli/emprunt?idLivre=" + idLivre + "&idLecteur=" + idLecteur;
+	makeAjaxDeleteRequest(wsUrl, function(responseJson) {
+		document.getElementById("messageException").classList.add("d-none");
+		rechercherEmprunts();
+	}, errCallbackJson)
+
+}
+
+
+function miseAJourEmprunt(){
+	let idLivre = (document.getElementById("inputIdLivre")).value;
+	let idLecteur = (document.getElementById("inputIdLecteur")).value;
+	let motifIncident = (document.getElementById("inputMotifIncident")).value;
+	let empruntJs = {
+		idLivre: idLivre,
+		idLecteur: idLecteur
+	};
+	let empruntJson = JSON.stringify(empruntJs); //motifIncident
+	let wsUrl = "./api-bibli/emprunt?idLivre=" + idLivre + "&idLecteur=" + idLecteur+ "&motifIncident=" + motifIncident;
+	makeAjaxPutRequest(wsUrl, empruntJson, function(responseJson) {
+		document.getElementById("messageException").classList.add("d-none");
+		rechercherEmprunts();
+	}, errCallbackJson);
+}
+
+/*
+function updateLivreEtat(){
+	 let labelLivreUpdateEtat = (document.getElementById("inputLabelLivreUpdateEtat")).value;
+	 let labelIdLivre = (document.getElementById("inputLabelIdLivreEtat")).value;
+	 var  dispoVar= new Boolean(true);
 	 
-	 let labelLivreDelete = (document.getElementById("inputLabelLivreDelete")).value;
-	 	 
-	 let wsUrl= "./api-bibli/livre/"+labelLivreDelete; 
-	 makeAjaxDeleteRequest(wsUrl,function(responseJson){
-		 rechercherLivres();
+    
+	 let livreUpdateEtatJs = {id : labelIdLivre,
+								   dispo: dispoVar,
+								   etat: labelLivreUpdateEtat.toUpperCase()};
+	 
+	 if(labelLivreUpdateEtat.toUpperCase() == "HORS_SERVICE") dispoVar = false;
+	   	
+	 livreUpdateEtatJs = {id : labelIdLivre,
+								dispo: dispoVar,
+								etat: labelLivreUpdateEtat.toUpperCase()};
+	
+	 let livreUpdateEtatJson = JSON.stringify(livreUpdateEtatJs);
+	 
+	 let wsUrl= "./api-bibli/livre/";
+	 makeAjaxPutRequest(wsUrl,livreUpdateEtatJson, function(responseJson){
+		  rechercherLivres();
 	 })
 	 
- }
- 
- function updateLivreDispo(){
-	  let labelLivreUpdateDispo = (document.getElementById("inputLabelLivreUpdateDispo")).value;
-	  let labelIdLivre = (document.getElementById("inputLabelIdLivre")).value;
-	  let livreUpdateDispoJs = {id : labelIdLivre,
-	  							dispo: labelLivreUpdateDispo};
-		  						
-	  let livreUpdateDispoJson = JSON.stringify(livreUpdateDispoJs);
-	  
-	  let wsUrl= "./api-bibli/livre/";
-	  console.log("TEST UPDATE ", labelIdLivre+"  "+ livreUpdateDispoJs.dispo);
-	  makeAjaxPutRequest(wsUrl,livreUpdateDispoJson, function(responseJson){
-		    rechercherLivres();
-	  })
-	  
- }
- 
- function updateLivreEtat(){
-	  let labelLivreUpdateEtat = (document.getElementById("inputLabelLivreUpdateEtat")).value;
-	  let labelIdLivre = (document.getElementById("inputLabelIdLivreEtat")).value;
-	  var  dispoVar= new Boolean(true);
-	  
-	 
-	  let livreUpdateEtatJs = {id : labelIdLivre,
-	  							dispo: dispoVar,
-	  							etat: labelLivreUpdateEtat.toUpperCase()};
-	  
-	  if(labelLivreUpdateEtat.toUpperCase() == "HORS_SERVICE") dispoVar = false;
-			
-	  livreUpdateEtatJs = {id : labelIdLivre,
-	  						 dispo: dispoVar,
-	  						 etat: labelLivreUpdateEtat.toUpperCase()};
-	
-	  let livreUpdateEtatJson = JSON.stringify(livreUpdateEtatJs);
-	  
-	  let wsUrl= "./api-bibli/livre/";
-	  makeAjaxPutRequest(wsUrl,livreUpdateEtatJson, function(responseJson){
-		   rechercherLivres();
-	  })
-	  
- }
- */
+}
+*/
 
 
- 
+

@@ -1,25 +1,28 @@
 window.onload=function(){
 	
-	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLecteursSelonSoldeMini);
+	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLecteursSelonId);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLecteur);
 	
 }
 
-function rechercherLecteursSelonSoldeMini(){
-	let soldeMini = (document.getElementById("inputSoldeMini")).value;
+function rechercherLecteursSelonId(){
+	let id = (document.getElementById("inputId")).value;
 		
-	let wsUrl = "./api-bibli/lecteur?soldeMini="+soldeMini; //l'appel du controller qui fournit le fichier JSON
+	let wsUrl = "./api-bibli/lecteur/"+id; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl,function(responseJson){
 		let lecteursJs = JSON.parse(responseJson);
 		//console.log("comptesJs="+livresJs);
 		
 		let bodyElt = document.getElementById("table_body");
 		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
-		for(let lecteur of lecteursJs){
+		
+		if(id >= 1){
+			let lecteur = lecteursJs;
 			let row = bodyElt.insertRow(-1);
 			(row.insertCell(0)).innerHTML = lecteur.id;
 			(row.insertCell(1)).innerHTML = lecteur.prenom;
 			(row.insertCell(2)).innerHTML = lecteur.nom;
+			/*
 			(row.insertCell(3)).innerHTML = lecteur.codepostal;
 			(row.insertCell(4)).innerHTML = lecteur.email;
 			(row.insertCell(5)).innerHTML = lecteur.numallee;
@@ -29,6 +32,26 @@ function rechercherLecteursSelonSoldeMini(){
 			(row.insertCell(9)).innerHTML = lecteur.ville;
 			(row.insertCell(10)).innerHTML = lecteur.password;
 			(row.insertCell(11)).innerHTML = lecteur.username;
+			*/
+		}
+		else{
+			for(let lecteur of lecteursJs){
+				let row = bodyElt.insertRow(-1);
+				(row.insertCell(0)).innerHTML = lecteur.id;
+				(row.insertCell(1)).innerHTML = lecteur.prenom;
+				(row.insertCell(2)).innerHTML = lecteur.nom;
+				/*
+				(row.insertCell(3)).innerHTML = lecteur.codepostal;
+				(row.insertCell(4)).innerHTML = lecteur.email;
+				(row.insertCell(5)).innerHTML = lecteur.numallee;
+				(row.insertCell(6)).innerHTML = lecteur.numtel;
+				(row.insertCell(7)).innerHTML = lecteur.pays;
+				(row.insertCell(8)).innerHTML = lecteur.typevoie;
+				(row.insertCell(9)).innerHTML = lecteur.ville;
+				(row.insertCell(10)).innerHTML = lecteur.password;
+				(row.insertCell(11)).innerHTML = lecteur.username;
+				*/
+			}
 		}
 	});
 	
@@ -62,7 +85,7 @@ function rechercherLecteursSelonSoldeMini(){
 	   let wsUrl= "./api-bibli/lecteur";
 	    makeAjaxPostRequest(wsUrl, lecteurJson,function(responseJson){
 			console.log("responseJson=", responseJson);
-		    rechercherLecteursSelonSoldeMini();
+		    rechercherLecteursSelonId();
 		});
    
  }

@@ -22,6 +22,8 @@ public class GenericConverter {
 						sourceEmp.getDate_debut().toString(),
 						sourceEmp.getDate_fin().toString()
 						);
+				if(sourceEmp.getIncident() != null) empDto.setIncident(sourceEmp.getIncident().getMotif());
+				else empDto.setIncident("aucun incident");
 				BeanUtils.copyProperties(empDto, target);
 			}
 			else {
