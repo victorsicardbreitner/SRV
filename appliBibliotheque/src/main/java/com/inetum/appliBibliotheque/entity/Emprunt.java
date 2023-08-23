@@ -39,9 +39,9 @@ public class Emprunt {
 	
 
 	@Temporal(TemporalType.DATE)
-	private Date date_debut = new Date();
+	private Date dateDebut = new Date();
 	@Temporal(TemporalType.DATE)
-	private Date date_fin = AppUtils.ajouterJours(date_debut, 14);
+	private Date dateFin = AppUtils.ajouterJours(dateDebut, 14);
 
 	@OneToOne
 	@JoinColumn(name = "incident")
@@ -64,10 +64,10 @@ public class Emprunt {
 		this.lecteur = lecteur;
 	}
 
-	// faire un constructeur pour les date_debut et date_fin ?
+	// faire un constructeur pour les dateDebut et dateFin ?
 	
 	public void prolonger() { // une semaine
-		this.date_fin = AppUtils.ajouterJours(date_fin, 7);
+		this.dateFin = AppUtils.ajouterJours(dateFin, 7);
 	}
 
 	

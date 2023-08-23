@@ -1,17 +1,23 @@
 window.onload=function(){
 	
+	rechercherLivres();
+	
 	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLivres);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLivre);
 	(document.getElementById("btnDelete")).addEventListener("click", deleteLivre);
 	(document.getElementById("btnUpdateDispo")).addEventListener("click", updateLivreDispo);
 	(document.getElementById("btnUpdateEtat")).addEventListener("click",updateLivreEtat);
+	(document.getElementById("btnRechercheParLecteur")).addEventListener("click",rechercherLivresParLecteurs);
+	(document.getElementById("btnRechercheParLecteurActuel")).addEventListener("click",rechercherLivresParLecteursActuel);
+	
+	
 }
 
 
 
 function rechercherLivres(){
 	
-	let wsUrl = "./api-bibli/livre?soldeMini="; //l'appel du controller qui fournit le fichier JSON
+	let wsUrl = "./api-bibli/livre"; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl,function(responseJson){
 		let livresJs = JSON.parse(responseJson);
 		
@@ -24,6 +30,7 @@ function rechercherLivres(){
 			(row.insertCell(2)).innerHTML = livre.auteur;
 			(row.insertCell(3)).innerHTML = livre.dispo;
 			(row.insertCell(4)).innerHTML = livre.etat;
+			
 		}
 	});
 	/*document.getElementById('idMessage').innerHTML="ok";*/
@@ -96,4 +103,40 @@ function rechercherLivres(){
      
 
 
- 
+ function rechercherLivresParLecteurs(){
+	let idLecteur = (document.getElementById("inputRechercheParLecteur")).value;
+	let wsUrl = "./api-bibli/livre/livresEmpruntes?idLecteur="+idLecteur; //l'appel du controller qui fournit le fichier JSON
+	makeAjaxGetRequest(wsUrl,function(responseJson){
+		let livresJs = JSON.parse(responseJson);
+		let bodyElt = document.getElementById("table_body");
+		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
+		
+		for(let livre of livresJs){
+			let row = bodyElt.insertRow(-1);
+			(row.insertCell(0)).innerHTML = livre.id;
+			(row.insertCell(1)).innerHTML = livre.titre;
+			(row.insertCell(2)).innerHTML = livre.auteur;
+			(row.insertCell(3)).innerHTML = livre.dispo;
+			(row.insertCell(4)).innerHTML = livre.etat;
+		}
+	});
+}
+
+ function rechercherLivresParLecteursActuel(){
+	let idLecteur = (document.getElementById("inputRechercheParLecteur")).value;
+	let wsUrl = "./api-bibli/livre/livresEmpruntesActuel?idLecteur="+idLecteur; //l'appel du controller qui fournit le fichier JSON
+	makeAjaxGetRequest(wsUrl,function(responseJson){
+		let livresJs = JSON.parse(responseJson);
+		let bodyElt = document.getElementById("table_body");
+		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
+		
+		for(let livre of livresJs){
+			let row = bodyElt.insertRow(-1);
+			(row.insertCell(0)).innerHTML = livre.id;
+			(row.insertCell(1)).innerHTML = livre.titre;
+			(row.insertCell(2)).innerHTML = livre.auteur;
+			(row.insertCell(3)).innerHTML = livre.dispo;
+			(row.insertCell(4)).innerHTML = livre.etat;
+		}
+	});
+}

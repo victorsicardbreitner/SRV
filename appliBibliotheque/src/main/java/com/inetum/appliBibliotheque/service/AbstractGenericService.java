@@ -14,6 +14,7 @@ public abstract class AbstractGenericService<E,ID,DTO> implements GenericService
 	public abstract CrudRepository<E,ID> getDao();
 	public abstract Class<DTO> getDtoClass();
 	public abstract Class<E> getEClass();
+	//public abstract Class<CONV> getCONVClass();
 	
 
 

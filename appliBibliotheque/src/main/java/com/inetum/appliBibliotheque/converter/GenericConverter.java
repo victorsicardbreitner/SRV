@@ -19,8 +19,8 @@ public class GenericConverter {
 				EmpruntDto empDto = new EmpruntDto(
 						sourceEmp.getLecteur().getPrenom(),
 						sourceEmp.getLivre().getTitre(),
-						sourceEmp.getDate_debut().toString(),
-						sourceEmp.getDate_fin().toString()
+						sourceEmp.getDateDebut().toString(),
+						sourceEmp.getDateFin().toString()
 						);
 				if(sourceEmp.getIncident() != null) empDto.setIncident(sourceEmp.getIncident().getMotif());
 				else empDto.setIncident("aucun incident");

@@ -13,28 +13,12 @@
 		<script src="my_ajax_util.js"></script>		
 	</head>
 	<body>
-		<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center ">
+		<div class="d-flex py-5 flex-column min-vh-100 justify-content-center align-items-center ">
 		
-			<div class="card shadow rounded w-25 bg-body">
+			<div class="card shadow rounded w-25 bg-body" style="min-width:300px;">
 				<div class="card-header text-center h3 text-secondary" >Gestion des Lecteurs</div>
 				<div class="card-body"> 
-					Prenom:<input class="form-control" id="inputLabelPrenom"/><br/>
-					Nom:<input class="form-control" id="inputLabelNom"/><br/>	
-					<div class="d-none">		
-						labelUsername:<input class="form-control" id="inputLabelUsername"/><br/>
-						labelEmail:<input class="form-control" id="inputLabelEmail"/><br/>
-						labelNumtel:<input class="form-control" id="inputLabelNumtel"/><br/>
-						labelPassword:<input class="form-control" id="inputLabelPassword" type="password"/><br/>
-						labelNumallee:<input class="form-control" id="inputLabelNumallee"/><br/>
-						labelTypevoie:<input class="form-control" id="inputLabelTypevoie"/><br/>
-						labelCodepostal:<input class="form-control" id="inputLabelCodepostal"/><br/>
-						labelVille:<input class="form-control" id="inputLabelVille"/><br/>
-						labelPays:<input class="form-control" id="inputLabelPays"/><br/>
-					</div> 
-					<button class="btn btn-primary" id="btnAjout">ajouter Lecteur (post)</button>
-	 				<hr/>
-					Id : <input  class="form-control" id="inputId" /> <br />
-					<button class="btn btn-primary" id="btnRechercher">Rechercher lecteur</button> <br /> <br />
+					<div class="text-center"><button class="btn btn-primary" id="btnRechercher">Rafraîchir</button> </div><br />
 					<table class="table table-bordered" >
 						<thead>
 							<tr>
@@ -58,6 +42,35 @@
 						</tbody>
 					</table>
 					
+					<br/><hr><br/>
+					
+					<div class="alert alert-danger d-none" role="alert" id="messageException">
+						err
+					</div>
+					
+				
+					Prenom:<input class="form-control" id="inputLabelPrenom"/><br/>
+					Nom:<input class="form-control" id="inputLabelNom"/><br/>	
+					
+					<div class="d-none">		
+						labelUsername:<input class="form-control" id="inputLabelUsername"/><br/>
+						labelEmail:<input class="form-control" id="inputLabelEmail"/><br/>
+						labelNumtel:<input class="form-control" id="inputLabelNumtel"/><br/>
+						labelPassword:<input class="form-control" id="inputLabelPassword" type="password"/><br/>
+						labelNumallee:<input class="form-control" id="inputLabelNumallee"/><br/>
+						labelTypevoie:<input class="form-control" id="inputLabelTypevoie"/><br/>
+						labelCodepostal:<input class="form-control" id="inputLabelCodepostal"/><br/>
+						labelVille:<input class="form-control" id="inputLabelVille"/><br/>
+						labelPays:<input class="form-control" id="inputLabelPays"/><br/>
+					</div> 
+					
+					<button class="btn btn-primary" id="btnAjout">Ajouter</button>
+	 				<hr/>
+					Id : <input  class="form-control" id="inputId" /> <br />
+					<button class="btn btn-primary" id="btnRechercherParId">Rechercher avec l'Id</button><br />
+					
+					
+					<br />
 					<a class="btn btn-outline-secondary" href="/appliBibliotheque">← </a>
 				</div>
 			</div>

@@ -24,6 +24,7 @@ import com.inetum.appliBibliotheque.entity.Emprunt;
 import com.inetum.appliBibliotheque.entity.Incident;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.utils.AppUtils;
 
 /**
  * Classe utilitaire qui initalise un jeu de données au démarrage de l'application.
@@ -80,6 +81,9 @@ public class InitDataSet {
 		
 		Lecteur lecteur1 = daoLecteurJpa.save(new Lecteur("Paul" , "Dirac"));
 		Emprunt emprunt1 = daoEmpruntJpa.save(new Emprunt(livre1,lecteur1));
+		emprunt1.setDateDebut(AppUtils.ajouterJours(emprunt1.getDateDebut(), -20));
+		emprunt1.setDateFin(AppUtils.ajouterJours(emprunt1.getDateFin(), -20));
+		daoEmpruntJpa.save(emprunt1);
 		
 		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		
@@ -94,6 +98,9 @@ public class InitDataSet {
 		
 		Lecteur lecteur2 = daoLecteurJpa.save(new Lecteur("Joseph" , "Staline"));
 		logger.debug("EMPRUNT : "+ daoLecteurJpa.findById(lecteur2.getId()));
+		
+		
+		
 		/*
 		Emprunt emprunt2 = new Emprunt(livre2,lecteur2);
 		logger.debug("EMPRUNT2 : "+ emprunt2.getId().toString());

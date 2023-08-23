@@ -13,9 +13,9 @@
 		<script src="my_ajax_util.js"></script>		
 	</head>
 	<body>
-		<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center ">
+		<div class="d-flex py-5 flex-column min-vh-100 justify-content-center align-items-center ">
 		
-			<div class="card shadow rounded w-25 bg-body">
+			<div class="card shadow rounded w-25 bg-body" style="min-width:500px;">
 				<div class="card-header text-center h3 text-secondary" >Gestion des Emprunts</div>
 				<div class="card-body"> 	
 									
@@ -29,6 +29,10 @@
 					</table>
 					
 					<hr><br/>
+					
+					<div class="alert alert-danger d-none" role="alert" id="messageException">
+						err
+					</div>
 	
 					Livre:<input class="form-control" id="inputIdLivre"/><br/>
 					Lecteur:<input class="form-control" id="inputIdLecteur"/><br/>
@@ -37,9 +41,7 @@
 	 				<button class="btn btn-danger" id="btnDelete">Supprimer</button>
 	 				<button class="btn btn-primary" id="btnUpdate">Mettre à jour</button><br /> <br />
 	 				
-					<div class="alert alert-danger d-none" role="alert" id="messageException">
-						err
-					</div>
+					
 					
 					
 					<a class="btn btn-outline-secondary" href="/appliBibliotheque">← </a>

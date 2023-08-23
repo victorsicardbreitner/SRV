@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +69,12 @@ public class EmpruntRestCtrl {
 	@GetMapping("")
 	public List<EmpruntDto> getEmprunt(@RequestParam(value="soldeMini",required=false) Double soldeMini){
 			return serviceEmprunt.trouverToutDto();
+	}
+	
+	@GetMapping("/{idLecteur}")
+	public List<EmpruntDto> getEmprunt(@PathVariable("idLecteur") Long idLecteur){
+			Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
+			return serviceEmprunt.trouverParLecteurDto(lecteur);
 	}
 	
 	

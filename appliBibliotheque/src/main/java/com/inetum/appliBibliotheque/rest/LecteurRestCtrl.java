@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.entity.Lecteur;
+import com.inetum.appliBibliotheque.exception.NotFoundException;
 
 
 
@@ -32,18 +33,18 @@ public class LecteurRestCtrl {
 	
 
 	@GetMapping("/{idLecteur}")
-	public ResponseEntity<?> getLecteurById(@PathVariable("idLecteur") Long id) {
+	public ResponseEntity<?> getLecteurById(@PathVariable("idLecteur") Long id) throws NotFoundException {
 		Lecteur lecteur = daoLecteurJpa.findById(id).orElse(null);
 		if(lecteur!=null) {
 			return new ResponseEntity<Lecteur>(lecteur, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<String> ("{ \"err\" : \"lecteur not found\"}", HttpStatus.NOT_FOUND) ;
+			throw new NotFoundException();
 		}
 	}
 	
 	@GetMapping("")
-	public List<Lecteur> getComptes(@RequestParam(value="soldeMini",required=false) Double soldeMini){
+	public List<Lecteur> getLecteurs(){
 			return daoLecteurJpa.findAll();
 	}
 	
@@ -60,11 +61,9 @@ public class LecteurRestCtrl {
 	
 	//exemple de fin d'URL: ./api-bank/compte/1
 	@DeleteMapping("/{idLecteur}" )
-	public ResponseEntity<?> deleteLecteurByNumero(@PathVariable("idLecteur") Long id) {
+	public ResponseEntity<?> deleteLecteurByNumero(@PathVariable("idLecteur") Long id) throws NotFoundException{
 	    Lecteur lecteurAsupprimer = daoLecteurJpa.findById(id).orElse(null);
-	    if(lecteurAsupprimer == null) 
-	    	   		 return new ResponseEntity<String>("{ \"err\" : \"lecteur not found\"}" ,
-	 			           HttpStatus.NOT_FOUND);//40
+	    if(lecteurAsupprimer == null) throw new NotFoundException();
 	    daoLecteurJpa.deleteById(id);
 	    return new ResponseEntity<>("{ \"done\" : \"lecteur deleted\"}" ,
 	    	   HttpStatus.OK);

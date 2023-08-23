@@ -1,8 +1,17 @@
 window.onload=function(){
 	
+	rechercherLecteursSelonId();
+	
+	(document.getElementById("btnRechercherParId")).addEventListener("click",rechercherLecteursSelonId);
 	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLecteursSelonId);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLecteur);
 	
+}
+
+function errCallbackJson(responseErrCallbackJson) {
+	document.getElementById("messageException").classList.remove("d-none");
+	let repJs = JSON.parse(responseErrCallbackJson);
+	document.getElementById("messageException").innerHTML = repJs.message;
 }
 
 function rechercherLecteursSelonId(){
@@ -10,6 +19,7 @@ function rechercherLecteursSelonId(){
 		
 	let wsUrl = "./api-bibli/lecteur/"+id; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl,function(responseJson){
+		document.getElementById("messageException").classList.add("d-none");
 		let lecteursJs = JSON.parse(responseJson);
 		//console.log("comptesJs="+livresJs);
 		
@@ -53,7 +63,7 @@ function rechercherLecteursSelonId(){
 				*/
 			}
 		}
-	});
+	},errCallbackJson);
 	
 }
 
@@ -84,6 +94,7 @@ function rechercherLecteursSelonId(){
 	  let lecteurJson= JSON.stringify(lecteurJs);
 	   let wsUrl= "./api-bibli/lecteur";
 	    makeAjaxPostRequest(wsUrl, lecteurJson,function(responseJson){
+			document.getElementById("messageException").classList.add("d-none");
 			console.log("responseJson=", responseJson);
 		    rechercherLecteursSelonId();
 		});
