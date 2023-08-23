@@ -14,6 +14,7 @@ public class LivreDto {
 	private String titre;
 	private String auteur;
 	private Boolean dispo;
+	private String etat;
 	private String domaine;
 	
 	
@@ -24,17 +25,18 @@ public class LivreDto {
 
 
 
-	public LivreDto(Long id, String titre, String auteur, Boolean dispo, String domaine) {
+	public LivreDto(Long id, String titre, String auteur, Boolean dispo, String etat, String domaine) {
 		super();
 		this.id = id;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.dispo = dispo;
+		this.etat = etat;
 		this.domaine = domaine;
 	}
 	
-	public LivreDto(Long id, String titre, String auteur) {
-		this(id,titre,auteur,true,null);
+	public LivreDto(Long id, String titre, String auteur, String etat) {
+		this(id,titre,auteur,true,etat,null);
 	}
 
 }

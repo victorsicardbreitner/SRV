@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.inetum.appliBibliotheque.converter.EmpruntConverter;
 import com.inetum.appliBibliotheque.converter.GenericConverter;
 import com.inetum.appliBibliotheque.dao.DaoEmprunt;
 import com.inetum.appliBibliotheque.dto.EmpruntDto;
@@ -19,7 +20,7 @@ import com.inetum.appliBibliotheque.utils.AppUtils;
 
 @Service
 @Transactional 
-public class ServiceEmpruntImpl extends AbstractGenericService<Emprunt,EmpruntCompositePk,EmpruntDto> implements ServiceEmprunt {
+public class ServiceEmpruntImpl extends AbstractGenericService<Emprunt,EmpruntCompositePk,EmpruntDto,EmpruntConverter> implements ServiceEmprunt {
 
 	@Override
 	public CrudRepository<Emprunt,EmpruntCompositePk> getDao() {
@@ -34,6 +35,11 @@ public class ServiceEmpruntImpl extends AbstractGenericService<Emprunt,EmpruntCo
 	@Override
 	public Class<Emprunt> getEClass() {
 		return Emprunt.class;
+	}
+	
+	@Override
+	public EmpruntConverter getCONV() {
+		return new EmpruntConverter();
 	}
 
 
@@ -54,7 +60,7 @@ public class ServiceEmpruntImpl extends AbstractGenericService<Emprunt,EmpruntCo
 
 	@Override
 	public List<EmpruntDto> trouverParLecteurDto(Lecteur lecteur) {
-		return GenericConverter.map(daoEmprunt.findByLecteur(lecteur), getDtoClass());
+		return getCONV().map(daoEmprunt.findByLecteur(lecteur), getDtoClass());
 	}
 
 	@Override

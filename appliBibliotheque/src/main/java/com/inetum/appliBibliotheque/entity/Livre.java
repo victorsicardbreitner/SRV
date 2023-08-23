@@ -43,10 +43,15 @@ public class Livre {
 	private EtatLivre etat = EtatLivre.BON_ETAT;
 	
 	public Livre(Long id, String titre, String auteur, Boolean dispo) {
+		this(id,titre,auteur,dispo,null);
+	}
+	
+	public Livre(Long id, String titre, String auteur, Boolean dispo, Domaine domaine) {
 		this.id = id;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.dispo = dispo;
+		this.domaine=domaine;
 	}
 
 	@Override

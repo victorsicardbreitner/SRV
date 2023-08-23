@@ -60,15 +60,26 @@ public class InitDataSet {
 		
 		
 		Logger logger = LoggerFactory.getLogger(InitDataSet.class);
+		
+		
+		Domaine domaine1= new Domaine(null,"livre de biologie","sciences");
+		daoDomaineJpa.save(domaine1);
+		
+		Domaine domFantasy= new Domaine("Fantasy",
+				"La fantasy, terme issu de l'anglais fantasy est un genre artistique et littéraire qui représente des phénomènes surnaturels imaginaires, souvent associés au mythe et souvent figurés par l'intervention ou l'emploi de la magie et de l'anachronisme.");
+		daoDomaineJpa.save(domFantasy);
+		
+		
+		
 
-    	Livre livre1 = daoLivreJpa.save(new Livre(null,"Harry Potter 1" , "JKR",true));
-    	Livre livre2 = daoLivreJpa.save(new Livre(null,"Harry Potter 2" , "JKR",true));
-    	daoLivreJpa.save(new Livre(null,"Harry Potter 3" , "JKR",true));
-    	daoLivreJpa.save(new Livre(null,"Harry Potter 4" , "JKR",true));
-    	daoLivreJpa.save(new Livre(null,"Harry Potter 5" , "JKR",true));
-    	daoLivreJpa.save(new Livre(null,"Harry Potter 6" , "JKR",true));
-    	daoLivreJpa.save(new Livre(null,"Harry Potter 7" , "JKR",false));
-    	daoLivreJpa.save(new Livre(null,"Le Seigneur des Anneaux" , "Tolkien",true));
+    	Livre livre1 = daoLivreJpa.save(new Livre(null,"Harry Potter 1" , "JKR",true,domFantasy));
+    	Livre livre2 = daoLivreJpa.save(new Livre(null,"Harry Potter 2" , "JKR",true,domFantasy));
+    	daoLivreJpa.save(new Livre(null,"Harry Potter 3" , "JKR",true,domFantasy));
+    	daoLivreJpa.save(new Livre(null,"Harry Potter 4" , "JKR",true,domFantasy));
+    	daoLivreJpa.save(new Livre(null,"Harry Potter 5" , "JKR",true,domFantasy));
+    	daoLivreJpa.save(new Livre(null,"Harry Potter 6" , "JKR",true,domFantasy));
+    	daoLivreJpa.save(new Livre(null,"Harry Potter 7" , "JKR",false,domFantasy));
+    	daoLivreJpa.save(new Livre(null,"Le Seigneur des Anneaux" , "Tolkien",true,domFantasy));
     	daoLivreJpa.save(new Livre(null,"Les Miserables" , "Victor Hugo",true));
     	daoLivreJpa.save(new Livre(null,"Madame Bovary" , "Gustave Flaubert",true));
     	daoAdminJpa.save(new Administrateur(null, "Soulef", "Saoud", "soulefsaoud@biblio.fr", "06XXXXXXXX", "5", "rue de la Biologie",
@@ -88,9 +99,8 @@ public class InitDataSet {
 		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		
 
-		Domaine domaine1= new Domaine(null,"livre de biologie","sciences");
 		
-		daoDomaineJpa.save(domaine1);
+
 
 		Incident incident1 = new Incident("motif 1");
 		incident1.setEmprunt(emprunt1);

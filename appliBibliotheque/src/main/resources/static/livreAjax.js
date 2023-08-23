@@ -30,6 +30,7 @@ function rechercherLivres(){
 			(row.insertCell(2)).innerHTML = livre.auteur;
 			(row.insertCell(3)).innerHTML = livre.dispo;
 			(row.insertCell(4)).innerHTML = livre.etat;
+			(row.insertCell(5)).innerHTML = livre.domaine;
 			
 		}
 	});

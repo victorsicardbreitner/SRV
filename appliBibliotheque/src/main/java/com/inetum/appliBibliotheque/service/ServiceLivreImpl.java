@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.inetum.appliBibliotheque.converter.GenericConverter;
+import com.inetum.appliBibliotheque.converter.LivreConverter;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.dto.LivreDto;
 import com.inetum.appliBibliotheque.entity.Emprunt;
@@ -15,7 +17,7 @@ import com.inetum.appliBibliotheque.entity.Livre;
 
 @Service
 @Transactional 
-public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto> implements ServiceLivre{
+public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto,LivreConverter> implements ServiceLivre{
 	
 	@Override
 	public CrudRepository<Livre,Long> getDao() {
@@ -30,6 +32,11 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto
 	@Override
 	public Class<Livre> getEClass() {
 		return Livre.class;
+	}
+	
+	@Override
+	public LivreConverter getCONV() {
+		return new LivreConverter();
 	}
 
 
@@ -55,6 +62,8 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto
 						.map(emprunt -> emprunt.getLivre())
 						.toList();
 	}
+
+
 	
 	
 	

@@ -4,17 +4,18 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.inetum.appliBibliotheque.converter.Converter;
 import com.inetum.appliBibliotheque.converter.GenericConverter;
 import com.inetum.appliBibliotheque.exception.NotFoundException;
 
-public abstract class AbstractGenericService<E,ID,DTO> implements GenericService<E,ID,DTO> {
+public abstract class AbstractGenericService<E,ID,DTO,CONV extends GenericConverter<E,DTO>> implements GenericService<E,ID,DTO> {
 	
 	//private CrudRepository<E,ID> dao; 
 	
 	public abstract CrudRepository<E,ID> getDao();
 	public abstract Class<DTO> getDtoClass();
 	public abstract Class<E> getEClass();
-	//public abstract Class<CONV> getCONVClass();
+	public abstract CONV getCONV();
 	
 
 
@@ -59,23 +60,23 @@ public abstract class AbstractGenericService<E,ID,DTO> implements GenericService
 	@Override
 	public DTO trouverDtoParId(ID id) throws NotFoundException {
 		E e = this.trouverParId(id);
-		if(e!=null)  return GenericConverter.map(this.trouverParId(id), getDtoClass()); //ex : dtoClass=CompteDto.class
+		if(e!=null)  return getCONV().map(this.trouverParId(id), getDtoClass()); //ex : dtoClass=CompteDto.class
 		else throw new NotFoundException("entity not found for id="+id);
 	};
 	
 	public List<DTO> trouverToutDto(){
-		return GenericConverter.map(this.trouverTout(), getDtoClass());
+		return getCONV().map(this.trouverTout(), getDtoClass());
 	};
 	
 	@Override
 	public E sauvegarderParDto(DTO dto) {
-		E e = GenericConverter.map(dto, getEClass());
+		E e = getCONV().mapRetour(dto, getEClass());
 		return this.sauvegarder(e);
 	}
 	
 	@Override
 	public DTO sauvegarderParDtoPourDto(DTO dto) {
-		return GenericConverter.map(sauvegarderParDto(dto), getDtoClass());
+		return getCONV().map(sauvegarderParDto(dto), getDtoClass());
 	}
 
 

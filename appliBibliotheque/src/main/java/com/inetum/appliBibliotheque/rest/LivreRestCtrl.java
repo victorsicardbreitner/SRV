@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
-import com.inetum.appliBibliotheque.dao.DaoLivre;
+import com.inetum.appliBibliotheque.dto.LivreDto;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
-import com.inetum.appliBibliotheque.service.ServiceEmprunt;
 import com.inetum.appliBibliotheque.service.ServiceLivre;
 
 
@@ -30,9 +29,7 @@ import com.inetum.appliBibliotheque.service.ServiceLivre;
 //ATTENTION origins = "*" peut être un problème de sécurité
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST}) //pour autoriser les appels extérieurs  Cross-origin resource sharing
 public class LivreRestCtrl {
-	
-	@Autowired
-	private DaoLivre daoLivreJpa;
+
 	
 	@Autowired
 	private ServiceLivre serviceLivre;
@@ -44,7 +41,7 @@ public class LivreRestCtrl {
 
 	@GetMapping("/{idLivre}")
 	public ResponseEntity<?> getLivreById(@PathVariable("idLivre") Long id) {
-		Livre livre = daoLivreJpa.findById(id).orElse(null);
+		Livre livre = serviceLivre.trouverParId(id);
 		if(livre!=null) {
 			return new ResponseEntity<Livre>(livre, HttpStatus.OK);
 		}
@@ -68,8 +65,8 @@ public class LivreRestCtrl {
 	}
 	
 	@GetMapping("")
-	public List<Livre> getLivres(){
-			return daoLivreJpa.findAll();
+	public List<LivreDto> getLivres(){
+			return serviceLivre.trouverToutDto();
 	}
 	
 	
@@ -79,7 +76,7 @@ public class LivreRestCtrl {
 	public Livre postLivre(@RequestBody Livre nouveauLivre) {
 		System.out.println("nouveauLIvre "+ nouveauLivre);
 		nouveauLivre.setDispo(true);
-		Livre livreEnregistreEnBase = daoLivreJpa.save(nouveauLivre);
+		Livre livreEnregistreEnBase = serviceLivre.sauvegarder(nouveauLivre);
 		return livreEnregistreEnBase; // on retourne le livre avec la clé primaire auto-incrémentée
 	}
 	
@@ -87,12 +84,12 @@ public class LivreRestCtrl {
 	//exemple de fin d'URL:  ./api-bibli/livre/1
 	@DeleteMapping("/{idLivre}" )
 	public ResponseEntity<?> deleteLivreByNumero(@PathVariable("idLivre") Long id) {
-	    Livre livreAsupprimer = daoLivreJpa.findById(id).orElse(null);
+	    Livre livreAsupprimer = serviceLivre.trouverParId(id);
 	    System.out.println("livre supprimer"+ livreAsupprimer);
 	    if(livreAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
 	 			           HttpStatus.NOT_FOUND);//40
-	    daoLivreJpa.deleteById(id);
+	    serviceLivre.suppressionParId(id);
 	    return new ResponseEntity<>("{ \"done\" : \"livre deleted\"}" ,
 	    	   HttpStatus.OK);
 	    // ou bien
@@ -103,7 +100,7 @@ public class LivreRestCtrl {
 	@PutMapping("" )
 	public  ResponseEntity<?> updateLivre(@RequestBody Livre livreUpdated){
 		Long numLivreToUpdate = livreUpdated.getId();
-		Livre livreQuiDevraitExister = daoLivreJpa.findById(numLivreToUpdate).orElse(null);
+		Livre livreQuiDevraitExister = serviceLivre.trouverParId(numLivreToUpdate);
 	
 	    if(livreQuiDevraitExister==null)
 	    	return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
@@ -113,7 +110,7 @@ public class LivreRestCtrl {
 	    livreUpdated.setTitre(livreQuiDevraitExister.getTitre());
 	    livreUpdated.setDispo(livreUpdated.getDispo());
 	    
-		daoLivreJpa.save(livreUpdated);
+		serviceLivre.sauvegarder(livreUpdated);
 		return new ResponseEntity<Livre>(livreUpdated , HttpStatus.OK);
     }
 
