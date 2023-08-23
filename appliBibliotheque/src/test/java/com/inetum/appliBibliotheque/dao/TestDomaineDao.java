@@ -12,6 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.inetum.appliBibliotheque.entity.Domaine;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.service.ServiceDomaine;
+import com.inetum.appliBibliotheque.service.ServiceLivre;
 
 @SpringBootTest
 @ActiveProfiles({"oracle"})
@@ -19,34 +21,34 @@ public class TestDomaineDao {
 
 	Logger logger = LoggerFactory.getLogger(TestDomaineDao.class);
 	@Autowired
-	private DaoLivre daoLivreJpa;
+	private ServiceLivre serviceLivre ;
 
 	@Autowired
-	private DaoDomaine daoDomaineJpa;
+	private ServiceDomaine serviceDomaine;
 
 	@Test
 	public void testFind() {
-		daoLivreJpa.findAll();
+		serviceLivre.trouverTout();
 	}
 
 	@Test
 	public void testDomaineEtLivreFetchEtLazy() {
 
 		
-		Domaine domaine1 = daoDomaineJpa.save(new Domaine("Biologie", "Etude du vivant"));
+		Domaine domaine1 = serviceDomaine.sauvegarder(new Domaine("Biologie", "Etude du vivant"));
 
 		Livre livre1 = new Livre(null, "Parasitisme, Ecologie et évolution des interactions durables"
 				,"Claude Combes", true);
 		livre1.setDomaine(domaine1);
-		livre1 = daoLivreJpa.save(livre1);
+		livre1 = serviceLivre.sauvegarder(livre1);
 		
 		Livre livre2 = new Livre(null, "Eléments de biologie à l'usage des autres disciplines" ,"Jacques Demongeot", true);
 		livre2.setDomaine(domaine1);
-		livre2 = daoLivreJpa.save(livre2);
+		livre2 = serviceLivre.sauvegarder(livre2);
 
-		Domaine domaine1FetchLivres = daoDomaineJpa.findByIdFetchLivres(domaine1.getId());
+		Domaine domaine1FetchLivres = serviceDomaine.trouverParIdFetchLivres(domaine1.getId());
 
-		Domaine domaine1ReluSansFetch = daoDomaineJpa.findById(domaine1.getId()).orElse(domaine1FetchLivres);
+		Domaine domaine1ReluSansFetch = serviceDomaine.trouverParId(domaine1.getId()); /*.orElse(domaine1FetchLivres);*/
 
 		assertEquals(domaine1FetchLivres.getLivres().size(),2);
 		

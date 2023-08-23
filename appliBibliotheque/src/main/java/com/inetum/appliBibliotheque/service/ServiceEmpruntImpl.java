@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.inetum.appliBibliotheque.converter.EmpruntConverter;
-import com.inetum.appliBibliotheque.converter.GenericConverter;
 import com.inetum.appliBibliotheque.dao.DaoEmprunt;
 import com.inetum.appliBibliotheque.dto.EmpruntDto;
 import com.inetum.appliBibliotheque.entity.Emprunt;
@@ -22,6 +21,9 @@ import com.inetum.appliBibliotheque.utils.AppUtils;
 @Transactional 
 public class ServiceEmpruntImpl extends AbstractGenericService<Emprunt,EmpruntCompositePk,EmpruntDto,EmpruntConverter> implements ServiceEmprunt {
 
+	@Autowired
+	private DaoEmprunt daoEmprunt;
+	
 	@Override
 	public CrudRepository<Emprunt,EmpruntCompositePk> getDao() {
 		return this.daoEmprunt;
@@ -43,12 +45,7 @@ public class ServiceEmpruntImpl extends AbstractGenericService<Emprunt,EmpruntCo
 	}
 
 
-	@Autowired
-	private DaoEmprunt daoEmprunt;
 
-	
-	
-	
 	
 	
 	

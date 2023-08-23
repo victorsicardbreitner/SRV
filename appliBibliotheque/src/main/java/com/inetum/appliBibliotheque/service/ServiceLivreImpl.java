@@ -19,6 +19,12 @@ import com.inetum.appliBibliotheque.entity.Livre;
 @Transactional 
 public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto,LivreConverter> implements ServiceLivre{
 	
+	@Autowired
+	private DaoLivre daoLivre;
+	
+	@Autowired
+	private ServiceEmprunt serviceEmprunt;
+	
 	@Override
 	public CrudRepository<Livre,Long> getDao() {
 		return this.daoLivre;
@@ -40,11 +46,7 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto
 	}
 
 
-	@Autowired
-	private DaoLivre daoLivre;
 	
-	@Autowired
-	private ServiceEmprunt serviceEmprunt;
 
 	@Override
 	public List<Livre> trouverLivreParLecteur(Lecteur lecteur) {
@@ -61,6 +63,16 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto
 		return listeEmpruntsLecteurActuel.stream()
 						.map(emprunt -> emprunt.getLivre())
 						.toList();
+	}
+
+	@Override
+	public List<Livre> trouverParTitre(String titre) {
+		return daoLivre.findByTitre(titre);
+	}
+
+	@Override
+	public Livre trouverParIdFetchEmprunts(Long id) {
+		return daoLivre.findByIdFetchEmprunts(id);
 	}
 
 

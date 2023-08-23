@@ -11,5 +11,10 @@ public interface ServiceLivre extends GenericService<Livre,Long,LivreDto>{
 	List<Livre> trouverLivreParLecteur(Lecteur lecteur);
 
 	List<Livre> trouverLivreActuelParLecteur(Lecteur lecteur);
+	
+	
+	List<Livre> trouverParTitre(String titre);
+
+	Livre trouverParIdFetchEmprunts(Long id);
 
 }

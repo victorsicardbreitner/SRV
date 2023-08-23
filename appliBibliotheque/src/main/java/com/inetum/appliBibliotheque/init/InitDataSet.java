@@ -62,7 +62,7 @@ public class InitDataSet {
 		Logger logger = LoggerFactory.getLogger(InitDataSet.class);
 		
 		
-		Domaine domaine1= new Domaine(null,"livre de biologie","sciences");
+		Domaine domaine1= new Domaine(null,"livre de biologie","science");
 		daoDomaineJpa.save(domaine1);
 		
 		Domaine domFantasy= new Domaine("Fantasy",
@@ -96,7 +96,7 @@ public class InitDataSet {
 		emprunt1.setDateFin(AppUtils.ajouterJours(emprunt1.getDateFin(), -20));
 		daoEmpruntJpa.save(emprunt1);
 		
-		logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
+		//logger.debug("EMPRUNT : "+ emprunt1.getId().toString());
 		
 
 		
@@ -107,7 +107,7 @@ public class InitDataSet {
 		daoIncidentJpa.save(incident1);
 		
 		Lecteur lecteur2 = daoLecteurJpa.save(new Lecteur("Joseph" , "Staline"));
-		logger.debug("EMPRUNT : "+ daoLecteurJpa.findById(lecteur2.getId()));
+		//logger.debug("EMPRUNT : "+ daoLecteurJpa.findById(lecteur2.getId()));
 		
 		
 		
