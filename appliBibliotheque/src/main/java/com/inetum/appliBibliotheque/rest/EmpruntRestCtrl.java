@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoIncident;
-import com.inetum.appliBibliotheque.dao.DaoLecteur;
-import com.inetum.appliBibliotheque.dao.DaoLivre;
 import com.inetum.appliBibliotheque.dto.EmpruntDto;
 import com.inetum.appliBibliotheque.entity.Emprunt;
 import com.inetum.appliBibliotheque.entity.EmpruntCompositePk;
@@ -31,6 +28,9 @@ import com.inetum.appliBibliotheque.exception.LivreIndisponibleException;
 import com.inetum.appliBibliotheque.exception.NotFoundException;
 import com.inetum.appliBibliotheque.init.InitDataSet;
 import com.inetum.appliBibliotheque.service.ServiceEmprunt;
+import com.inetum.appliBibliotheque.service.ServiceIncident;
+import com.inetum.appliBibliotheque.service.ServiceLecteur;
+import com.inetum.appliBibliotheque.service.ServiceLivre;
 
 
 @RestController
@@ -45,13 +45,13 @@ public class EmpruntRestCtrl {
 	private ServiceEmprunt serviceEmprunt;
 	
 	@Autowired
-	private DaoLivre daoLivreJpa;
+	private ServiceLivre serviceLivre;
 	
 	@Autowired
-	private DaoLecteur daoLecteurJpa;
+	private ServiceLecteur serviceLecteur;
 	
 	@Autowired
-	private DaoIncident daoIncidentJpa;
+	private ServiceIncident serviceIncident;
 	
 	/*
 	@GetMapping("/{idEmprunt}")
@@ -73,7 +73,7 @@ public class EmpruntRestCtrl {
 	
 	@GetMapping("/{idLecteur}")
 	public List<EmpruntDto> getEmprunt(@PathVariable("idLecteur") Long idLecteur){
-			Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
+			Lecteur lecteur = serviceLecteur.trouverParId(idLecteur);
 			return serviceEmprunt.trouverParLecteurDto(lecteur);
 	}
 	
@@ -84,12 +84,12 @@ public class EmpruntRestCtrl {
 	public ResponseEntity<?> postEmprunt(@RequestParam(value="idLivre",required=false) Long idLivre, @RequestParam(value="idLecteur",required=false) Long idLecteur, @RequestParam(value="motifIncident",required=false) String motifIncident) throws LivreIndisponibleException {
 		
 
-		Livre livre = daoLivreJpa.findById(idLivre).orElse(null);
-		Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
+		Livre livre = serviceLivre.trouverParId(idLivre);
+		Lecteur lecteur = serviceLecteur.trouverParId(idLecteur);
 		Incident incident = null;
 	    if(!motifIncident.isEmpty()) {
 		   incident = new Incident(motifIncident);
-		   daoIncidentJpa.save(incident);
+		   serviceIncident.sauvegarder(incident);
 	    }
 		
 		
@@ -101,7 +101,7 @@ public class EmpruntRestCtrl {
 		
 		if(livre.getDispo()) {
 			livre.setDispo(false);
-			daoLivreJpa.save(livre);
+			serviceLivre.sauvegarder(livre);
 			Emprunt nouvelEmprunt = new Emprunt(livre,lecteur);
 			nouvelEmprunt.setIncident(incident);
 			Emprunt EmpruntEnregistreEnBase = serviceEmprunt.sauvegarder(nouvelEmprunt);
@@ -124,9 +124,9 @@ public class EmpruntRestCtrl {
 	    	   		 //return new ResponseEntity<String>("{ \"err\" : \"Emprunt not found\"}" , HttpStatus.NOT_FOUND);//40
 	    	
 	    serviceEmprunt.suppressionParId(idEmprunt);
-	    Livre livre = daoLivreJpa.findById(idLivre).orElse(null);
+	    Livre livre = serviceLivre.trouverParId(idLivre);
 	    livre.setDispo(true);
-		daoLivreJpa.save(livre);
+		serviceLivre.sauvegarder(livre);
 	    return new ResponseEntity<>("{ \"done\" : \"Emprunt deleted\"}" ,
 	    	   HttpStatus.OK);
 	    // ou bien
@@ -144,7 +144,7 @@ public class EmpruntRestCtrl {
 	    Incident incident = null;
 	    if(!motifIncident.isEmpty()) {
 		   incident = new Incident(motifIncident);
-		   daoIncidentJpa.save(incident);
+		   serviceIncident.sauvegarder(incident);
 	    }
 	    
 	    EmpruntQuiDevraitExister.setIncident(incident);

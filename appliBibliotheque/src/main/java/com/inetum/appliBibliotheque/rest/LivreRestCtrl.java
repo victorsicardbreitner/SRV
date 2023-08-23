@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.dto.LivreDto;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.service.ServiceLecteur;
 import com.inetum.appliBibliotheque.service.ServiceLivre;
 
 
@@ -35,7 +35,7 @@ public class LivreRestCtrl {
 	private ServiceLivre serviceLivre;
 	
 	@Autowired
-	private DaoLecteur daoLecteurJpa;
+	private ServiceLecteur serviceLecteur;
 
 	
 
@@ -54,13 +54,13 @@ public class LivreRestCtrl {
 	
 	@GetMapping("/livresEmpruntesActuel") //faire les erreurs
 	public List<Livre> getLivresActuelByLecteur(@RequestParam(value="idLecteur",required=false) Long idLecteur) {
-		Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
+		Lecteur lecteur = serviceLecteur.trouverParId(idLecteur);
 		return serviceLivre.trouverLivreActuelParLecteur(lecteur);
 	}
 	
 	@GetMapping("/livresEmpruntes") //faire les erreurs
 	public List<Livre> getLivresByLecteur(@RequestParam(value="idLecteur",required=false) Long idLecteur) {
-		Lecteur lecteur = daoLecteurJpa.findById(idLecteur).orElse(null);
+		Lecteur lecteur = serviceLecteur.trouverParId(idLecteur);
 		return serviceLivre.trouverLivreParLecteur(lecteur);
 	}
 	
