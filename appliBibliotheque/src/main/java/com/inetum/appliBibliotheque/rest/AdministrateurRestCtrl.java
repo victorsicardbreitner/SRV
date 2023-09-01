@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoAdminJpa;
+import com.inetum.appliBibliotheque.dto.AdministrateurDto;
 import com.inetum.appliBibliotheque.entity.Administrateur;
+import com.inetum.appliBibliotheque.service.ServiceAdmin;
 
 
 
@@ -28,12 +29,12 @@ import com.inetum.appliBibliotheque.entity.Administrateur;
 public class AdministrateurRestCtrl {
 	
 	@Autowired
-	private DaoAdminJpa daoAdminJpa;
+	private ServiceAdmin serviceAdmin;
 	
 
 	@GetMapping("/{idAdmin}")
 	public ResponseEntity<?> getCompteByNumero(@PathVariable("idAdmin") Long id) {
-		Administrateur admin = daoAdminJpa.findById(id);
+		Administrateur admin = serviceAdmin.trouverParId(id);
 		if(admin!=null) {
 			return new ResponseEntity<Administrateur>(admin, HttpStatus.OK);
 		}
@@ -43,8 +44,8 @@ public class AdministrateurRestCtrl {
 	}
 	
 	@GetMapping("")
-	public List<Administrateur> getComptes(@RequestParam(value="soldeMini",required=false) Double soldeMini){
-			return daoAdminJpa.findAll();
+	public List<AdministrateurDto> getAdmin(){
+			return serviceAdmin.trouverToutDto();
 	}
 	
 	
@@ -53,7 +54,7 @@ public class AdministrateurRestCtrl {
 	@PostMapping("" )
 	public Administrateur postAdmin(@RequestBody Administrateur nouveauAdmin) {
 		System.out.println("nouveauAdmin "+ nouveauAdmin);
-		Administrateur adminEnregistreEnBase = daoAdminJpa.insert(nouveauAdmin);
+		Administrateur adminEnregistreEnBase = serviceAdmin.sauvegarder(nouveauAdmin);
 		return adminEnregistreEnBase; // on retourne le lecteur avec la clé primaire auto-incrémentée
 	}
 	
@@ -61,11 +62,11 @@ public class AdministrateurRestCtrl {
 	//exemple de fin d'URL: ./api-bank/compte/1
 	@DeleteMapping("/{idAdmin}" )
 	public ResponseEntity<?> deleteAdminByNumero(@PathVariable("idAdmin") Long id) {
-	    Administrateur adminAsupprimer = daoAdminJpa.findById(id);
+	    Administrateur adminAsupprimer = serviceAdmin.trouverParId(id);
 	    if(adminAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"admin not found\"}" ,
 	 			           HttpStatus.NOT_FOUND);//40
-	    daoAdminJpa.deleteById(id);
+	    serviceAdmin.suppressionParId(id);
 	    return new ResponseEntity<>("{ \"done\" : \"admin deleted\"}" ,
 	    	   HttpStatus.OK);
 	    // ou bien

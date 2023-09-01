@@ -13,44 +13,49 @@
 		<script src="my_ajax_util.js"></script>		
 	</head>
 	<body>
-		<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center ">
-			<h1>adminAjax</h1>
-			<div class="table shadow p-3 mb-5 bg-body rounded w-50 p-3">
-				labelPrenom:<input class="form-control" id="inputLabelPrenom"/><br/>
-				labelNom:<input class="form-control" id="inputLabelNom"/><br/>				
-				labelUsername:<input class="form-control" id="inputLabelUsername"/><br/>
-				labelEmail:<input class="form-control" id="inputLabelEmail"/><br/>
-				labelNumtel:<input class="form-control" id="inputLabelNumtel"/><br/>
-				labelPassword:<input class="form-control" id="inputLabelPassword" type="password"/><br/>
-				labelNumallee:<input class="form-control" id="inputLabelNumallee"/><br/>
-				labelTypevoie:<input class="form-control" id="inputLabelTypevoie"/><br/>
-				labelCodepostal:<input class="form-control" id="inputLabelCodepostal"/><br/>
-				labelVille:<input class="form-control" id="inputLabelVille"/><br/>
-				labelPays:<input class="form-control" id="inputLabelPays"/><br/>
-				<button class="btn btn-primary" id="btnAjout">ajouter admin (post)</button>
- 				<hr/>
-				soldeMini : <input  class="form-control" id="inputSoldeMini" /> <br />
-				<button class="btn btn-primary" id="btnRechercher">Rechercher admin</button> <br /> <br />
-				<table class="table table-bordered" >
-					<thead>
-						<tr>
-							<th>id</th>
-							<th>prenom</th>
-							<th>nom</th>
-							<th>codepostal</th>
-							<th>email</th>
-							<th>numallee</th>
-							<th>numtel</th>
-							<th>pays</th>
-							<th>typevoie</th>
-							<th>ville</th>
-							<th>password</th>
-							<th>username</th>
-						</tr>
-					</thead>
-					<tbody id="table_body">
-					</tbody>
-				</table>
+		<div class="d-flex py-5 flex-column min-vh-100 justify-content-center align-items-center ">
+		
+			<div class="card shadow rounded w-75 bg-body" style="min-width:1000px;">
+				<div class="card-header text-center h3 text-secondary" >Gestion des Admins</div>
+				<div class="card-body"> 
+					labelPrenom:<input class="form-control" id="inputLabelPrenom"/><br/>
+					labelNom:<input class="form-control" id="inputLabelNom"/><br/>				
+					labelUsername:<input class="form-control" id="inputLabelUsername"/><br/>
+					labelEmail:<input class="form-control" id="inputLabelEmail"/><br/>
+					labelNumtel:<input class="form-control" id="inputLabelNumtel"/><br/>
+					labelPassword:<input class="form-control" id="inputLabelPassword" type="password"/><br/>
+					labelNumallee:<input class="form-control" id="inputLabelNumallee"/><br/>
+					labelTypevoie:<input class="form-control" id="inputLabelTypevoie"/><br/>
+					labelCodepostal:<input class="form-control" id="inputLabelCodepostal"/><br/>
+					labelVille:<input class="form-control" id="inputLabelVille"/><br/>
+					labelPays:<input class="form-control" id="inputLabelPays"/><br/>
+					<button class="btn btn-primary" id="btnAjout">ajouter admin (post)</button>
+	 				<hr/>
+					soldeMini : <input  class="form-control" id="inputSoldeMini" /> <br />
+					<button class="btn btn-primary" id="btnRechercher">Rechercher admin</button> <br /> <br />
+					<table class="table table-bordered" >
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>prenom</th>
+								<th>nom</th>
+								<th>codepostal</th>
+								<th>email</th>
+								<th>numallee</th>
+								<th>numtel</th>
+								<th>pays</th>
+								<th>typevoie</th>
+								<th>ville</th>
+								<th>password</th>
+								<th>username</th>
+							</tr>
+						</thead>
+						<tbody id="table_body">
+						</tbody>
+					</table>
+					
+					<a class="btn btn-outline-secondary" href="/appliBibliotheque">← </a>
+				</div>
 			</div>
 		</div>
 	</body>

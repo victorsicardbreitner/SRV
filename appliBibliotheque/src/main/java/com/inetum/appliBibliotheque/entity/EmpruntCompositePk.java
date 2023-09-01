@@ -1,22 +1,22 @@
 package com.inetum.appliBibliotheque.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Embeddable;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Embeddable
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 public class EmpruntCompositePk implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private long idLivre;
-	private long idLecteur;
+	private Long idLivre;
+	private Long idLecteur;
 
-	public EmpruntCompositePk(long idLivre, long idLecteur) {
+	public EmpruntCompositePk(Long idLivre, Long idLecteur) {
 		super();
 		this.idLivre = idLivre;
 		this.idLecteur = idLecteur;

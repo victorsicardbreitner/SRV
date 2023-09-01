@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoLecteurJpa;
 import com.inetum.appliBibliotheque.entity.Lecteur;
+import com.inetum.appliBibliotheque.exception.NotFoundException;
+import com.inetum.appliBibliotheque.service.ServiceLecteur;
 
 
 
@@ -28,23 +28,23 @@ import com.inetum.appliBibliotheque.entity.Lecteur;
 public class LecteurRestCtrl {
 	
 	@Autowired
-	private DaoLecteurJpa daoLecteurJpa;
+	private ServiceLecteur serviceLecteur;
 	
 
 	@GetMapping("/{idLecteur}")
-	public ResponseEntity<?> getCompteByNumero(@PathVariable("idLecteur") Long id) {
-		Lecteur lecteur = daoLecteurJpa.findById(id);
+	public ResponseEntity<?> getLecteurById(@PathVariable("idLecteur") Long id) throws NotFoundException {
+		Lecteur lecteur = serviceLecteur.trouverParId(id);
 		if(lecteur!=null) {
 			return new ResponseEntity<Lecteur>(lecteur, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<String> ("{ \"err\" : \"lecteur not found\"}", HttpStatus.NOT_FOUND) ;
+			throw new NotFoundException();
 		}
 	}
 	
 	@GetMapping("")
-	public List<Lecteur> getComptes(@RequestParam(value="soldeMini",required=false) Double soldeMini){
-			return daoLecteurJpa.findAll();
+	public List<Lecteur> getLecteurs(){
+			return serviceLecteur.trouverTout();
 	}
 	
 	
@@ -53,19 +53,17 @@ public class LecteurRestCtrl {
 	@PostMapping("" )
 	public Lecteur postLecteur(@RequestBody Lecteur nouveauLecteur) {
 		System.out.println("nouveauLecteur "+ nouveauLecteur);
-		Lecteur lecteurEnregistreEnBase = daoLecteurJpa.insert(nouveauLecteur);
+		Lecteur lecteurEnregistreEnBase = serviceLecteur.sauvegarder(nouveauLecteur);
 		return lecteurEnregistreEnBase; // on retourne le lecteur avec la clé primaire auto-incrémentée
 	}
 	
 	
 	//exemple de fin d'URL: ./api-bank/compte/1
 	@DeleteMapping("/{idLecteur}" )
-	public ResponseEntity<?> deleteLecteurByNumero(@PathVariable("idLecteur") Long id) {
-	    Lecteur lecteurAsupprimer = daoLecteurJpa.findById(id);
-	    if(lecteurAsupprimer == null) 
-	    	   		 return new ResponseEntity<String>("{ \"err\" : \"lecteur not found\"}" ,
-	 			           HttpStatus.NOT_FOUND);//40
-	    daoLecteurJpa.deleteById(id);
+	public ResponseEntity<?> deleteLecteurByNumero(@PathVariable("idLecteur") Long id) throws NotFoundException{
+	    Lecteur lecteurAsupprimer = serviceLecteur.trouverParId(id);
+	    if(lecteurAsupprimer == null) throw new NotFoundException();
+	    serviceLecteur.suppressionParId(id);
 	    return new ResponseEntity<>("{ \"done\" : \"lecteur deleted\"}" ,
 	    	   HttpStatus.OK);
 	    // ou bien

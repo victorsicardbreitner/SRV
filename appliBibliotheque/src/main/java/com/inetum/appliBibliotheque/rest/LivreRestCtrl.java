@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.appliBibliotheque.dao.DaoLivreJpa;
+import com.inetum.appliBibliotheque.dto.LivreDto;
+import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.service.ServiceLecteur;
+import com.inetum.appliBibliotheque.service.ServiceLivre;
 
 
 @RestController
@@ -26,14 +29,19 @@ import com.inetum.appliBibliotheque.entity.Livre;
 //ATTENTION origins = "*" peut être un problème de sécurité
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST}) //pour autoriser les appels extérieurs  Cross-origin resource sharing
 public class LivreRestCtrl {
+
 	
 	@Autowired
-	private DaoLivreJpa daoLivreJpa;
+	private ServiceLivre serviceLivre;
+	
+	@Autowired
+	private ServiceLecteur serviceLecteur;
+
 	
 
 	@GetMapping("/{idLivre}")
-	public ResponseEntity<?> getCompteByNumero(@PathVariable("idLivre") Long id) {
-		Livre livre = daoLivreJpa.findById(id);
+	public ResponseEntity<?> getLivreById(@PathVariable("idLivre") Long id) {
+		Livre livre = serviceLivre.trouverParId(id);
 		if(livre!=null) {
 			return new ResponseEntity<Livre>(livre, HttpStatus.OK);
 		}
@@ -42,9 +50,23 @@ public class LivreRestCtrl {
 		}
 	}
 	
+	
+	
+	@GetMapping("/livresEmpruntesActuel") //faire les erreurs
+	public List<Livre> getLivresActuelByLecteur(@RequestParam(value="idLecteur",required=false) Long idLecteur) {
+		Lecteur lecteur = serviceLecteur.trouverParId(idLecteur);
+		return serviceLivre.trouverLivreActuelParLecteur(lecteur);
+	}
+	
+	@GetMapping("/livresEmpruntes") //faire les erreurs
+	public List<Livre> getLivresByLecteur(@RequestParam(value="idLecteur",required=false) Long idLecteur) {
+		Lecteur lecteur = serviceLecteur.trouverParId(idLecteur);
+		return serviceLivre.trouverLivreParLecteur(lecteur);
+	}
+	
 	@GetMapping("")
-	public List<Livre> getComptes(@RequestParam(value="soldeMini",required=false) Double soldeMini){
-			return daoLivreJpa.findAll();
+	public List<LivreDto> getLivres(){
+			return serviceLivre.trouverToutDto();
 	}
 	
 	
@@ -54,7 +76,7 @@ public class LivreRestCtrl {
 	public Livre postLivre(@RequestBody Livre nouveauLivre) {
 		System.out.println("nouveauLIvre "+ nouveauLivre);
 		nouveauLivre.setDispo(true);
-		Livre livreEnregistreEnBase = daoLivreJpa.insert(nouveauLivre);
+		Livre livreEnregistreEnBase = serviceLivre.sauvegarder(nouveauLivre);
 		return livreEnregistreEnBase; // on retourne le livre avec la clé primaire auto-incrémentée
 	}
 	
@@ -62,12 +84,12 @@ public class LivreRestCtrl {
 	//exemple de fin d'URL:  ./api-bibli/livre/1
 	@DeleteMapping("/{idLivre}" )
 	public ResponseEntity<?> deleteLivreByNumero(@PathVariable("idLivre") Long id) {
-	    Livre livreAsupprimer = daoLivreJpa.findById(id);
+	    Livre livreAsupprimer = serviceLivre.trouverParId(id);
 	    System.out.println("livre supprimer"+ livreAsupprimer);
 	    if(livreAsupprimer == null) 
 	    	   		 return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
 	 			           HttpStatus.NOT_FOUND);//40
-	    daoLivreJpa.deleteById(id);
+	    serviceLivre.suppressionParId(id);
 	    return new ResponseEntity<>("{ \"done\" : \"livre deleted\"}" ,
 	    	   HttpStatus.OK);
 	    // ou bien
@@ -78,7 +100,7 @@ public class LivreRestCtrl {
 	@PutMapping("" )
 	public  ResponseEntity<?> updateLivre(@RequestBody Livre livreUpdated){
 		Long numLivreToUpdate = livreUpdated.getId();
-		Livre livreQuiDevraitExister = daoLivreJpa.findById(numLivreToUpdate);
+		Livre livreQuiDevraitExister = serviceLivre.trouverParId(numLivreToUpdate);
 	
 	    if(livreQuiDevraitExister==null)
 	    	return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
@@ -88,7 +110,7 @@ public class LivreRestCtrl {
 	    livreUpdated.setTitre(livreQuiDevraitExister.getTitre());
 	    livreUpdated.setDispo(livreUpdated.getDispo());
 	    
-		daoLivreJpa.update(livreUpdated);
+		serviceLivre.sauvegarder(livreUpdated);
 		return new ResponseEntity<Livre>(livreUpdated , HttpStatus.OK);
     }
 
