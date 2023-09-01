@@ -1,25 +1,38 @@
 window.onload=function(){
 	
-	(document.getElementById("btnRechercher")).addEventListener("click",rechercherAdministrateursSelonSoldeMini);
+	rechercherAdminsSelonId();
+	
+	(document.getElementById("btnRechercherParId")).addEventListener("click",rechercherAdminsSelonId);
+	(document.getElementById("btnRechercher")).addEventListener("click",rechercherAdminsSelonId);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterAdmin);
 	
 }
 
-function rechercherAdministrateursSelonSoldeMini(){
-	let soldeMini = (document.getElementById("inputSoldeMini")).value;
+function errCallbackJson(responseErrCallbackJson) {
+	document.getElementById("messageException").classList.remove("d-none");
+	let repJs = JSON.parse(responseErrCallbackJson);
+	document.getElementById("messageException").innerHTML = repJs.message;
+}
+
+function rechercherAdminsSelonId(){
+	let id = (document.getElementById("inputId")).value;
 		
-	let wsUrl = "./api-bibli/admin?soldeMini="+soldeMini; //l'appel du controller qui fournit le fichier JSON
+	let wsUrl = "./api-bibli/administrateur/"+id; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl,function(responseJson){
+		document.getElementById("messageException").classList.add("d-none");
 		let adminsJs = JSON.parse(responseJson);
 		//console.log("comptesJs="+livresJs);
 		
 		let bodyElt = document.getElementById("table_body");
 		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
-		for(let admin of adminsJs){
+		
+		if(id >= 1){
+			let admin = adminsJs;
 			let row = bodyElt.insertRow(-1);
 			(row.insertCell(0)).innerHTML = admin.id;
 			(row.insertCell(1)).innerHTML = admin.prenom;
 			(row.insertCell(2)).innerHTML = admin.nom;
+			/*
 			(row.insertCell(3)).innerHTML = admin.codepostal;
 			(row.insertCell(4)).innerHTML = admin.email;
 			(row.insertCell(5)).innerHTML = admin.numallee;
@@ -29,8 +42,29 @@ function rechercherAdministrateursSelonSoldeMini(){
 			(row.insertCell(9)).innerHTML = admin.ville;
 			(row.insertCell(10)).innerHTML = admin.password;
 			(row.insertCell(11)).innerHTML = admin.username;
+			*/
 		}
-	});
+		else{
+			for(let admin of adminsJs){
+				let row = bodyElt.insertRow(-1);
+				(row.insertCell(0)).innerHTML = admin.id;
+				(row.insertCell(1)).innerHTML = admin.prenom;
+				(row.insertCell(2)).innerHTML = admin.nom;
+				console.log(admin)
+				/*
+				(row.insertCell(3)).innerHTML = admin.codepostal;
+				(row.insertCell(4)).innerHTML = admin.email;
+				(row.insertCell(5)).innerHTML = admin.numallee;
+				(row.insertCell(6)).innerHTML = admin.numtel;
+				(row.insertCell(7)).innerHTML = admin.pays;
+				(row.insertCell(8)).innerHTML = admin.typevoie;
+				(row.insertCell(9)).innerHTML = admin.ville;
+				(row.insertCell(10)).innerHTML = admin.password;
+				(row.insertCell(11)).innerHTML = admin.username;
+				*/
+			}
+		}
+	},errCallbackJson);
 	
 }
 
@@ -46,7 +80,7 @@ function rechercherAdministrateursSelonSoldeMini(){
 	  let labelTypevoie = (document.getElementById("inputLabelTypevoie")).value;
 	  let labelCodepostal = (document.getElementById("inputLabelCodepostal")).value;
 	  let labelVille = (document.getElementById("inputLabelVille")).value;
-	  let labelPays = (document.getElementById("inputLabelPays")).value;	  
+	  let labelPays = (document.getElementById("inputLabelPays")).value;
 	  let adminJs = {prenom : labelPrenom,
 	  				 nom : labelNom,
 	  				 username : labelUsername,
@@ -61,8 +95,9 @@ function rechercherAdministrateursSelonSoldeMini(){
 	  let adminJson= JSON.stringify(adminJs);
 	   let wsUrl= "./api-bibli/lecteur";
 	    makeAjaxPostRequest(wsUrl, adminJson,function(responseJson){
+			document.getElementById("messageException").classList.add("d-none");
 			console.log("responseJson=", responseJson);
-		    rechercherAdministrateursSelonSoldeMini();
+		    rechercherLecteursSelonId();
 		});
    
  }

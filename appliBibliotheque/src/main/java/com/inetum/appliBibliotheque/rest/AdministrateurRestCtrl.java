@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.appliBibliotheque.dto.AdministrateurDto;
 import com.inetum.appliBibliotheque.entity.Administrateur;
+import com.inetum.appliBibliotheque.exception.NotFoundException;
 import com.inetum.appliBibliotheque.service.ServiceAdmin;
 
 
@@ -33,7 +34,7 @@ public class AdministrateurRestCtrl {
 	
 
 	@GetMapping("/{idAdmin}")
-	public ResponseEntity<?> getCompteByNumero(@PathVariable("idAdmin") Long id) {
+	public ResponseEntity<?> getAdminById(@PathVariable("idAdmin") Long id) throws NotFoundException {
 		Administrateur admin = serviceAdmin.trouverParId(id);
 		if(admin!=null) {
 			return new ResponseEntity<Administrateur>(admin, HttpStatus.OK);
@@ -44,8 +45,8 @@ public class AdministrateurRestCtrl {
 	}
 	
 	@GetMapping("")
-	public List<AdministrateurDto> getAdmin(){
-			return serviceAdmin.trouverToutDto();
+	public List<Administrateur> getAdmin(){
+			return serviceAdmin.trouverTout();
 	}
 	
 	
