@@ -67,7 +67,7 @@ public class EmpruntRestCtrl {
 	*/
 	
 	@GetMapping("")
-	public List<EmpruntDto> getEmprunt(@RequestParam(value="soldeMini",required=false) Double soldeMini){
+	public List<EmpruntDto> getEmprunt(){
 			return serviceEmprunt.trouverToutDto();
 	}
 	

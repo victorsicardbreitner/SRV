@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.inetum.appliBibliotheque.dto.LivreDto;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.exception.NotFoundException;
 import com.inetum.appliBibliotheque.service.ServiceLecteur;
 import com.inetum.appliBibliotheque.service.ServiceLivre;
 
@@ -40,13 +41,13 @@ public class LivreRestCtrl {
 	
 
 	@GetMapping("/{idLivre}")
-	public ResponseEntity<?> getLivreById(@PathVariable("idLivre") Long id) {
+	public ResponseEntity<?> getLivreById(@PathVariable("idLivre") Long id) throws NotFoundException {
 		Livre livre = serviceLivre.trouverParId(id);
 		if(livre!=null) {
 			return new ResponseEntity<Livre>(livre, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<String> ("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND) ;
+			throw new NotFoundException();
 		}
 	}
 	
@@ -73,28 +74,22 @@ public class LivreRestCtrl {
 	//ex de fin URL: ./api-bibli/livre
 	// appelé en mode POST avec dans la partie invisible "body" de la requête
 	@PostMapping("" )
-	public Livre postLivre(@RequestBody Livre nouveauLivre) {
+	public LivreDto postLivre(@RequestBody LivreDto nouveauLivre) {
 		System.out.println("nouveauLIvre "+ nouveauLivre);
 		nouveauLivre.setDispo(true);
-		Livre livreEnregistreEnBase = serviceLivre.sauvegarder(nouveauLivre);
+		LivreDto livreEnregistreEnBase = serviceLivre.sauvegarderParDtoPourDto(nouveauLivre);
 		return livreEnregistreEnBase; // on retourne le livre avec la clé primaire auto-incrémentée
 	}
 	
 	
 	//exemple de fin d'URL:  ./api-bibli/livre/1
 	@DeleteMapping("/{idLivre}" )
-	public ResponseEntity<?> deleteLivreByNumero(@PathVariable("idLivre") Long id) {
+	public ResponseEntity<?> deleteLivreByNumero(@PathVariable("idLivre") Long id) throws NotFoundException {
 	    Livre livreAsupprimer = serviceLivre.trouverParId(id);
 	    System.out.println("livre supprimer"+ livreAsupprimer);
-	    if(livreAsupprimer == null) 
-	    	   		 return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
-	 			           HttpStatus.NOT_FOUND);//40
+	    if(livreAsupprimer == null) throw new NotFoundException();
 	    serviceLivre.suppressionParId(id);
-	    return new ResponseEntity<>("{ \"done\" : \"livre deleted\"}" ,
-	    	   HttpStatus.OK);
-	    // ou bien
-	   // return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	    		    
+	    return new ResponseEntity<>("{ \"done\" : \"livre deleted\"}" , HttpStatus.OK);	    		    
 	}
 	
 	@PutMapping("" )
@@ -102,9 +97,7 @@ public class LivreRestCtrl {
 		Long numLivreToUpdate = livreUpdated.getId();
 		Livre livreQuiDevraitExister = serviceLivre.trouverParId(numLivreToUpdate);
 	
-	    if(livreQuiDevraitExister==null)
-	    	return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}" ,
-			           HttpStatus.NOT_FOUND); //NOT_FOUND = code http 404
+	    if(livreQuiDevraitExister==null) throw new NotFoundException();
 	    
 	    livreUpdated.setAuteur(livreQuiDevraitExister.getAuteur());
 	    livreUpdated.setTitre(livreQuiDevraitExister.getTitre());

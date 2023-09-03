@@ -69,10 +69,20 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre,Long,LivreDto
 	public List<Livre> trouverParTitre(String titre) {
 		return daoLivre.findByTitre(titre);
 	}
+	
+	@Override
+	public List<LivreDto> trouverDtoParTitre(String titre) {
+		return getCONV().map(daoLivre.findByTitre(titre), getDtoClass());
+	}
 
 	@Override
 	public Livre trouverParIdFetchEmprunts(Long id) {
 		return daoLivre.findByIdFetchEmprunts(id);
+	}
+	
+	@Override
+	public LivreDto trouverDtoParIdFetchEmprunts(Long id) {
+		return getCONV().map(daoLivre.findByIdFetchEmprunts(id), getDtoClass());
 	}
 
 

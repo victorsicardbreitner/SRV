@@ -32,7 +32,6 @@ function rechercherLecteursSelonId(){
 			(row.insertCell(0)).innerHTML = lecteur.id;
 			(row.insertCell(1)).innerHTML = lecteur.prenom;
 			(row.insertCell(2)).innerHTML = lecteur.nom;
-			
 			/*
 			(row.insertCell(3)).innerHTML = lecteur.codepostal;
 			(row.insertCell(4)).innerHTML = lecteur.email;
@@ -51,7 +50,6 @@ function rechercherLecteursSelonId(){
 				(row.insertCell(0)).innerHTML = lecteur.id;
 				(row.insertCell(1)).innerHTML = lecteur.prenom;
 				(row.insertCell(2)).innerHTML = lecteur.nom;
-				console.log(lecteur)
 				/*
 				(row.insertCell(3)).innerHTML = lecteur.codepostal;
 				(row.insertCell(4)).innerHTML = lecteur.email;
@@ -99,7 +97,7 @@ function rechercherLecteursSelonId(){
 			document.getElementById("messageException").classList.add("d-none");
 			console.log("responseJson=", responseJson);
 		    rechercherLecteursSelonId();
-		});
+		},errCallbackJson);
    
  }
  
