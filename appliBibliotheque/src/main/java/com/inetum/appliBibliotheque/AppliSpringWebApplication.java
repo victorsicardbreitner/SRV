@@ -15,7 +15,7 @@ public class AppliSpringWebApplication {
 				//"mysql";
 				//"h2";
 		
-		System.setProperty("spring.profiles.active", typeDeBase+",withSecurity");
+		System.setProperty("spring.profiles.active", typeDeBase+",withSecurity"); //init
 
 		SpringApplication.run(AppliSpringWebApplication.class, args);
 		

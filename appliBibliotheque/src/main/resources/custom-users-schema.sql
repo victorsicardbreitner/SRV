@@ -18,12 +18,13 @@ ALTER TABLE AUTHORITIES ADD CONSTRAINT AUTHORITIES_FK1 FOREIGN KEY (USERNAME) RE
 
 
 
---INSERT INTO USERS (username, password, enabled) VALUES ('user1','$2a$10$yl7N17Pooyc/HSy7t1rsYe4I2BVQnv8.woLrYeBPL.JnfXMCXBCve', 'Y');
---INSERT INTO USERS (username, password, enabled)  VALUES ('admin1','$2a$10$j1K7Yx1ZqbZMYPgUArjxR.z6qYhfRmQ94rh0J8GZZRsEtGYYQSicq', 'Y');
+INSERT INTO USERS (username, password, enabled) VALUES ('user1','$2a$10$yl7N17Pooyc/HSy7t1rsYe4I2BVQnv8.woLrYeBPL.JnfXMCXBCve', 'Y');
+INSERT INTO USERS (username, password, enabled)  VALUES ('admin1','$2a$10$j1K7Yx1ZqbZMYPgUArjxR.z6qYhfRmQ94rh0J8GZZRsEtGYYQSicq', 'Y');
+
 INSERT INTO USERS (username, password, enabled)  VALUES ('user2','$2a$10$CxkZoFkQAHplkwGFwbJ/Z.0P7mNsoHV1yVArCj38afUpUHULQct1K', 'Y');
 INSERT INTO USERS (username, password, enabled)  VALUES ('admin2','$2a$10$lZf31UbPjtUKcHeK6VsRauLjkIrVb7ZhlHkm5IeFBsLQ2QSwp41RW', 'Y');
 
---INSERT INTO AUTHORITIES (id,username, authority) VALUES (1,'admin1','ROLE_ADMIN');
+INSERT INTO AUTHORITIES (id,username, authority) VALUES (1,'admin1','ROLE_ADMIN');
 INSERT INTO AUTHORITIES (id,username, authority) VALUES (2,'admin2','ROLE_ADMIN');
---INSERT INTO AUTHORITIES (id,username, authority) VALUES (3,'user1','ROLE_USER');
+INSERT INTO AUTHORITIES (id,username, authority) VALUES (3,'user1','ROLE_USER');
 INSERT INTO AUTHORITIES (id,username, authority) VALUES (4,'user2','ROLE_USER');

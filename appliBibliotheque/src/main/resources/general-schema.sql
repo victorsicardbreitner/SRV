@@ -9,7 +9,7 @@ drop table personne cascade constraints;
 CREATE sequence hibernate_sequence start with 1 increment by  1;
 
 CREATE TABLE Domaine (
-	id NUMBER(19) generated as identity, 
+	id NUMBER(19) not null, 
 	description VARCHAR(255 ), 
 	nom VARCHAR(255 ), 
 	PRIMARY KEY (id)
@@ -20,14 +20,14 @@ CREATE TABLE Emprunt (
 	id_livre NUMBER(19) not null, 
 	date_debut date, 
 	date_fin date, 
-	etat VARCHAR(255 ), 
+	etat VARCHAR2(255), 
 	incident NUMBER(19), 
 	PRIMARY KEY (id_lecteur, id_livre)
 );
 
 CREATE TABLE Incident (
-	id NUMBER(19) generated as identity, 
-	motif VARCHAR(255 ), 
+	id NUMBER(19) not null,  
+	motif VARCHAR(255), 
 	PRIMARY KEY (id)
 );
 
