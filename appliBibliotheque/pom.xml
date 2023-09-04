@@ -91,6 +91,12 @@
 			<artifactId>my-security-starter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<!-- tentative de debug pour faire fonctionner la fonctionnalite de hasRole -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
 
 	</dependencies>
 

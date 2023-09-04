@@ -26,9 +26,7 @@ import com.inetum.appliBibliotheque.service.ServiceAdmin;
 
 @RestController
 @RequestMapping(value="/api-bibli/administrateur" , headers="Accept=application/json")
-//ATTENTION origins = "*" peut être un problème de sécurité
 @PreAuthorize("hasRole('ADMIN')")
-//@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST}) //pour autoriser les appels extérieurs  Cross-origin resource sharing
 public class AdministrateurRestCtrl {
 	
 	@Autowired
