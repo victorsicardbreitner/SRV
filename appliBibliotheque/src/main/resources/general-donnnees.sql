@@ -108,7 +108,7 @@ INSERT INTO Personne (id, role, nom, prenom) VALUES (24, 'Lecteur', 'Andersen', 
 INSERT INTO Personne (id, role, nom, prenom) VALUES (25, 'Lecteur', 'Johansen', 'Anna');
 
 /*Emprunts*/
-INSERT INTO Emprunt (id_lecteur , id_livre , date_debut , date_fin , etat, incident) VALUES (1, 1, TO_DATE('2023-09-04 03:05:30', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-09-18 00:00:00', 'YYYY-MM-DD HH24:MI:SS'),  'EFFECTIF', 1);
+INSERT INTO Emprunt (id_lecteur , id_livre , date_debut , date_fin , etat, incident) VALUES (11, 11, TO_DATE('2023-09-04 03:05:30', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-09-18 00:00:00', 'YYYY-MM-DD HH24:MI:SS'),  'EFFECTIF', 1);
 
 
 		
