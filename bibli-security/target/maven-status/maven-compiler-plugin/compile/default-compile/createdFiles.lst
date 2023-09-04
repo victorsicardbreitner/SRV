@@ -1,8 +1,8 @@
-org\mycontrib\mysecurity\util\JwtAuthenticationFilter.class
-org\mycontrib\mysecurity\util\JwtUtil.class
-org\mycontrib\mysecurity\rest\LoginRestCtrl.class
-org\mycontrib\mysecurity\dto\LoginResponse.class
-org\mycontrib\mysecurity\util\MySecurity.class
-org\mycontrib\mysecurity\dto\LoginRequest.class
-org\mycontrib\mysecurity\util\MyNoAuthenticationEntryPoint.class
-org\mycontrib\mysecurity\util\JwtTokenProvider.class
+org\biblicontrib\biblisecurity\util\MySecurity.class
+org\biblicontrib\biblisecurity\util\JwtAuthenticationFilter.class
+org\biblicontrib\biblisecurity\util\JwtTokenProvider.class
+org\biblicontrib\biblisecurity\util\MyNoAuthenticationEntryPoint.class
+org\biblicontrib\biblisecurity\util\JwtUtil.class
+org\biblicontrib\biblisecurity\dto\LoginResponse.class
+org\biblicontrib\biblisecurity\rest\LoginRestCtrl.class
+org\biblicontrib\biblisecurity\dto\LoginRequest.class
