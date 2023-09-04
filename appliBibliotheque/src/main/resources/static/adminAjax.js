@@ -1,5 +1,6 @@
 window.onload=function(){
 	
+	afficherConnexion();
 	rechercherAdminsSelonId();
 	
 	(document.getElementById("btnRechercherParId")).addEventListener("click",rechercherAdminsSelonId);
@@ -7,6 +8,26 @@ window.onload=function(){
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterAdmin);
 	
 }
+
+
+function afficherConnexion(){	
+	let token = sessionStorage.getItem('token');
+	let jsonPayload =JSON.parse(parseJwt(token));
+	document.getElementById("connexionActuelle").innerHTML=jsonPayload.sub+" "+jsonPayload.authorities+" "+jsonPayload.exp;
+}
+
+function parseJwt (token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return jsonPayload;
+    //return JSON.parse(jsonPayload);
+};
+
+
+
 
 function errCallbackJson(responseErrCallbackJson) {
 	document.getElementById("messageException").classList.remove("d-none");

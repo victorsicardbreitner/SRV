@@ -1,0 +1,10 @@
+org\mycontrib\mysecurity\config\MySecurityDefaultConfig.class
+org\mycontrib\mysecurity\config\MyAppGlobalUserDetailsConfigHelper.class
+org\mycontrib\mysecurity\config\WebSecurityRecentConfig$1.class
+org\mycontrib\mysecurity\autoconfigure\MySecurityAutoConfiguration.class
+org\mycontrib\mysecurity\properties\MySecurityProperties.class
+org\mycontrib\mysecurity\config\MySecuritySimpleConfigurer.class
+org\mycontrib\mysecurity\config\MySecuritySimpleConfigurerDefaultImpl.class
+org\mycontrib\mysecurity\config\WithoutSecurityRecentConfig.class
+org\mycontrib\mysecurity\config\MySecurityExtension.class
+org\mycontrib\mysecurity\config\WebSecurityRecentConfig.class

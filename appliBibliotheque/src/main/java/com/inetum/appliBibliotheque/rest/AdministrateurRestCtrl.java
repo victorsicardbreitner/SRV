@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,8 @@ import com.inetum.appliBibliotheque.service.ServiceAdmin;
 @RestController
 @RequestMapping(value="/api-bibli/administrateur" , headers="Accept=application/json")
 //ATTENTION origins = "*" peut être un problème de sécurité
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST}) //pour autoriser les appels extérieurs  Cross-origin resource sharing
+@PreAuthorize("hasRole('ADMIN')")
+//@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST}) //pour autoriser les appels extérieurs  Cross-origin resource sharing
 public class AdministrateurRestCtrl {
 	
 	@Autowired

@@ -1,16 +1,12 @@
 package com.inetum.appliBibliotheque.init;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import com.inetum.appliBibliotheque.dao.DaoAdmin;
 import com.inetum.appliBibliotheque.dao.DaoDomaine;
@@ -18,12 +14,16 @@ import com.inetum.appliBibliotheque.dao.DaoEmprunt;
 import com.inetum.appliBibliotheque.dao.DaoIncident;
 import com.inetum.appliBibliotheque.dao.DaoLecteur;
 import com.inetum.appliBibliotheque.dao.DaoLivre;
+import com.inetum.appliBibliotheque.dao.security.DaoAuthorities;
+import com.inetum.appliBibliotheque.dao.security.DaoUsers;
 import com.inetum.appliBibliotheque.entity.Administrateur;
 import com.inetum.appliBibliotheque.entity.Domaine;
 import com.inetum.appliBibliotheque.entity.Emprunt;
 import com.inetum.appliBibliotheque.entity.Incident;
 import com.inetum.appliBibliotheque.entity.Lecteur;
 import com.inetum.appliBibliotheque.entity.Livre;
+import com.inetum.appliBibliotheque.security.Authorities;
+import com.inetum.appliBibliotheque.security.Users;
 import com.inetum.appliBibliotheque.utils.AppUtils;
 
 /**
@@ -53,6 +53,12 @@ public class InitDataSet {
 
 	@Autowired
 	private DaoDomaine daoDomaineJpa;
+	
+	@Autowired
+	private DaoUsers daoUsers;
+	
+	@Autowired
+	private DaoAuthorities daoAuthorities;
 	
 	@PostConstruct
 	public void initData() { // pour que les tables de soient pas vide
@@ -117,7 +123,11 @@ public class InitDataSet {
 		daoEmpruntJpa.insert(emprunt2);
 		*/
 		
+		daoUsers.save(new Users("user1","$2a$10$yl7N17Pooyc/HSy7t1rsYe4I2BVQnv8.woLrYeBPL.JnfXMCXBCve", "Y"));
+		daoAuthorities.save(new Authorities("user1","ROLE_USER"));
 		
+		daoUsers.save(new Users("admin1","$2a$10$j1K7Yx1ZqbZMYPgUArjxR.z6qYhfRmQ94rh0J8GZZRsEtGYYQSicq", "Y"));
+		daoAuthorities.save(new Authorities("admin1","ROLE_ADMIN"));
 		
 
 		

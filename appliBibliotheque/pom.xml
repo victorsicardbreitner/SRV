@@ -83,6 +83,14 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>0.4</version>
 		</dependency>
+		
+		<!-- package security -->
+		
+		<dependency>
+			<groupId>org.mycontrib</groupId>
+			<artifactId>my-security-starter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 
