@@ -1,6 +1,6 @@
 window.onload = function() {
 	
-	afficherConnexion();
+	afficherConnexion();  //date avant expiration du token
 	
 	rechercherEmprunts();
 
@@ -18,16 +18,33 @@ window.onload = function() {
 	*/
 }
 
+
 //connecté en tant qu'admin : statut modifié par la fonction "afficher connexion" executée à l'ouverture de la page ou en cas de MAJ
 var admin=false;
+
+//Pour afficher le reste de secondes
+var endDate = new Date();
+var interval = setInterval(updateCounter, 1000);
 
 function afficherConnexion(){	
 	let token = sessionStorage.getItem('token');
 	let jsonPayload =JSON.parse(parseJwt(token));
-	document.getElementById("connexionActuelle").innerHTML=jsonPayload.sub+" "+jsonPayload.authorities+" "+jsonPayload.exp;
+	
+	//document.getElementById("connexionActuelle").innerHTML=jsonPayload.sub+" "+jsonPayload.authorities+" "+jsonPayload.exp;
+	endDate = new Date(jsonPayload.exp * 1000);
+	updateCounter();
+	
 	if(jsonPayload.authorities=="[ROLE_ADMIN]"){
 		admin=true;
 		document.getElementById("colonneAdmin").classList.remove("d-none");
+		
+		document.getElementById("connexionActuelle").innerHTML=jsonPayload.sub+" <i class='fa-solid fa-user-gear'></i> - <i class='fa-regular fa-clock'></i> <i id='counter' ></i>";
+	}
+	else if(jsonPayload.authorities=="[ROLE_USER]"){
+		document.getElementById("connexionActuelle").innerHTML=jsonPayload.sub+" <i class='fa-solid fa-user'></i> - <i class='fa-regular fa-clock'></i> <i id='counter' ></i>";
+	}
+	else{
+		document.getElementById("connexionActuelle").innerHTML="Aucune connexion <i class='fa-solid fa-circle-question'></i>";
 	}
 }
 
@@ -40,6 +57,32 @@ function parseJwt (token) {
     return jsonPayload;
     //return JSON.parse(jsonPayload);
 };
+
+function updateCounter() {
+    var now = new Date();
+    var secondsRemaining = (endDate.getTime() - now.getTime()) / 1000;
+    
+    // Arrondir au nombre de secondes le plus proche
+    secondsRemaining = Math.round(secondsRemaining);
+    
+    var minutes = Math.floor(secondsRemaining / 60);
+    var seconds = secondsRemaining % 60;
+
+    
+    // Si le temps est écoulé, on arrête le compteur
+    if (secondsRemaining <= 0) {
+        secondsRemaining = 0;
+        clearInterval(interval);
+    }
+    
+    function formatNumber(number) {
+    	return number < 10 ? '0' + number : number;
+	}
+    
+    document.getElementById("counter").textContent = "Session terminée dans "+`${formatNumber(minutes)}:${formatNumber(seconds)}`+" (minutes)";
+}
+
+
 
 function errCallbackJson(responseErrCallbackJson) {
 	document.getElementById("messageException").classList.remove("d-none");
@@ -163,5 +206,10 @@ function updateLivreEtat(){
 }
 */
 
+     // multiplié par 1000 pour le convertir de secondes en millisecondes
+
+
+
+    
 
 
