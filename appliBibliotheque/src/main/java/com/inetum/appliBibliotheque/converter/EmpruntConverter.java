@@ -15,7 +15,10 @@ public class EmpruntConverter extends GenericConverter<Emprunt,EmpruntDto> {
 						source.getLecteur().getPrenom(),
 						source.getLivre().getTitre(),
 						source.getDateDebut().toString(),
-						source.getDateFin().toString()
+						source.getDateFin().toString(),
+						null, //on definit l'incident après
+						source.getLecteur().getId(),
+						source.getLivre().getId()
 						);
 			if(source.getIncident() != null) empDto.setIncident(source.getIncident().getMotif());
 			else empDto.setIncident("aucun incident");

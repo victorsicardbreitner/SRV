@@ -14,16 +14,22 @@ public class EmpruntDto {
 	private String dateFin;
 	private String incident;
 	
-	public EmpruntDto(String nomLecteur, String nomLivre, String dateDebut, String dateFin, String incident) {
+	//necessiterait de faire un DTO étendu
+	private Long idLecteur;
+	private Long idLivre;
+	
+	public EmpruntDto(String nomLecteur, String nomLivre, String dateDebut, String dateFin, String incident, Long idLecteur, Long idLivre) {
 		this.nomLecteur = nomLecteur;
 		this.nomLivre = nomLivre;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.incident=incident;
+		this.idLecteur=idLecteur;
+		this.idLivre=idLivre;
 	}
 	
 	public EmpruntDto(String nomLecteur, String nomLivre, String dateDebut, String dateFin) {
-		this(nomLecteur,nomLivre,dateDebut,dateFin,"");
+		this(nomLecteur,nomLivre,dateDebut,dateFin,"",null,null);
 	}
 	
 	

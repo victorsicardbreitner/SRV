@@ -37,7 +37,7 @@ import com.inetum.appliBibliotheque.service.ServiceLivre;
 @RestController
 @RequestMapping(value="/api-bibli/emprunt" , headers="Accept=application/json")
 //ATTENTION origins = "*" peut être un problème de sécurité
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')") //ne permet pas de preciser quelle methode (POST/GEt etc.) est autorisee ou non, on paramètre dans WebSecurityRecentConfig
 //@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST}) //pour autoriser les appels extérieurs  Cross-origin resource sharing
 public class EmpruntRestCtrl {
 	

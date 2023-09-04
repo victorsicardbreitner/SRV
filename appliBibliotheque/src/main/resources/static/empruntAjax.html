@@ -24,13 +24,15 @@
 			<div class="card shadow rounded bg-body" >
 				<div class="card-header text-center h3 text-secondary" >Gestion des Emprunts</div>
 				<div class="card-body"> 	
+							
+					<div class="alert alert-light" id="connexionActuelle"> </div> <br /> <br />
 									
 					<div class="text-center"><button class="btn btn-primary" id="btnRechercher">Rafraîchir <i class="fa-solid fa-arrows-rotate"></i></button> </div><br />
 					
-					<div class="table-responsive">
-						<table class="table table-bordered p-3 mb-5 bg" >
+					<div class="table-responsive" style="max-height: 300px;">
+						<table class="table table-bordered p-3 mb-5 bg"  >
 							<thead>
-								<tr><th>Lecteur</th><th>Livre</th><th>Début</th><th>Fin</th><th>Incident</th></tr>
+								<tr><th>Lecteur</th><th>Livre</th><th>Début</th><th>Fin</th><th>Incident</th><th id="colonneAdmin" class="d-none">Action</th></tr>
 							</thead>
 							<tbody id="table_body">
 							</tbody>
@@ -43,8 +45,8 @@
 						err
 					</div>
 	
-					Livre:<input class="form-control" id="inputIdLivre"/><br/>
 					Lecteur:<input class="form-control" id="inputIdLecteur"/><br/>
+					Livre:<input class="form-control" id="inputIdLivre"/><br/>
 					Motif d'incident :<input class="form-control" id="inputMotifIncident"/><br/>
 					<button class="btn btn-success" id="btnAjout">Ajouter <i class="fa-solid fa-plus"></i></button>
 	 				<button class="btn btn-danger" id="btnDelete">Supprimer <i class="fa-solid fa-xmark"></i> </button>

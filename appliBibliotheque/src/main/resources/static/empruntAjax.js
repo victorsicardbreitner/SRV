@@ -1,5 +1,7 @@
 window.onload = function() {
 	
+	afficherConnexion();
+	
 	rechercherEmprunts();
 
 	(document.getElementById("btnRechercher")).addEventListener("click", rechercherEmprunts);
@@ -16,6 +18,28 @@ window.onload = function() {
 	*/
 }
 
+//connecté en tant qu'admin : statut modifié par la fonction "afficher connexion" executée à l'ouverture de la page ou en cas de MAJ
+var admin=false;
+
+function afficherConnexion(){	
+	let token = sessionStorage.getItem('token');
+	let jsonPayload =JSON.parse(parseJwt(token));
+	document.getElementById("connexionActuelle").innerHTML=jsonPayload.sub+" "+jsonPayload.authorities+" "+jsonPayload.exp;
+	if(jsonPayload.authorities=="[ROLE_ADMIN]"){
+		admin=true;
+		document.getElementById("colonneAdmin").classList.remove("d-none");
+	}
+}
+
+function parseJwt (token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return jsonPayload;
+    //return JSON.parse(jsonPayload);
+};
 
 function errCallbackJson(responseErrCallbackJson) {
 	document.getElementById("messageException").classList.remove("d-none");
@@ -40,6 +64,9 @@ function rechercherEmprunts() {
 			(row.insertCell(2)).innerHTML = emprunt.dateDebut; //emprunt.date_debut
 			(row.insertCell(3)).innerHTML = emprunt.dateFin; //emprunt.date_fin
 			(row.insertCell(4)).innerHTML = emprunt.incident; //emprunt.incident
+			if(admin){
+				(row.insertCell(5)).innerHTML = "<button class='btn btn-danger ' onClick='supprimerEmpruntBouton("+emprunt.idLecteur+","+emprunt.idLivre+")'>Supprimer <i class='fa-solid fa-xmark'></i></button>";
+			}
 		}
 	});
 }
@@ -93,6 +120,20 @@ function miseAJourEmprunt(){
 		document.getElementById("messageException").classList.add("d-none");
 		rechercherEmprunts();
 	}, errCallbackJson);
+}
+
+function supprimerEmpruntBouton(idLecteur,idLivre) {
+	let empruntJs = {
+		idLivre: idLivre,
+		idLecteur: idLecteur
+	};
+	let empruntJson = JSON.stringify(empruntJs);
+	let wsUrl = "./api-bibli/emprunt?idLivre=" + idLivre + "&idLecteur=" + idLecteur;
+	makeAjaxDeleteRequest(wsUrl, function(responseJson) {
+		document.getElementById("messageException").classList.add("d-none");
+		rechercherEmprunts();
+	}, errCallbackJson)
+
 }
 
 /*
