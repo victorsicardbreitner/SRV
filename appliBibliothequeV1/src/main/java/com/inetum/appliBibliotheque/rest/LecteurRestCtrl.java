@@ -52,7 +52,7 @@ public class LecteurRestCtrl {
 	// appelé en mode POST avec dans la partie invisible "body" de la requête
 	@PostMapping("" )
 	public Lecteur postLecteur(@RequestBody Lecteur nouveauLecteur) {
-		System.out.println("nouveauLecteur "+ nouveauLecteur);
+		System.out.println("nouveau Lecteur "+ nouveauLecteur);
 		Lecteur lecteurEnregistreEnBase = daoLecteurJpa.insert(nouveauLecteur);
 		return lecteurEnregistreEnBase; // on retourne le lecteur avec la clé primaire auto-incrémentée
 	}

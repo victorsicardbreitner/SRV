@@ -72,8 +72,4 @@ public class Personne {
 		this.prenom = prenom;
 		this.nom = nom;
 	}
-
-
-
-	
 }

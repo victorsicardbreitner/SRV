@@ -26,6 +26,7 @@ function rechercherLivres(){
 			(row.insertCell(2)).innerHTML = livre.auteur;
 			(row.insertCell(3)).innerHTML = livre.dispo;
 			(row.insertCell(4)).innerHTML = livre.etat;
+			
 		}
 		
 		(document.getElementById('idMessage')).innerHTML="ok";
@@ -36,11 +37,14 @@ function rechercherLivres(){
  function ajouterLivre(){
 	  let labelTitre = (document.getElementById("inputLabelTitre")).value;
 	  let labelAuteur = (document.getElementById("inputLabelAuteur")).value;
+	  let labelDisponibilite = (document.getElementById("inputLabelDisponibilite")).value;
 	  let livreJs = {titre : labelTitre,
-	  				 auteur: labelAuteur};
+	  				 auteur: labelAuteur,
+	  				 dispo : labelDisponibilite};
 	  let livreJson= JSON.stringify(livreJs);
 	   let wsUrl= "./api-bibli/livre";
 	    makeAjaxPostRequest(wsUrl, livreJson,function(responseJson){
+			
 			 rechercherLivres();
 		});
    

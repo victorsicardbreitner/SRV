@@ -36,14 +36,4 @@ public class Lecteur extends Personne {
 	@JsonIgnore
 	private List<Emprunt> emprunts;
 	
-
-	
-
-
-	
-	
-	
-
-	
-	
 }

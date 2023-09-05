@@ -3,6 +3,7 @@ window.onload=function(){
 	(document.getElementById("btnRechercher")).addEventListener("click",rechercherLecteursSelonSoldeMini);
 	(document.getElementById("btnAjout")).addEventListener("click", ajouterLecteur);
 	
+	
 }
 
 function rechercherLecteursSelonSoldeMini(){

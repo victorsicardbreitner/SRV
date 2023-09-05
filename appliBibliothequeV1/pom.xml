@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.inetum</groupId>
-	<artifactId>appliBibliotheque</artifactId>
+	<artifactId>appliBibliothequeV1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>appliBibliotheque</name>
 	<description>Projet Fil Rouge</description>
