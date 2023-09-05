@@ -52,7 +52,7 @@ INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (7, 'Paul The
 INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (8, 'Malcolm Gladwell', 1, 'BON_ETAT', 'Le point de basculement', 8);
 INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (9, 'Platon', 1, 'BON_ETAT', 'La République', 9);
 INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (10, 'Dalai Lama', 1, 'BON_ETAT', 'La voie vers l’éveil', 10);
-INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (11, 'Stephen Hawking', 1, 'BON_ETAT', 'Une brève histoire du temps', 11);
+INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (11, 'Stephen Hawking', 0, 'BON_ETAT', 'Une brève histoire du temps', 11);
 INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (12, 'Marcus du Sautoy', 1, 'BON_ETAT', 'L’Énigme des nombres premiers', 12);
 INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (13, 'Walter Isaacson', 1, 'BON_ETAT', 'Steve Jobs', 13);
 INSERT INTO Livre (id, auteur, dispo, etat, titre, domaine) VALUES (14, 'Atul Gawande', 1, 'BON_ETAT', 'La Checklist: Comment faire les choses bien', 14);
