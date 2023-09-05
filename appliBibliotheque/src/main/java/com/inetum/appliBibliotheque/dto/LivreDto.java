@@ -38,5 +38,9 @@ public class LivreDto {
 	public LivreDto(Long id, String titre, String auteur, String etat) {
 		this(id,titre,auteur,true,etat,null);
 	}
+	
+	public LivreDto(String titre, String auteur) {
+		this(null,titre,auteur,true,null,null);
+	}
 
 }

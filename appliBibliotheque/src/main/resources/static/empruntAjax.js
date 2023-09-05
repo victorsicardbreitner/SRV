@@ -3,6 +3,7 @@ window.onload = function() {
 	afficherConnexion();  //date avant expiration du token
 	
 	rechercherEmprunts();
+	donneesLivres();
 
 	(document.getElementById("btnRechercher")).addEventListener("click", rechercherEmprunts);
 
@@ -179,34 +180,21 @@ function supprimerEmpruntBouton(idLecteur,idLivre) {
 
 }
 
-/*
-function updateLivreEtat(){
-	 let labelLivreUpdateEtat = (document.getElementById("inputLabelLivreUpdateEtat")).value;
-	 let labelIdLivre = (document.getElementById("inputLabelIdLivreEtat")).value;
-	 var  dispoVar= new Boolean(true);
-	 
-    
-	 let livreUpdateEtatJs = {id : labelIdLivre,
-								   dispo: dispoVar,
-								   etat: labelLivreUpdateEtat.toUpperCase()};
-	 
-	 if(labelLivreUpdateEtat.toUpperCase() == "HORS_SERVICE") dispoVar = false;
-	   	
-	 livreUpdateEtatJs = {id : labelIdLivre,
-								dispo: dispoVar,
-								etat: labelLivreUpdateEtat.toUpperCase()};
+//pour remplir la liste de choix de livres
+function donneesLivres(){
 	
-	 let livreUpdateEtatJson = JSON.stringify(livreUpdateEtatJs);
-	 
-	 let wsUrl= "./api-bibli/livre/";
-	 makeAjaxPutRequest(wsUrl,livreUpdateEtatJson, function(responseJson){
-		  rechercherLivres();
-	 })
-	 
+	let wsUrl = "./api-bibli/livre"; //l'appel du controller qui fournit le fichier JSON
+	makeAjaxGetRequest(wsUrl,function(responseJson){
+		document.getElementById("messageException").classList.add("d-none");
+		let livresJs = JSON.parse(responseJson);
+		
+		let bodyElt = document.getElementById("table_body");
+		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
+		for(let livre of livresJs){
+			document.getElementById("inputIdLivre").innerHTML += "<option value='"+livre.id+"'>"+livre.titre+"</option>";
+		}
+	},errCallbackJson);
 }
-*/
-
-     // multiplié par 1000 pour le convertir de secondes en millisecondes
 
 
 

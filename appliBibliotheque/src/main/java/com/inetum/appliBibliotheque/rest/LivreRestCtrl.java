@@ -73,11 +73,13 @@ public class LivreRestCtrl {
 	
 	//ex de fin URL: ./api-bibli/livre
 	// appelé en mode POST avec dans la partie invisible "body" de la requête
-	@PostMapping("" )
+	@PostMapping("")
 	public LivreDto postLivre(@RequestBody LivreDto nouveauLivre) {
 		System.out.println("nouveauLIvre "+ nouveauLivre);
 		nouveauLivre.setDispo(true);
 		LivreDto livreEnregistreEnBase = serviceLivre.sauvegarderParDtoPourDto(nouveauLivre);
+
+		System.out.println(livreEnregistreEnBase);
 		return livreEnregistreEnBase; // on retourne le livre avec la clé primaire auto-incrémentée
 	}
 	

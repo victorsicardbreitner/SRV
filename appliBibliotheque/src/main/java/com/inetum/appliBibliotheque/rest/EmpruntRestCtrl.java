@@ -146,7 +146,9 @@ public class EmpruntRestCtrl {
 	    Incident incident = null;
 	    if(!motifIncident.isEmpty()) {
 		   incident = new Incident(motifIncident);
-		   serviceIncident.sauvegarder(incident);
+		   
+		   incident = serviceIncident.sauvegarder(incident);
+		   logger.debug("########### incident id : "+incident.getId());
 	    }
 	    
 	    EmpruntQuiDevraitExister.setIncident(incident);
