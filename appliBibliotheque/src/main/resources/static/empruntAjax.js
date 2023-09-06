@@ -2,8 +2,10 @@ window.onload = function() {
 	
 	afficherConnexion();  //date avant expiration du token
 	
-	rechercherEmprunts();
+	
 	donneesLivres();
+	donneesLecteurs();
+	rechercherEmprunts();
 
 	(document.getElementById("btnRechercher")).addEventListener("click", rechercherEmprunts);
 
@@ -94,7 +96,7 @@ function errCallbackJson(responseErrCallbackJson) {
 
 function rechercherEmprunts() {
 
-	let wsUrl = "./api-bibli/emprunt?soldeMini="; //l'appel du controller qui fournit le fichier JSON
+	let wsUrl = "./api-bibli/emprunt"; //l'appel du controller qui fournit le fichier JSON
 	makeAjaxGetRequest(wsUrl, function(responseJson) {
 		document.getElementById("messageException").classList.add("d-none");
 		let empruntsJs = JSON.parse(responseJson);
@@ -184,14 +186,30 @@ function supprimerEmpruntBouton(idLecteur,idLivre) {
 function donneesLivres(){
 	
 	let wsUrl = "./api-bibli/livre"; //l'appel du controller qui fournit le fichier JSON
+	
+	
 	makeAjaxGetRequest(wsUrl,function(responseJson){
 		document.getElementById("messageException").classList.add("d-none");
 		let livresJs = JSON.parse(responseJson);
 		
-		let bodyElt = document.getElementById("table_body");
-		bodyElt.innerHTML="";//vider le tableau avant de le reremplir
+		
 		for(let livre of livresJs){
 			document.getElementById("inputIdLivre").innerHTML += "<option value='"+livre.id+"'>"+livre.titre+"</option>";
+		}
+	},errCallbackJson);
+}
+
+//pour remplir la liste de choix de livres
+function donneesLecteurs(){
+	
+	let wsUrl = "./api-bibli/lecteur";
+	
+	makeAjaxGetRequest(wsUrl,function(responseJson){
+		document.getElementById("messageException").classList.add("d-none");
+		let lecteursJs = JSON.parse(responseJson);
+		
+		for(let lecteur of lecteursJs){
+			document.getElementById("inputIdLecteur").innerHTML += "<option value='"+lecteur.id+"'>"+lecteur.prenom+" "+lecteur.nom+"</option>";
 		}
 	},errCallbackJson);
 }
