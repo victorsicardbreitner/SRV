@@ -68,14 +68,35 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version> <!-- dernière version -->
 		</dependency>
-		
-				<dependency>
+
+		<dependency>
 			<!-- driver jdbc pour base h2 -->
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<!-- pas de scope=test aujourd'hui -->
 		</dependency>
+
+		<!-- crypter les mdp -->
+
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
 		
+		<!-- package security -->
+		
+		<dependency>
+			<groupId>org.biblicontrib</groupId>
+			<artifactId>bibli-security-starter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- tentative de debug pour faire fonctionner la fonctionnalite de hasRole -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
 
 	</dependencies>
 

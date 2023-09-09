@@ -1,0 +1,8 @@
+org\biblicontrib\biblisecurity\util\MySecurity.class
+org\biblicontrib\biblisecurity\util\JwtAuthenticationFilter.class
+org\biblicontrib\biblisecurity\util\JwtTokenProvider.class
+org\biblicontrib\biblisecurity\util\MyNoAuthenticationEntryPoint.class
+org\biblicontrib\biblisecurity\util\JwtUtil.class
+org\biblicontrib\biblisecurity\dto\LoginResponse.class
+org\biblicontrib\biblisecurity\rest\LoginRestCtrl.class
+org\biblicontrib\biblisecurity\dto\LoginRequest.class

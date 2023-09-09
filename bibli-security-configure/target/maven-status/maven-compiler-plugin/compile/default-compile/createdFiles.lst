@@ -1,0 +1,10 @@
+org\biblicontrib\biblisecurity\properties\MySecurityProperties.class
+org\biblicontrib\biblisecurity\autoconfigure\MySecurityAutoConfiguration.class
+org\biblicontrib\biblisecurity\config\MySecuritySimpleConfigurerDefaultImpl.class
+org\biblicontrib\biblisecurity\config\MySecuritySimpleConfigurer.class
+org\biblicontrib\biblisecurity\config\WebSecurityRecentConfig$1.class
+org\biblicontrib\biblisecurity\config\MyAppGlobalUserDetailsConfigHelper.class
+org\biblicontrib\biblisecurity\config\MySecurityDefaultConfig.class
+org\biblicontrib\biblisecurity\config\WithoutSecurityRecentConfig.class
+org\biblicontrib\biblisecurity\config\MySecurityExtension.class
+org\biblicontrib\biblisecurity\config\WebSecurityRecentConfig.class
